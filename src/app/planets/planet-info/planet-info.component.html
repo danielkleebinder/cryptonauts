@@ -1,0 +1,25 @@
+<header>
+  <h1>{{planet.name}}</h1>
+  <button class="close-button" mat-icon-button (click)="close.emit(planet)">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <mat-chip-list>
+    <mat-chip color="primary" selected>{{planet.age}} billion years old</mat-chip>
+    <mat-chip color="primary" selected>{{planet.gravity}} m/s²</mat-chip>
+    <mat-chip color="primary" selected>{{planet.temperature}} °C</mat-chip>
+  </mat-chip-list>
+
+  <mat-divider></mat-divider>
+</header>
+
+<main>
+  <p>{{planet.description}}</p>
+</main>
+
+<footer>
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary">Do some cool stuff</button>
+</footer>

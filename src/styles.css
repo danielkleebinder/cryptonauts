@@ -1,4 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  background: black;
+  color: white;
+}
+
+body {
+  margin: 0;
+  font-family: 'lato', sans-serif !important;
+  font-weight: 300;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 6px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(170, 170, 170, 0.8);
+  border-radius: 20px;
+}

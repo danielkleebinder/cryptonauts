@@ -1,0 +1,12 @@
+<main>
+  <app-planet *ngFor="let planet of cryptoverse"
+              [planet]="planet"
+              [class.selected]="planet.id === selectedPlanet?.id"
+              (click)="selectPlanet(planet)">
+  </app-planet>
+</main>
+
+<app-planet-info *ngIf="selectedPlanet"
+                 [planet]="selectedPlanet"
+                 (close)="selectedPlanet = null">
+</app-planet-info>

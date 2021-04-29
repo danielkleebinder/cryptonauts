@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  background: rgba(40, 55, 64, 0.7);
+  padding: 32px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+button.close-button {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+header h1 {
+  margin-bottom: 48px;
+}
+
+header {
+  margin-bottom: 16px;
+}
+
+mat-divider {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+main {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+footer * {
+  width: 100%;
+}
