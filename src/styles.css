@@ -26,3 +26,14 @@ h1 {
   background-color: rgba(170, 170, 170, 0.8);
   border-radius: 20px;
 }
+
+.commander-header-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px 32px;
+  background: rgba(40, 55, 64, 0.7);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 12px;
+}

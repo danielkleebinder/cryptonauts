@@ -14,12 +14,16 @@ button.close-button {
   right: 10px;
 }
 
-header h1 {
-  margin-bottom: 48px;
-}
-
 header {
   margin-bottom: 16px;
+}
+
+header .planet-name {
+  margin-bottom: 46px;
+}
+
+header .planet-name h1 {
+  margin-bottom: 0;
 }
 
 mat-divider {

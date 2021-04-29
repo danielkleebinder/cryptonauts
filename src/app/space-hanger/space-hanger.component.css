@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+img {
+  padding: 60px;
+  width: 440px;
+  background: radial-gradient(ellipse, rgba(9, 10, 15, 0), rgba(40, 55, 64, 1));
+  border-radius: 500px;
+  animation: rotate-ship 60s linear infinite;
+}
+
+@keyframes rotate-ship {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+mat-sidenav-container {
+  width: 100%;
+  height: 100%;
+  background: none;
+}
+
+mat-sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  background: rgba(40, 55, 64, 0.7);
+  padding: 32px;
+  width: 340px;
+}
+
+mat-sidenav-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

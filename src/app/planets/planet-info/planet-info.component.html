@@ -1,5 +1,9 @@
 <header>
-  <h1>{{planet.name}}</h1>
+  <div class="planet-name">
+    <h1>{{planet.name}}</h1>
+    <small>({{planet.id}})</small>
+  </div>
+
   <button class="close-button" mat-icon-button (click)="close.emit(planet)">
     <mat-icon>close</mat-icon>
   </button>

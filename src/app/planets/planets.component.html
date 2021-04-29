@@ -1,3 +1,10 @@
+<header class="commander-header-bar">
+  <button mat-flat-button color="primary" [routerLink]="['/hanger']">
+    <mat-icon>home</mat-icon>
+    Go to Spacehanger
+  </button>
+</header>
+
 <main>
   <app-planet *ngFor="let planet of cryptoverse"
               [planet]="planet"
