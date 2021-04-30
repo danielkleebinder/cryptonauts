@@ -7,6 +7,9 @@
     <mat-icon>explore</mat-icon>
     Planets
   </button>
+  <button mat-flat-button color="primary" (click)="exit()">
+    <mat-icon>logout</mat-icon>
+  </button>
 </aside>
 
 <app-background [@routeAnimation]="prepareRoute(outlet)">

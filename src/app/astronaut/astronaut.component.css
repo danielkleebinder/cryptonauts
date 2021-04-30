@@ -25,12 +25,12 @@ mat-sidenav-content {
     transform: rotateZ(20deg) translate(20px, 40px);
   }
   33% {
-    transform: rotateZ(-10deg) translate(-20px, 30px);
+    transform: rotateZ(-10deg) translate(-60px, 30px);
   }
   66% {
     transform: rotateZ(-30deg) translate(-50px, 0);
   }
   100% {
-    transform: rotateZ(-20deg) translate(20px, -30px);
+    transform: rotateZ(-20deg) translate(80px, -30px);
   }
 }

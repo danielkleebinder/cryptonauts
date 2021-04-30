@@ -16,6 +16,12 @@ export interface Planet {
   age: number;
 
   /**
+   * The radius of the planet compared to earth's radius.
+   * Example: size=2 indicates that the planet is twice as large as earth.
+   */
+  size: number;
+
+  /**
    * The gravity on the surface in m/s^2.
    */
   gravity: number;

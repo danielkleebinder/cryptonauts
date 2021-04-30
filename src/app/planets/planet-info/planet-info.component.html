@@ -11,9 +11,10 @@
   <mat-divider></mat-divider>
   <div class="planet-properties">
     <mat-chip-list>
-      <mat-chip color="primary" selected>{{planet?.age}} billion years old</mat-chip>
-      <mat-chip color="primary" selected>{{planet?.gravity}} m/s²</mat-chip>
-      <mat-chip color="primary" selected>{{planet?.temperature}} °C</mat-chip>
+      <mat-chip color="primary" selected matTooltip="Age">{{planet?.age}} billion years old</mat-chip>
+      <mat-chip color="primary" selected matTooltip="Surface gravity">{{planet?.gravity}} m/s²</mat-chip>
+      <mat-chip color="primary" selected matTooltip="Average surface temperature">{{planet?.temperature}} °C</mat-chip>
+      <mat-chip color="primary" selected matTooltip="Size compared to earth">{{planet?.size}} er</mat-chip>
     </mat-chip-list>
   </div>
   <mat-divider></mat-divider>
@@ -25,7 +26,7 @@
 
 <footer>
   <mat-divider></mat-divider>
-  <button mat-flat-button color="primary">
+  <button mat-flat-button color="primary" (click)="explore()">
     <mat-icon>explore</mat-icon>
     Explore
   </button>

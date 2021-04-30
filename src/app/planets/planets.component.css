@@ -12,7 +12,7 @@ app-planet {
 }
 
 app-planet.selected {
-  transform: scale(1.5);
+  transform: scale(1.4);
 }
 
 mat-sidenav-content {
@@ -24,4 +24,15 @@ mat-sidenav-content {
   mat-sidenav-content {
     flex-direction: column;
   }
+}
+
+.notes {
+  position: absolute;
+  bottom: 48px;
+  padding: 32px;
+  margin-left: 32px;
+  margin-right: 32px;
+  background: rgba(40, 55, 64, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
 }
