@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpaceHangerComponent } from './space-hanger.component';
+import { AstronautInfoComponent } from './astronaut-info.component';
 
-describe('SpaceHangerComponent', () => {
-  let component: SpaceHangerComponent;
-  let fixture: ComponentFixture<SpaceHangerComponent>;
+describe('AstronautInfoComponent', () => {
+  let component: AstronautInfoComponent;
+  let fixture: ComponentFixture<AstronautInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SpaceHangerComponent ]
+      declarations: [ AstronautInfoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SpaceHangerComponent);
+    fixture = TestBed.createComponent(AstronautInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

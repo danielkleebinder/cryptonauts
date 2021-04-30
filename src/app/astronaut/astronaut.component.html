@@ -1,0 +1,14 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [opened]="drawerOpen">
+    <app-astronaut-info [me]="me" (click)="drawerOpen = true"></app-astronaut-info>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <div class="astronaut" matTooltip="Me" matTooltipPosition="above">
+      <img src="assets/astronaut.png">
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

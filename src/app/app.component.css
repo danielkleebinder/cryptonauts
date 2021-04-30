@@ -5,3 +5,19 @@ app-background {
   left: 0;
   right: 0;
 }
+
+aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 16px 32px;
+  background: rgba(40, 55, 64, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 12px;
+  z-index: 100;
+}
+
+aside > * {
+  margin-left: 12px;
+  margin-right: 12px;
+}

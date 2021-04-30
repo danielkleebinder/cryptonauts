@@ -1,29 +1,32 @@
-<header>
-  <div class="planet-name">
-    <h1>{{planet.name}}</h1>
-    <small>({{planet.id}})</small>
-  </div>
+<button class="close-button" mat-icon-button (click)="close.emit(planet)">
+  <mat-icon>close</mat-icon>
+</button>
 
-  <button class="close-button" mat-icon-button (click)="close.emit(planet)">
-    <mat-icon>close</mat-icon>
-  </button>
+<header class="title">
+  <h1 class="no-margin">{{planet?.name}}</h1>
+  <small>({{planet?.id}})</small>
+</header>
 
+<header class="sub-header">
   <mat-divider></mat-divider>
-
-  <mat-chip-list>
-    <mat-chip color="primary" selected>{{planet.age}} billion years old</mat-chip>
-    <mat-chip color="primary" selected>{{planet.gravity}} m/s²</mat-chip>
-    <mat-chip color="primary" selected>{{planet.temperature}} °C</mat-chip>
-  </mat-chip-list>
-
+  <div class="planet-properties">
+    <mat-chip-list>
+      <mat-chip color="primary" selected>{{planet?.age}} billion years old</mat-chip>
+      <mat-chip color="primary" selected>{{planet?.gravity}} m/s²</mat-chip>
+      <mat-chip color="primary" selected>{{planet?.temperature}} °C</mat-chip>
+    </mat-chip-list>
+  </div>
   <mat-divider></mat-divider>
 </header>
 
 <main>
-  <p>{{planet.description}}</p>
+  <p>{{planet?.description}}</p>
 </main>
 
 <footer>
   <mat-divider></mat-divider>
-  <button mat-flat-button color="primary">Do some cool stuff</button>
+  <button mat-flat-button color="primary">
+    <mat-icon>explore</mat-icon>
+    Explore
+  </button>
 </footer>

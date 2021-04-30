@@ -1,3 +1,14 @@
+<aside>
+  <button mat-flat-button color="primary" [routerLink]="['/me']">
+    <mat-icon>face</mat-icon>
+    Me
+  </button>
+  <button mat-flat-button color="primary" [routerLink]="['/planets']">
+    <mat-icon>explore</mat-icon>
+    Planets
+  </button>
+</aside>
+
 <app-background [@routeAnimation]="prepareRoute(outlet)">
   <router-outlet #outlet="outlet"></router-outlet>
 </app-background>

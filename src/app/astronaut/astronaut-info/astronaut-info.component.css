@@ -7,17 +7,11 @@
   overflow-x: hidden;
 }
 
-button.close-button {
-  position: absolute;
-  top: 15px;
-  right: 10px;
-}
-
 header {
   margin-bottom: 46px;
 }
 
-.planet-properties {
+.astronaut-properties {
   margin-top: 24px;
   margin-bottom: 24px;
 }
@@ -25,12 +19,4 @@ header {
 main {
   height: 100%;
   overflow-y: scroll;
-}
-
-footer > * {
-  width: 100%;
-}
-
-footer mat-divider {
-  margin-bottom: 32px;
 }

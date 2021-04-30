@@ -1,19 +1,18 @@
-<header class="commander-header-bar">
-  <button mat-flat-button color="primary" [routerLink]="['/hanger']">
-    <mat-icon>home</mat-icon>
-    Go to Spacehanger
-  </button>
-</header>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [opened]="selectedPlanet != null">
+    <app-planet-info [planet]="selectedPlanet"
+                     (close)="selectedPlanet = null">
+    </app-planet-info>
+  </mat-sidenav>
 
-<main>
-  <app-planet *ngFor="let planet of cryptoverse"
-              [planet]="planet"
-              [class.selected]="planet.id === selectedPlanet?.id"
-              (click)="selectPlanet(planet)">
-  </app-planet>
-</main>
+  <mat-sidenav-content>
 
-<app-planet-info *ngIf="selectedPlanet"
-                 [planet]="selectedPlanet"
-                 (close)="selectedPlanet = null">
-</app-planet-info>
+    <app-planet *ngFor="let planet of cryptoverse"
+                [planet]="planet"
+                [class.selected]="planet.id === selectedPlanet?.id"
+                (click)="selectPlanet(planet)">
+    </app-planet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

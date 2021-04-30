@@ -9,6 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatDividerModule} from "@angular/material/divider";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 const routes: Routes = [
@@ -22,16 +23,17 @@ const routes: Routes = [
     PlanetComponent,
     PlanetInfoComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
 
-    MatTooltipModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatDividerModule
-  ]
+        MatTooltipModule,
+        MatButtonModule,
+        MatIconModule,
+        MatChipsModule,
+        MatDividerModule,
+        MatSidenavModule
+    ]
 })
 export class PlanetsModule {
 }
