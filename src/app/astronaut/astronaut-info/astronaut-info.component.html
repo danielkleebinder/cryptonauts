@@ -37,4 +37,14 @@
 
 </main>
 
-<footer></footer>
+<footer>
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" class="margin-bottom">
+    <mat-icon>inventory</mat-icon>
+    Open Inventory
+  </button>
+  <button mat-flat-button color="primary" (click)="increaseLevel()">
+    <mat-icon>arrow_upward</mat-icon>
+    Increase Level
+  </button>
+</footer>

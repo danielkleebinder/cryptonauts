@@ -21,6 +21,14 @@ h1 {
   margin: 0 !important;
 }
 
+.margin-top {
+  margin-top: 16px !important;
+}
+
+.margin-bottom {
+  margin-bottom: 16px !important;
+}
+
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;

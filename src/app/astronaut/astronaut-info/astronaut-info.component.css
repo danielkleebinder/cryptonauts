@@ -28,3 +28,11 @@ main * {
 section {
   margin-bottom: 48px;
 }
+
+footer > * {
+  width: 100%;
+}
+
+footer mat-divider {
+  margin-bottom: 32px;
+}
