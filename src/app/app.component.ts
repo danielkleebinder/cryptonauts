@@ -1,13 +1,14 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {filter} from 'rxjs/operators';
 import {routeAnimation} from './app.animation';
-import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmationDialogComponent,
   ConfirmationDialogModel,
   ConfirmationDialogResult
-} from "./shared/components/confirmation-dialog";
-import {filter} from "rxjs/operators";
+} from './shared/components/confirmation-dialog';
+import {AuctionsComponent} from './auctions/auctions.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,12 @@ export class AppComponent {
 
   prepareRoute(outlet: RouterOutlet): any {
     return outlet && outlet.isActivated && outlet.activatedRoute;
+  }
+
+  showAuctions(): void {
+    this.dialog.open(AuctionsComponent, {
+      width: '800px'
+    });
   }
 
   exit(): void {

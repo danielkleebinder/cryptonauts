@@ -55,6 +55,12 @@ button mat-icon {
   padding-right: 6px;
 }
 
+mat-dialog-content {
+  padding-top: 8px !important;
+  padding-bottom: 26px !important;
+  text-align: justify;
+}
+
 mat-dialog-actions {
   justify-content: flex-end;
   background: #352d35 !important;
