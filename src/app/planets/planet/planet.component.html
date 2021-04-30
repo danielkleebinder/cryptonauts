@@ -1,5 +1,5 @@
-<img [src]="planet.imageUrl"
+<img [src]="'assets/planets/' + planet.name.toLowerCase() + '.png'"
      [alt]="planet.name"
      [matTooltip]="planet.name"
-     [ngStyle]="{transform: 'scale('+ planet.size +')'}"
+     [ngStyle]="{transform: 'scale('+ relativePlanetSize +')'}"
      matTooltipPosition="above">

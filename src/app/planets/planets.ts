@@ -2,23 +2,19 @@ import {Planet} from './models';
 
 export const planets: Planet[] = [
   {
-    id: 'C-7738-S4',
+    id: 0,
     name: 'Crypton',
-    age: 1.438,
-    size: 0.9017,
-    gravity: 7.3817,
-    temperature: 10.3,
-    imageUrl: 'assets/planets/crypton.png',
-    description: 'Crypton is a planet which lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+    age: 1_438_847_005,
+    radius: 5_745_932,
+    mass: 2.503 * Math.pow(10, 24),
+    temperature: 10
   },
   {
-    id: 'B-36193-L99',
+    id: 1,
     name: 'Etherra',
-    age: 2.840,
-    size: 1.132,
-    gravity: 12.848,
-    temperature: 22.9,
-    imageUrl: 'assets/planets/etherra.png',
-    description: 'Etherra is a planet which lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+    age: 2_840_381_101,
+    radius: 7_212_387,
+    mass: 9.195 * Math.pow(10, 24),
+    temperature: 22
   }
 ];

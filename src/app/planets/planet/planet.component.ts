@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Planet} from '../models';
+import {computeRelativePlanetSize} from '../../core/utils';
 
 @Component({
   selector: 'app-planet',
@@ -8,5 +9,10 @@ import {Planet} from '../models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetComponent {
+
   @Input() planet: Planet;
+
+  get relativePlanetSize(): number {
+    return computeRelativePlanetSize(this.planet);
+  }
 }

@@ -3,7 +3,7 @@ export interface Planet {
   /**
    * A planets unique ID.
    */
-  id: string;
+  id: number;
 
   /**
    * The planets name.
@@ -11,33 +11,23 @@ export interface Planet {
   name: string;
 
   /**
-   * It's age in billion years.
+   * It's age in years.
    */
   age: number;
 
   /**
-   * The radius of the planet compared to earth's radius.
-   * Example: size=2 indicates that the planet is twice as large as earth.
+   * The radius of the planet in meters.
+   * Example: Earth sized planets have a radius of around 6_371_000 km.
    */
-  size: number;
+  radius: number;
 
   /**
-   * The gravity on the surface in m/s^2.
+   * The mass of the planet in kilograms.
    */
-  gravity: number;
+  mass: number;
 
   /**
    * The average temperature on the planet in degrees celcius.
    */
   temperature: number;
-
-  /**
-   * The planets (longer) description.
-   */
-  description: string;
-
-  /**
-   * The image of the planet.
-   */
-  imageUrl: string;
 }

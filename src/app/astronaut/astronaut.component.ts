@@ -9,7 +9,7 @@ import {Astronaut} from './models';
 })
 export class AstronautComponent implements AfterViewInit {
 
-  me: Astronaut = {level: 12};
+  me: Astronaut = {id: 0, level: 12};
   drawerOpen = false;
 
   constructor(private cdRef: ChangeDetectorRef) {

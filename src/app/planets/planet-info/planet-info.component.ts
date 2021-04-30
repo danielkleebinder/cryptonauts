@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {Planet} from '../models';
+import {Planet, planetDescriptions} from '../models';
 import {ConfirmationDialogComponent, ConfirmationDialogModel} from '../../shared/components/confirmation-dialog';
+import {computePlanetSurfaceGravity, computeRelativePlanetMass, computeRelativePlanetSize} from '../../core/utils';
 
 @Component({
   selector: 'app-planet-info',
@@ -15,6 +16,22 @@ export class PlanetInfoComponent {
   @Input() planet: Planet;
 
   constructor(private dialog: MatDialog) {
+  }
+
+  get relativePlanetSize(): number {
+    return computeRelativePlanetSize(this.planet);
+  }
+
+  get relativePlanetMass(): number {
+    return computeRelativePlanetMass(this.planet);
+  }
+
+  get surfaceGravity(): number {
+    return computePlanetSurfaceGravity(this.planet);
+  }
+
+  get description(): string {
+    return planetDescriptions[this.planet?.name?.toLowerCase()];
   }
 
   explore(): void {
