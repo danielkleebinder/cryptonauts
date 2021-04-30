@@ -67,4 +67,21 @@ contract("Cryptoverse Astronaut Factory Test", async accounts => {
     assert.equal(hasAstronaut, true);
   });
 
+  // Tests the full workflow of new players
+  it("should delete my old astronaut and create a new one", async () => {
+    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), false);
+
+    // Create my new astronaut ... YAY, I can finally play
+    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerBlue}), "NewAstronaut");
+    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), true);
+
+    // Delete my existing astronaut
+    truffleAssert.eventEmitted(await astronautFactory.deleteAstronaut({from: playerBlue}), "DeleteAstronaut");
+    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), false);
+
+    // Create my new astronaut ... YAY, I can finally play
+    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerBlue}), "NewAstronaut");
+    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), true);
+  });
+
 });
