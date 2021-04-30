@@ -49,6 +49,14 @@ Effort breakdown
 ------------------
 TODO - Short breakdown of your work distribution (approx. 40h effort)...
 
+| Work Packet           | Time |
+|-----------------------|------|
+| Game Idea             | 2h   |
+| Frontend              | 9h   |
+| Contracts             | 2h   |
+| **Total**             | **13h**  |
+
+
 Difficulties
 ------------
 TODO - What difficulties did you face during development?
