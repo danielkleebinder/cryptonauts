@@ -1,8 +1,8 @@
 const truffleAssert = require('truffle-assertions');
-const AstronautFactory = artifacts.require("CryptoverseAstronautFactory");
-const web3 = AstronautFactory.web3;
+const AstronautsContract = artifacts.require("CryptoverseAstronauts");
+const web3 = AstronautsContract.web3;
 
-contract("Cryptoverse Astronaut Factory Test", async accounts => {
+contract("Cryptoverse Astronauts Test", async accounts => {
 
   const owner = accounts[0];
   const playerRed = accounts[1];
@@ -12,7 +12,7 @@ contract("Cryptoverse Astronaut Factory Test", async accounts => {
   let astronautFactory;
 
   beforeEach("deploy and init", async () => {
-    astronautFactory = await AstronautFactory.new();
+    astronautFactory = await AstronautsContract.new();
   });
 
   it("should start without an astronaut", async () => {

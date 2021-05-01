@@ -10,7 +10,7 @@ import "./CryptoverseMath.sol";
  * @title Cryptoverse Exploration System
  * @dev Players can explore the universe of "Cryptoverse". This contract handles that.
  */
-contract CryptoverseExploration is CryptoverseAstronauts, CryptoverseItems {
+contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
     
     /**
      * @dev Players can only fight other players in their level range. There is no

@@ -1,8 +1,8 @@
 const truffleAssert = require('truffle-assertions');
-const PlanetFactory = artifacts.require("CryptoversePlanetFactory");
-const web3 = PlanetFactory.web3;
+const PlanetsContract = artifacts.require("CryptoversePlanets");
+const web3 = PlanetsContract.web3;
 
-contract("Cryptoverse Planet Factory Test", async accounts => {
+contract("Cryptoverse Planets Test", async accounts => {
 
   const owner = accounts[0];
   const playerRed = accounts[1];
@@ -12,7 +12,7 @@ contract("Cryptoverse Planet Factory Test", async accounts => {
   let planetFactory;
 
   beforeEach("deploy and init", async () => {
-    planetFactory = await PlanetFactory.new();
+    planetFactory = await PlanetsContract.new();
   });
 
   it("should create the default planets", async () => {
