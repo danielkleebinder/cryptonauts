@@ -51,10 +51,10 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 
 | Work Packet           | Time |
 |-----------------------|------|
-| Game Idea             | 2h   |
+| Game Idea             | 4h   |
 | Frontend              | 9h   |
-| Contracts             | 2h   |
-| **Total**             | **13h**  |
+| Contracts             | 8h   |
+| **Total**             | **23h** |
 
 
 Difficulties
