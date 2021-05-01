@@ -75,7 +75,7 @@ contract CryptoverseItems is Cryptoverse {
         emit ItemDestroyed(msg.sender, _itemId);
     }
     
-    function levelUp(uint _itemId) external onlyItemOwnerOf(_itemId) {
+    function levelUpItem(uint _itemId) external onlyItemOwnerOf(_itemId) {
         Item storage item = items[_itemId];
         
         // Level up the item

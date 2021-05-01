@@ -18,15 +18,15 @@ contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
      *      are weaker than you.
      */
     modifier canFightAgainst(address _opponent) {
-        int32 myLevel = int32(getAstronautOf(msg.sender).level);
-        int32 opLevel = int32(getAstronautOf(_opponent).level);
+        int32 myLevel = int32(ownerToAstronaut[msg.sender].level);
+        int32 opLevel = int32(ownerToAstronaut[_opponent].level);
         require((opLevel - myLevel) > -10);
         _;
     }
     
     function fight(address _opponent) external {
-        Astronaut memory me = getAstronautOf(msg.sender);
-        Astronaut memory op = getAstronautOf(_opponent);
+        Astronaut storage me = ownerToAstronaut[msg.sender];
+        Astronaut storage op = ownerToAstronaut[_opponent];
         
         (uint myAtt, uint myDef) = getTotalPlayerStats(msg.sender);
         (uint opAtt, uint opDef) = getTotalPlayerStats(_opponent);
@@ -44,7 +44,7 @@ contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
     }
     
     function getTotalPlayerStats(address _player) public view returns (uint attack, uint defense) {
-        Astronaut memory astronaut = getAstronautOf(_player);
+        Astronaut memory astronaut = ownerToAstronaut[_player];
         Item[] memory playerItems = getItemsByOwner(_player);
         Item memory item;
         for (uint i = 0; i < playerItems.length; i++) {

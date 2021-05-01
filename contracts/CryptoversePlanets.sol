@@ -70,4 +70,11 @@ contract CryptoversePlanets is Cryptoverse {
     function getPlanets() external view returns (Planet[] memory) {
         return planets;
     }
+    
+    /**
+     * @dev Check if the given ID actually a planet.
+     */
+    function isPlanet(uint _planetId) public view returns (bool) {
+        return planets.length > _planetId;
+    }
 }

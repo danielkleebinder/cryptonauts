@@ -11,13 +11,13 @@ import "./CryptoverseItems.sol";
  */
 contract CryptoverseMarket is CryptoversePlanets, CryptoverseAstronauts, CryptoverseItems {
     
-	uint256 private tokenPrice = 100;
+	uint private tokenPrice = 100;
 	
 	/**
 	 * @dev Sets the token price. This is the price required to buy
 	 *      exactly one token.
 	 */
-	function setTokenPrice(uint256 _price) external onlyOwner {
+	function setTokenPrice(uint _price) external onlyOwner {
 	    tokenPrice = _price;
 	}
 	
@@ -25,7 +25,7 @@ contract CryptoverseMarket is CryptoversePlanets, CryptoverseAstronauts, Cryptov
 	 * @dev Returns the current token price. The token price may fluctuate
 	 *      depending on the market.
 	 */
-	function getTokenPrice() external view returns (uint256) {
+	function getTokenPrice() external view returns (uint) {
 	    return tokenPrice;
 	}
 	

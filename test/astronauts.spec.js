@@ -9,79 +9,98 @@ contract("Cryptoverse Astronauts Test", async accounts => {
   const playerGreen = accounts[2];
   const playerBlue = accounts[3];
 
-  let astronautFactory;
+  let astronautsInstance;
 
   beforeEach("deploy and init", async () => {
-    astronautFactory = await AstronautsContract.new();
+    astronautsInstance = await AstronautsContract.new();
   });
 
-  it("should start without an astronaut", async () => {
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, false);
+  it("should start with a level 0 astronaut", async () => {
+    const me = await astronautsInstance.getAstronaut.call();
+    assert.equal(me.level, 0);
+  })
 
-    const astronauts = await astronautFactory.getAstronauts.call();
+  it("should return 0 level up cost for level 0", async () => {
+    const cost = (await astronautsInstance.getAstronautLevelUpCost.call()).toNumber();
+    assert.equal(cost, 0);
+  });
+
+  it("should start with 0 astronauts", async () => {
+    const astronauts = await astronautsInstance.getAstronauts.call();
     assert.equal(astronauts.length, 0);
   });
 
-  it("should create a new astronaut", async () => {
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, false);
+  it("should level up astronaut to level 1 without cost", async () => {
+    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut({from: playerRed}), "AstronautLevelUp");
 
-    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerRed}), "NewAstronaut");
+    // Astronaut has to be level 1 now
+    const me = await astronautsInstance.getAstronaut.call({from: playerRed});
+    assert.equal(me.level, 1);
 
-    hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, true);
-
-    // Other players should not have an astronaut by now though
-    hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerGreen});
-    assert.equal(hasAstronaut, false);
+    // Level up cost must increase
+    const cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    assert(cost > 0);
   });
 
-  it("should delete an existing astronaut", async () => {
-    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerRed}), "NewAstronaut");
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, true);
-
-    truffleAssert.eventEmitted(await astronautFactory.deleteAstronaut({from: playerRed}), "DeleteAstronaut");
-    hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, false);
+  it("should throw if level up cost is too high", async () => {
+    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut({from: playerRed}), "AstronautLevelUp");
+    await truffleAssert.reverts(astronautsInstance.levelUpAstronaut({from: playerRed}));
   });
 
-  it("should throw if existing astronaut is recreate", async () => {
-    await astronautFactory.createAstronaut({from: playerRed});
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, true);
-    await truffleAssert.reverts(astronautFactory.createAstronaut({from: playerRed}));
+  it("should change level up cost depending on level up factor", async () => {
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.setLevelUpFactor(10);
+    const cost1 = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    await astronautsInstance.setLevelUpFactor(20);
+    const cost2 = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    assert.notEqual(cost1, cost2);
   });
 
-  it("should throw if non-existing astronaut is deleted", async () => {
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, false);
-    await truffleAssert.reverts(astronautFactory.deleteAstronaut({from: playerRed}));
+  it("should expose astronauts after becoming level 1", async () => {
+    let astronauts = await astronautsInstance.getAstronauts.call();
+    assert.equal(astronauts.length, 0);
+
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+
+    astronauts = await astronautsInstance.getAstronauts.call();
+    assert.equal(astronauts.length, 1);
   });
 
-  it("should only delete my astronaut", async () => {
-    await astronautFactory.createAstronaut({from: playerRed});
-    await truffleAssert.reverts(astronautFactory.deleteAstronaut({from: playerGreen}));
-    let hasAstronaut = await astronautFactory.hasAstronaut.call({from: playerRed});
-    assert.equal(hasAstronaut, true);
+  it("should burn tokens according to the level up cost", async () => {
+    await astronautsInstance.mint(playerRed, 100);
+
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    const balanceBeforeLevelUp = (await astronautsInstance.balanceOf.call(playerRed)).toNumber();
+
+    const cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    const balanceAfterLevelUp = (await astronautsInstance.balanceOf.call(playerRed)).toNumber();
+
+    assert.notEqual(balanceBeforeLevelUp, balanceAfterLevelUp);
+    assert.equal(balanceBeforeLevelUp, 100);
+    assert.equal(balanceAfterLevelUp, (100 - cost));
   });
 
-  // Tests the full workflow of new players
-  it("should delete my old astronaut and create a new one", async () => {
-    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), false);
+  it("should increase level up cost with every level", async () => {
+    await astronautsInstance.mint(playerRed, 1000);
 
-    // Create my new astronaut ... YAY, I can finally play
-    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerBlue}), "NewAstronaut");
-    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), true);
+    let previousCost, cost;
 
-    // Delete my existing astronaut
-    truffleAssert.eventEmitted(await astronautFactory.deleteAstronaut({from: playerBlue}), "DeleteAstronaut");
-    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), false);
+    previousCost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    assert(previousCost < cost);
 
-    // Create my new astronaut ... YAY, I can finally play
-    truffleAssert.eventEmitted(await astronautFactory.createAstronaut({from: playerBlue}), "NewAstronaut");
-    assert.equal(await astronautFactory.hasAstronaut.call({from: playerBlue}), true);
+    previousCost = cost;
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    assert(previousCost < cost);
+
+    previousCost = cost;
+    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+    assert(previousCost < cost);
   });
 
 });

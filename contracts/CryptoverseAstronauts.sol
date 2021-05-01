@@ -33,8 +33,11 @@ contract CryptoverseAstronauts is Cryptoverse {
      * @dev Levels up the astronaut by one level and burns the level up cost
      *      worth in tokens.
      */
-    function levelUp() external {
+    function levelUpAstronaut() external {
         Astronaut storage astronaut = ownerToAstronaut[msg.sender];
+        
+        // Burn the level up cost
+        burn(getAstronautLevelUpCost());
         
         // I only push the astronaut to the list of astronaut if he or she has at least
         // reached level 1. Otherwise the astronaut cannot fight and is not visible to
@@ -50,24 +53,23 @@ contract CryptoverseAstronauts is Cryptoverse {
         astronaut.attack++;
         astronaut.defense++;
         
-        // Burn the level up cost and emit the astronaut level up event
-        burn(getLevelUpCost());
+        // Emit the astronaut level up event
         emit AstronautLevelUp(msg.sender, astronaut.level);
     }
     
     /**
      * @dev Returns the cost in tokens that the next level up costs.
      */
-    function getLevelUpCost() public view returns (uint) {
+    function getAstronautLevelUpCost() public view returns (uint) {
         Astronaut memory astronaut = ownerToAstronaut[msg.sender];
         return levelUpFactor * astronaut.level;
     }
     
     /**
-     * @dev Returns the astronaut of the player with the given address.
+     * @dev Returns the players astronaut.
      */
-    function getAstronautOf(address player) public view returns (Astronaut memory) {
-        return ownerToAstronaut[player];
+    function getAstronaut() external view returns (Astronaut memory) {
+        return ownerToAstronaut[msg.sender];
     }
     
     /**
