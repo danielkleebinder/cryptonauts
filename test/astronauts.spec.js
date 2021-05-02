@@ -2,7 +2,7 @@ const truffleAssert = require('truffle-assertions');
 const AstronautsContract = artifacts.require("CryptoverseAstronauts");
 const web3 = AstronautsContract.web3;
 
-contract("Cryptoverse Astronauts Test", async accounts => {
+contract("Cryptoverse Astronauts", async accounts => {
 
   const owner = accounts[0];
   const playerRed = accounts[1];
@@ -18,7 +18,7 @@ contract("Cryptoverse Astronauts Test", async accounts => {
   it("should start with a level 0 astronaut", async () => {
     const me = await astronautsInstance.getAstronaut.call();
     assert.equal(me.level, 0);
-  })
+  });
 
   it("should return 0 level up cost for level 0", async () => {
     const cost = (await astronautsInstance.getAstronautLevelUpCost.call()).toNumber();
