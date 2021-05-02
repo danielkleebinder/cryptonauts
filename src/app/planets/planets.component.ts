@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {planets} from './planets';
+import {ChangeDetectionStrategy, Component, OnInit, TrackByFunction} from '@angular/core';
 import {Planet} from './models';
 import {slideOut} from './planets.animation';
 import {PlanetsFacade} from './store';
@@ -15,7 +14,10 @@ import {PlanetsFacade} from './store';
 export class PlanetsComponent implements OnInit {
 
   cryptoverse$ = this.planetsFacade.planets$;
-  selectedPlanet: Planet;
+  activePlanet$ = this.planetsFacade.activePlanet$;
+  hasActivePlanet$ = this.planetsFacade.hasActivePlanet$;
+
+  trackByPlanetId: TrackByFunction<Planet> = (index, planet) => planet.id;
 
   constructor(private planetsFacade: PlanetsFacade) {
   }
@@ -26,10 +28,10 @@ export class PlanetsComponent implements OnInit {
   }
 
   selectPlanet(planet: Planet): void {
-    if (this.selectedPlanet?.id === planet.id) {
-      this.selectedPlanet = null;
-    } else {
-      this.selectedPlanet = planet;
-    }
+    this.planetsFacade.selectPlanet(planet.id);
+  }
+
+  unselectPlanet(): void {
+    this.planetsFacade.selectPlanet(null);
   }
 }

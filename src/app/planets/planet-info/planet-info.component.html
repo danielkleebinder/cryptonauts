@@ -27,6 +27,10 @@
         {{relativePlanetSize | number}}
         <mat-icon>radio_button_checked</mat-icon>
       </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Explorer on the planet">
+        {{planet?.explorerCount | number}}
+        <mat-icon>person</mat-icon>
+      </mat-chip>
     </mat-chip-list>
   </div>
   <mat-divider></mat-divider>

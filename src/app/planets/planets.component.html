@@ -1,19 +1,19 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" [opened]="selectedPlanet != null">
-    <app-planet-info [planet]="selectedPlanet"
-                     (close)="selectedPlanet = null">
+  <mat-sidenav mode="side" [opened]="hasActivePlanet$ | async">
+    <app-planet-info [planet]="activePlanet$ | async"
+                     (close)="unselectPlanet()">
     </app-planet-info>
   </mat-sidenav>
 
   <mat-sidenav-content>
 
-    <app-planet *ngFor="let planet of (cryptoverse$ | async)"
+    <app-planet *ngFor="let planet of (cryptoverse$ | async); trackBy: trackByPlanetId"
                 [planet]="planet"
-                [class.selected]="planet.id === selectedPlanet?.id"
+                [class.selected]="planet.id === (activePlanet$ | async)?.id"
                 (click)="selectPlanet(planet)">
     </app-planet>
 
-    <div *ngIf="!selectedPlanet" class="notes" @slideOut>
+    <div *ngIf="!(hasActivePlanet$ | async)" class="notes" @slideOut>
       <h4 class="no-margin">Welcome back commander</h4>
       Click on one of the planets to start your exploration 🚀
     </div>

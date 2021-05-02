@@ -55,7 +55,7 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 | Frontend              | 9h   |
 | Contracts             | 9h 30m   |
 | Testing               | 3h 30m   |
-| Connecting FE & SC    | 3h   |
+| Connecting FE & SC    | 4h   |
 | **Total**             | **29h** |
 
 

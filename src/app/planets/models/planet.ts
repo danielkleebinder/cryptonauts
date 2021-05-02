@@ -30,4 +30,9 @@ export interface Planet {
    * The average temperature on the planet in degrees celcius.
    */
   temperature: number;
+
+  /**
+   * Number of explorers currently on this planet.
+   */
+  explorerCount?: number;
 }
