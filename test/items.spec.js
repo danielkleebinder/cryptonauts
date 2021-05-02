@@ -136,7 +136,7 @@ contract("Cryptoverse Items", async accounts => {
   });
 
   it("should not level up item if max level was reached", async () => {
-    await itemsInstance.mint(playerRed, 10_000);
+    await itemsInstance.mint(playerRed, 10000);
     await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
     await itemsInstance.setMaxItemLevel(2);
     const itemTypes = await itemsInstance.getItemTypes.call();
@@ -151,7 +151,7 @@ contract("Cryptoverse Items", async accounts => {
   });
 
   it("should not level up not owned item", async () => {
-    await itemsInstance.mint(playerRed, 10_000);
+    await itemsInstance.mint(playerRed, 10000);
     await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
     await itemsInstance.setMaxItemLevel(5);
     const itemTypes = await itemsInstance.getItemTypes.call();
@@ -164,7 +164,7 @@ contract("Cryptoverse Items", async accounts => {
   });
 
   it("should transfer an item", async () => {
-    await itemsInstance.mint(playerRed, 10_000);
+    await itemsInstance.mint(playerRed, 10000);
     await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
     await itemsInstance.setMaxItemLevel(5);
     const itemTypes = await itemsInstance.getItemTypes.call();
@@ -186,7 +186,7 @@ contract("Cryptoverse Items", async accounts => {
   });
 
   it("should not transfer not owned item", async () => {
-    await itemsInstance.mint(playerRed, 10_000);
+    await itemsInstance.mint(playerRed, 10000);
     await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
     await itemsInstance.setMaxItemLevel(5);
     const itemTypes = await itemsInstance.getItemTypes.call();
