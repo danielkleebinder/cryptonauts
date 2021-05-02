@@ -7,7 +7,7 @@
 
   <mat-sidenav-content>
 
-    <app-planet *ngFor="let planet of cryptoverse"
+    <app-planet *ngFor="let planet of (cryptoverse$ | async)"
                 [planet]="planet"
                 [class.selected]="planet.id === selectedPlanet?.id"
                 (click)="selectPlanet(planet)">

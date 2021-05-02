@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {planets} from './planets';
 import {Planet} from './models';
 import {slideOut} from './planets.animation';
+import {PlanetsFacade} from './store';
 
 
 @Component({
@@ -11,10 +12,18 @@ import {slideOut} from './planets.animation';
   animations: [slideOut],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlanetsComponent {
+export class PlanetsComponent implements OnInit {
 
-  cryptoverse = planets;
+  cryptoverse$ = this.planetsFacade.planets$;
   selectedPlanet: Planet;
+
+  constructor(private planetsFacade: PlanetsFacade) {
+  }
+
+  /** @inheritDoc */
+  ngOnInit(): void {
+    this.planetsFacade.loadPlanets();
+  }
 
   selectPlanet(planet: Planet): void {
     if (this.selectedPlanet?.id === planet.id) {

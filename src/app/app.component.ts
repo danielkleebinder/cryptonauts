@@ -10,6 +10,7 @@ import {
 } from './shared/components/confirmation-dialog';
 import {MarketComponent} from './market/market.component';
 import {InventoryComponent} from './inventory/inventory.component';
+import {BlockchainService} from './core/services/blockchain.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,11 @@ import {InventoryComponent} from './inventory/inventory.component';
 })
 export class AppComponent {
 
+  contractActive$ = this.blockchain.contractActive$;
+
   constructor(private dialog: MatDialog,
-              private router: Router) {
+              private router: Router,
+              private blockchain: BlockchainService) {
   }
 
   prepareRoute(outlet: RouterOutlet): any {
@@ -46,6 +50,9 @@ export class AppComponent {
       } as ConfirmationDialogModel
     }).afterClosed()
       .pipe(filter(res => res === ConfirmationDialogResult.Confirm))
-      .subscribe(() => this.router.navigate(['/auth']));
+      .subscribe(() => {
+        this.blockchain.logout();
+        this.router.navigate(['/auth']);
+      });
   }
 }

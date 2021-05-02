@@ -24,3 +24,7 @@ aside > * {
   margin-top: 6px;
   margin-bottom: 6px;
 }
+
+notifier-container {
+  z-index: 1000;
+}
