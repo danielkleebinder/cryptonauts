@@ -8,7 +8,8 @@ import {
   ConfirmationDialogModel,
   ConfirmationDialogResult
 } from './shared/components/confirmation-dialog';
-import {AuctionsComponent} from './auctions/auctions.component';
+import {MarketComponent} from './market/market.component';
+import {InventoryComponent} from './inventory/inventory.component';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +28,12 @@ export class AppComponent {
     return outlet && outlet.isActivated && outlet.activatedRoute;
   }
 
-  showAuctions(): void {
-    this.dialog.open(AuctionsComponent, {
-      width: '800px'
-    });
+  showInventory(): void {
+    this.dialog.open(InventoryComponent, {width: '800px'});
+  }
+
+  showMarket(): void {
+    this.dialog.open(MarketComponent, {width: '800px'});
   }
 
   exit(): void {

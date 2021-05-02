@@ -1,17 +1,29 @@
 <aside>
-  <button mat-flat-button color="primary" [routerLink]="['/me']">
+  <button mat-flat-button color="primary" [routerLink]="['/me']"
+          matTooltip="My Astronaut" matTooltipPosition="left">
     <mat-icon>face</mat-icon>
-    Me
   </button>
-  <button mat-flat-button color="primary" [routerLink]="['/planets']">
+  <button mat-flat-button color="primary" [routerLink]="['/planets']"
+          matTooltip="Explore some planets" matTooltipPosition="left">
     <mat-icon>explore</mat-icon>
-    Planets
   </button>
-  <button mat-flat-button color="primary" (click)="showAuctions()">
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" (click)="showInventory()"
+          matTooltip="Inventory" matTooltipPosition="left">
+    <mat-icon>inventory</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" (click)="showMarket()"
+          matTooltip="Market place" matTooltipPosition="left">
     <mat-icon>paid</mat-icon>
-    Auctions
   </button>
-  <button mat-flat-button color="primary" (click)="exit()">
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" (click)="showMarket()"
+          matTooltip="Admin panel" matTooltipPosition="left">
+    <mat-icon>admin_panel_settings</mat-icon>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" (click)="exit()"
+          matTooltip="Exit app" matTooltipPosition="left">
     <mat-icon>logout</mat-icon>
   </button>
 </aside>

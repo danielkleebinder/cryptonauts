@@ -2,7 +2,7 @@ const truffleAssert = require('truffle-assertions');
 const CryptoverseContract = artifacts.require("Cryptoverse");
 const web3 = CryptoverseContract.web3;
 
-contract("Cryptoverse Base", async accounts => {
+contract("Cryptoverse Owners", async accounts => {
 
   const owner = accounts[0];
   const playerRed = accounts[1];
