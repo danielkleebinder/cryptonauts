@@ -12,8 +12,7 @@ export const selectPlanet = createAction('[Planets Page] Select planet', props<{
 export const leavePlanet = createAction('[Planets Page] Leave planet');
 export const explorePlanet = createAction('[Planets Page] Start planet exploration', props<{ planetId: number }>());
 export const collectMinedResources = createAction('[Planets Page] Collect mined resourced');
-export const loadExplorerCount = createAction('[Planets Page] Load explorer count', props<{ planetId: number }>());
-export const loadExplorerCountSuccess = createAction('[Planets Page] Load explorer count success', props<{ planetId: number, explorerCount: number }>());
+export const collectMinedResourcesSuccess = createAction('[Planets Page] Collect mined resourced success');
 export const loadMyExploration = createAction('[Planets Page] Load my exploration');
 export const loadMyExplorationSuccess = createAction('[Planets Page] Load my exploration success', props<{ exploration: PlanetExploration }>());
 

@@ -37,12 +37,38 @@
 </header>
 
 <main>
-  <p>{{description}}</p>
+
+  <section *ngIf="exploring$ | async">
+    <h3>Exploration Status</h3>
+    <p>
+      You are currently exploring {{planet.name}}. The longer you stay on this planet, the more resources you are going
+      to find and be able to collect.
+    </p>
+  </section>
+
+  <section>
+    <h3>Description</h3>
+    <p>{{description}}</p>
+  </section>
 </main>
 
 <footer>
   <mat-divider></mat-divider>
-  <button mat-flat-button color="primary" (click)="explore()">
+
+  <ng-container *ngIf="exploring$ | async">
+    <button mat-flat-button color="primary" (click)="collectMinedResources()"
+            class="margin-bottom"
+            matTooltip="Collect all resources that you have mined so far" matTooltipPosition="right">
+      <mat-icon>hardware</mat-icon>
+      Collect mined resources
+    </button>
+    <button mat-flat-button color="warn" (click)="leavePlanet()">
+      <mat-icon>logout</mat-icon>
+      Leave Planet
+    </button>
+  </ng-container>
+
+  <button *ngIf="!(exploring$ | async)" mat-flat-button color="primary" (click)="explore()">
     <mat-icon>explore</mat-icon>
     Explore
   </button>

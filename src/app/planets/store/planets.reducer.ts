@@ -12,18 +12,14 @@ const initialState: PlanetsState = adapter.getInitialState({
   activePlanetId: null
 });
 
-const eventReducer = createReducer(initialState,
+const planetsReducer = createReducer(initialState,
   on(actions.loadPlanetsSuccess, (state, {planets}) => adapter.upsertMany(planets, state)),
   on(actions.loadTravelTimeSuccess, (state, {travelTime}) => ({...state, travelTime})),
-  on(actions.loadExplorerCountSuccess, (state, {planetId, explorerCount}) => adapter.updateOne({
-    id: planetId,
-    changes: {explorerCount}
-  }, state)),
   on(actions.loadMyExplorationSuccess, (state, {exploration}) => ({...state, exploration})),
   on(actions.clearPlanets, (state) => adapter.removeAll(state)),
   on(actions.selectPlanet, (state, {planetId}) => ({...state, activePlanetId: planetId}))
 );
 
 export function reducer(state: PlanetsState | undefined, action: Action): PlanetsState {
-  return eventReducer(state, action);
+  return planetsReducer(state, action);
 }

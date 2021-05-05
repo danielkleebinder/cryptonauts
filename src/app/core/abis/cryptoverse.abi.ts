@@ -61,31 +61,6 @@ export const cryptoverseAbi: any[] = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "itemId",
-        "type": "uint256"
-      }
-    ],
-    "name": "ItemTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "itemTypeId",
         "type": "uint256"
@@ -182,7 +157,7 @@ export const cryptoverseAbi: any[] = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "explorer",
         "type": "address"
@@ -201,7 +176,7 @@ export const cryptoverseAbi: any[] = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "explorer",
         "type": "address"
@@ -220,7 +195,7 @@ export const cryptoverseAbi: any[] = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "explorer",
         "type": "address"
@@ -505,25 +480,6 @@ export const cryptoverseAbi: any[] = [
     "name": "explorePlanet",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "explorerCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -829,7 +785,17 @@ export const cryptoverseAbi: any[] = [
           },
           {
             "internalType": "uint64",
+            "name": "explorerCount",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
             "name": "age",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "resources",
             "type": "uint64"
           },
           {
@@ -851,32 +817,6 @@ export const cryptoverseAbi: any[] = [
         "internalType": "struct CryptoversePlanets.Planet[]",
         "name": "",
         "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getRequiredTravelTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTokenPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1157,7 +1097,17 @@ export const cryptoverseAbi: any[] = [
       },
       {
         "internalType": "uint64",
+        "name": "explorerCount",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
         "name": "age",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "resources",
         "type": "uint64"
       },
       {
@@ -1198,6 +1148,19 @@ export const cryptoverseAbi: any[] = [
     "name": "renounceOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "requiredTravelTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1254,7 +1217,7 @@ export const cryptoverseAbi: any[] = [
   },
   {
     "inputs": [],
-    "name": "totalSupply",
+    "name": "tokenPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1266,74 +1229,16 @@ export const cryptoverseAbi: any[] = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
+    "inputs": [],
+    "name": "totalSupply",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_to",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "_value",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_data",
-        "type": "bytes"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_newOwner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_itemId",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "transferItemTo",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {

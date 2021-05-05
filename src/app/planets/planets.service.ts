@@ -5,12 +5,25 @@ import Web3 from 'web3';
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
 import {Planet, PlanetExploration} from './models';
+import {map} from "rxjs/operators";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanetsService {
+
+  private readonly planetExplorerArrivedEvent = 'PlanetExplorerArrived(address,uint256)';
+  private readonly planetExplorerLeftEvent = 'PlanetExplorerLeft(address,uint256)';
+  private readonly planetResourcesCollectedEvent = 'PlanetResourcesCollected(address,uint256)';
+
+  readonly explorerArrivedEvent$ = this.blockchain.createTopicObservable(this.planetExplorerArrivedEvent);
+  readonly explorerLeftEvent$ = this.blockchain.createTopicObservable(this.planetExplorerLeftEvent);
+
+  readonly resourcesCollectedEvent$ = this.blockchain
+    .createTopicObservable(this.planetResourcesCollectedEvent)
+    .pipe(map(({data}) => this.web3.utils.toDecimal(data)));
+
 
   constructor(@Inject(WEB3) private web3: Web3,
               private blockchain: BlockchainService) {
@@ -24,6 +37,16 @@ export class PlanetsService {
       .contract.methods
       .getPlanets()
       .call()) as Observable<Planet[]>;
+  }
+
+  /**
+   * Collects the mined resources so far.
+   */
+  collectMinedResources(): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .collectMinedPlanetResources()
+      .send({from: this.blockchain.player})) as Observable<any>;
   }
 
   /**
@@ -45,17 +68,6 @@ export class PlanetsService {
       .contract.methods
       .explorePlanet(planetId)
       .send({from: this.blockchain.player, gas: 300_000})) as Observable<any>;
-  }
-
-  /**
-   * Returns the current number of explorers on a given planet.
-   * @param planetId Planet.
-   */
-  getExplorerCount(planetId: number): Observable<number> {
-    return from(this.blockchain
-      .contract.methods
-      .explorerCount(planetId)
-      .call()) as Observable<number>;
   }
 
   /**

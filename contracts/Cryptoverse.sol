@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./ERC223/ERC223.sol";
 import "./ERC223/ERC223Mintable.sol";
 import "./ERC223/ERC223Burnable.sol";
 
@@ -9,7 +10,7 @@ import "./ERC223/ERC223Burnable.sol";
  * @dev Cryptoverse is a game which is based on mintable and burnable
  *      tokens and explorable planets as well as a fighting system.
  */
-contract Cryptoverse is ERC223Mintable, ERC223Burnable {
+contract Cryptoverse is ERC223Token, ERC223Mintable, ERC223Burnable {
     
     using Roles for Roles.Role;
     
@@ -19,15 +20,16 @@ contract Cryptoverse is ERC223Mintable, ERC223Burnable {
 	event ReceivedEther(address from, uint val);
     
     Roles.Role private owners;
+
+	uint public tokenPrice = 100;
     
     
     constructor() {
         owners.add(msg.sender);
-        emit OwnerAdded(msg.sender);
     }
     
     modifier onlyOwner() {
-        require(isOwner(), "You are not an owner");
+        require(isOwner(), "Not an owner");
         _;
     }
     
@@ -39,7 +41,7 @@ contract Cryptoverse is ERC223Mintable, ERC223Burnable {
      * @dev Adds a new owner. Be aware, because owners have all the
      *      rights about the contract that you also have.
      */
-    function addOwner(address _account) external onlyOwner {
+    function addOwner(address _account) public onlyOwner {
         owners.add(_account);
         emit OwnerAdded(_account);
     }
@@ -51,6 +53,24 @@ contract Cryptoverse is ERC223Mintable, ERC223Burnable {
         owners.remove(msg.sender);
         emit OwnerRemoved(msg.sender);
     }
+	
+	/**
+	 * @dev Sets the token price. This is the price required to buy
+	 *      exactly one token.
+	 */
+	function setTokenPrice(uint _price) public onlyOwner {
+	    tokenPrice = _price;
+	}
+	
+	/**
+	 * @dev Buys as much tokens as possible with the given msg.value. The
+	 *      amount of tokens received depends on the current token price.
+	 */
+	function buyTokens() external payable {
+	    require(msg.value > 0, "Send Ether to buy tokens");
+	    require(msg.value >= tokenPrice, "Not enough Ether to buy tokens");
+	    mint(msg.sender, msg.value / tokenPrice);
+	}
     
     /**
      * @dev Default receive fallback function when the contract receives Ether.

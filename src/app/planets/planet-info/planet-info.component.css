@@ -34,6 +34,10 @@ main {
   overflow-y: scroll;
 }
 
+section {
+  margin-bottom: 48px;
+}
+
 footer > * {
   width: 100%;
 }

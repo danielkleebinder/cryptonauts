@@ -24,8 +24,14 @@ contract CryptoversePlanets is Cryptoverse {
         // which image to use to render the planet.
         string name;
         
+        // The number of explorers on this planet
+        uint64 explorerCount;
+        
         // The age of the planet in years
         uint64 age;
+        
+        // The amount of tokens (resources) available on this planet at the moment
+        uint64 resources;
         
         // The radius of the planet in meters
         uint32 radius;
@@ -60,7 +66,7 @@ contract CryptoversePlanets is Cryptoverse {
      */
     function createPlanet(string memory _name, uint64 _age, uint32 _radius, uint32 _temperature, uint256 _mass) internal onlyOwner {
         uint id = planets.length;
-        planets.push(Planet(id, _name, _age, _radius, _temperature, _mass));
+        planets.push(Planet(id, _name, 0, _age, 0, _radius, _temperature, _mass));
         emit PlanetCreated(id);
     }
     

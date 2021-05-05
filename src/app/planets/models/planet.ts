@@ -11,6 +11,11 @@ export interface Planet {
   name: string;
 
   /**
+   * Number of explorers currently on this planet.
+   */
+  explorerCount: number;
+
+  /**
    * It's age in years.
    */
   age: number;
@@ -30,9 +35,4 @@ export interface Planet {
    * The average temperature on the planet in degrees celcius.
    */
   temperature: number;
-
-  /**
-   * Number of explorers currently on this planet.
-   */
-  explorerCount?: number;
 }

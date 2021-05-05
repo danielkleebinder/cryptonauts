@@ -15,28 +15,19 @@ export class PlanetsEffects {
 
   private readonly log = Logger.getLogger(PlanetsEffects);
 
+  planetExplorerArrived$ = createEffect(() => this.planetsService.explorerArrivedEvent$.pipe(map(() => actions.loadPlanets())));
+  planetExplorerLeft$ = createEffect(() => this.planetsService.explorerLeftEvent$.pipe(map(() => actions.loadPlanets())));
+
+  planetResourcesCollected$ = createEffect(() => this.planetsService.resourcesCollectedEvent$.pipe(
+    tap((collectedResources) => this.notifierService.notify('success', `You found ${collectedResources} space diamonds during your exploration`)),
+  ), {dispatch: false});
+
   loadPlanets$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadPlanets),
     switchMap(() => this.planetsService
       .getPlanets()
       .pipe(
-        tap(() => this.notifierService.notify('success', 'Planets loaded successfully')),
         map((planets) => actions.loadPlanetsSuccess({planets})),
-        catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
-          return EMPTY;
-        })
-      ))
-  ));
-
-  loadExplorerCount$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.loadExplorerCount),
-    switchMap(({planetId}) => this.planetsService
-      .getExplorerCount(planetId)
-      .pipe(
-        tap(() => this.notifierService.notify('success', 'Planet explorer loaded')),
-        map((explorerCount) => actions.loadExplorerCountSuccess({planetId, explorerCount})),
         catchError(err => {
           this.log.warn(err);
           this.notifierService.notify('error', err);
@@ -50,7 +41,6 @@ export class PlanetsEffects {
     switchMap(() => this.planetsService
       .getMyExploration()
       .pipe(
-        tap(() => this.notifierService.notify('success', 'Exploration status loaded')),
         map((exploration) => actions.loadMyExplorationSuccess({exploration})),
         catchError(err => {
           this.log.warn(err);
@@ -63,10 +53,21 @@ export class PlanetsEffects {
   selectPlanet$ = createEffect(() => this.actions$.pipe(
     ofType(actions.selectPlanet),
     distinctUntilChanged((x, y) => x.planetId === y.planetId),
-    switchMap(({planetId}) => [
-      actions.loadExplorerCount({planetId}),
-      actions.loadMyExploration()
-    ])
+    map(({planetId}) => actions.loadMyExploration())
+  ));
+
+  collectMinedResources = createEffect(() => this.actions$.pipe(
+    ofType(actions.collectMinedResources),
+    switchMap(() => this.planetsService
+      .collectMinedResources()
+      .pipe(
+        map(() => actions.collectMinedResourcesSuccess()),
+        catchError(err => {
+          this.log.warn(err);
+          this.notifierService.notify('error', err);
+          return EMPTY;
+        })
+      ))
   ));
 
   leavePlanet$ = createEffect(() => this.actions$.pipe(
@@ -75,13 +76,14 @@ export class PlanetsEffects {
       .leavePlanet()
       .pipe(
         tap(() => this.notifierService.notify('success', 'Left the planet')),
+        map(() => actions.loadMyExploration()),
         catchError(err => {
           this.log.warn(err);
           this.notifierService.notify('error', err);
           return EMPTY;
         })
       ))
-  ), {dispatch: false});
+  ));
 
   explorePlanet$ = createEffect(() => this.actions$.pipe(
     ofType(actions.explorePlanet),
@@ -89,9 +91,7 @@ export class PlanetsEffects {
       .explorePlanet(planetId)
       .pipe(
         tap(() => this.notifierService.notify('success', 'You are now exploring the planet')),
-        switchMap(() => [
-          actions.loadExplorerCount({planetId}),
-          actions.loadMyExploration()]),
+        map(() => actions.loadMyExploration()),
         catchError(err => {
           this.log.warn(err);
           this.notifierService.notify('error', err);

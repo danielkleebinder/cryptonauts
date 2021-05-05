@@ -8,7 +8,6 @@ import {
   ConfirmationDialogModel,
   ConfirmationDialogResult
 } from './shared/components/confirmation-dialog';
-import {MarketComponent} from './market/market.component';
 import {InventoryComponent} from './inventory/inventory.component';
 import {BlockchainService} from './core/services/blockchain.service';
 
@@ -34,10 +33,6 @@ export class AppComponent {
 
   showInventory(): void {
     this.dialog.open(InventoryComponent, {width: '800px'});
-  }
-
-  showMarket(): void {
-    this.dialog.open(MarketComponent, {width: '800px'});
   }
 
   exit(): void {

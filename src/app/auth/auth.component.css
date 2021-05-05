@@ -47,4 +47,5 @@ main {
 .contract-address,
 .player-address {
   width: 600px;
+  margin-bottom: 16px;
 }

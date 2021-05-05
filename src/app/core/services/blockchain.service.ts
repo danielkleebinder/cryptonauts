@@ -3,12 +3,17 @@ import Web3 from 'web3';
 
 import {cryptoverseAbi} from '../abis';
 import {WEB3} from '../tokens/web3.token';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Logger} from '../utils';
+import {filter, switchMap} from "rxjs/operators";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlockchainService {
+
+  private readonly log = Logger.getLogger(BlockchainService);
 
   private cryptoverseContractAddress: string;
   private playerAddress: string;
@@ -23,8 +28,37 @@ export class BlockchainService {
     this.updateContract();
   }
 
+  /**
+   * Creates an observable for a specific topic (i.e. event).
+   * @param topicNames Topic name (e.g. "Transfer(address,uint256)").
+   */
+  createTopicObservable(...topicNames: string[]): Observable<any> {
+    // Have to convert the topics name to it's signature array
+    const topicSignatures = topicNames
+      .filter(topic => topic != null)
+      .map(topic => this.web3.utils.keccak256(topic));
+
+    // Beware that we always use the active contracts' address
+    return this.contractActive$.pipe(
+      filter(active => active),
+
+      // Wrap the log subscription into an RxJS observable to use with NgRx
+      switchMap(() => new Observable(subscriber => {
+        const eventSubscription = this.web3.eth.subscribe('logs', {
+          topics: topicSignatures
+        }).on('data', data => {
+          this.log.info(`Event (${topicNames}) data arrived:`, data);
+          subscriber.next(data);
+        });
+
+        // Be careful to unsubscribe when the subscriber is no longer interested in this event.
+        subscriber.add(() => eventSubscription.unsubscribe());
+      }))
+    );
+  }
+
   setCryptoverseContractAddress(cryptoverseContractAddress: string): void {
-    if (cryptoverseContractAddress.startsWith('0x')) {
+    if (cryptoverseContractAddress?.startsWith('0x')) {
       cryptoverseContractAddress = cryptoverseContractAddress.substr(2);
     }
     this.cryptoverseContractAddress = cryptoverseContractAddress;
@@ -37,7 +71,7 @@ export class BlockchainService {
   }
 
   setPlayerAddress(playerAddress: string): void {
-    if (playerAddress.startsWith('0x')) {
+    if (playerAddress?.startsWith('0x')) {
       playerAddress = playerAddress.substr(2);
     }
     this.playerAddress = playerAddress;

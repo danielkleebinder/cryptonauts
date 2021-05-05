@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {InventoryFacade} from './store';
 
 @Component({
   selector: 'app-inventory',
@@ -8,9 +9,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class InventoryComponent implements OnInit {
 
-  constructor() { }
+  inventory$ = this.inventoryFacade.inventory$;
+  tokens$ = this.inventoryFacade.tokens$;
 
+  constructor(private inventoryFacade: InventoryFacade) {
+  }
+
+  /** @inheritDoc */
   ngOnInit(): void {
+    this.inventoryFacade.loadTokens();
   }
 
 }

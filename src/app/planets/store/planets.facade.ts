@@ -23,16 +23,16 @@ export class PlanetsFacade {
     this.store.dispatch(actions.loadPlanets());
   }
 
-  loadExplorerCount(planetId: number): void {
-    this.store.dispatch(actions.loadExplorerCount({planetId}));
-  }
-
   loadMyExploration(): void {
     this.store.dispatch(actions.loadMyExploration());
   }
 
   selectPlanet(planetId: number): void {
     this.store.dispatch(actions.selectPlanet({planetId}));
+  }
+
+  collectMinedResources(): void {
+    this.store.dispatch(actions.collectMinedResources());
   }
 
   leavePlanet(): void {

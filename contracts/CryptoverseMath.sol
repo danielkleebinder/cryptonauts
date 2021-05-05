@@ -18,12 +18,4 @@ library CryptoverseMath {
     function min(int a, int b) internal pure returns (int) {
         return a < b ? a : b;
     }
-
-    /**
-     * @dev Returns the average of two numbers. The result is rounded towards
-     * zero.
-     */
-    function average(int a, int b) internal pure returns (int) {
-        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);
-    }
 }

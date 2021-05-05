@@ -13,18 +13,6 @@ interface IERC223 {
     function balanceOf(address who) external view returns (uint);
 
     /**
-     * @dev Transfers `value` tokens from `msg.sender` to `to` address
-     * and returns `true` on success.
-     */
-    function transfer(address to, uint value) external returns(bool success);
-
-    /**
-     * @dev Transfers `value` tokens from `msg.sender` to `to` address with `data` parameter
-     * and returns `true` on success.
-     */
-    function transfer(address to, uint value, bytes calldata data) external returns (bool success);
-
-    /**
     * @dev Event that is fired on successful transfer.
     */
     event Transfer(address indexed from, address indexed to, uint value, bytes data);
