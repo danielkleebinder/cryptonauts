@@ -1,6 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" [opened]="hasActivePlanet$ | async">
-    <app-planet-info [planet]="activePlanet$ | async"
+    <app-planet-info *ngIf="hasActivePlanet$ | async"
+                     [planet]="activePlanet$ | async"
                      (close)="unselectPlanet()">
     </app-planet-info>
   </mat-sidenav>

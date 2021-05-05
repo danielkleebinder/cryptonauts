@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Marketplace</h1>
+
+<mat-dialog-content>
+
+  <div class="merchant">
+    <img src="assets/npc.png" alt="Merchant">
+    <div class="speech-bubble">
+      Hello, my name is Mr. Spacemerchant ... I know, my parents could have named me DrDragonKiller69 or something cool
+      like that, but I am from Etherra and you know how boring people from there are... Do you like what you see? Oh
+      you ... I am not talking about me but about my stuff here. Take your time and look around.
+    </div>
+  </div>
+
+  <main>
+    <mat-card *ngFor="let item of (market$ | async); trackBy: trackByItemId">
+      <mat-card-header>
+        <mat-card-title>{{item.name}}</mat-card-title>
+        <mat-card-subtitle>(ID: {{item.id}}, Level: {{item.level}})</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-described-text description="Mining">+{{item.mining}}</app-described-text>
+        <app-described-text description="Damage">+{{item.attack}}</app-described-text>
+        <app-described-text description="Defense">+{{item.defense}}</app-described-text>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button (click)="buyItem(item.id)">
+          Buy for {{item.cost}} SD
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </main>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <app-tokens [tokens]="tokens$ | async"></app-tokens>
+  <button mat-flat-button mat-dialog-close>
+    I am done, bye
+  </button>
+</mat-dialog-actions>

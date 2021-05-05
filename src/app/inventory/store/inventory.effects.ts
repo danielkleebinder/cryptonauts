@@ -43,6 +43,38 @@ export class InventoryEffects {
       ))
   ));
 
+  upgradeItem = createEffect(() => this.actions$.pipe(
+    ofType(actions.upgradeItem),
+    switchMap(({itemId}) => this.inventoryService
+      .upgradeItem(itemId)
+      .pipe(
+        switchMap(() => [
+          actions.upgradeItemSuccess({itemId}),
+          actions.loadInventory(),
+          actions.loadTokens()
+        ]),
+        catchError(err => {
+          this.log.warn(err);
+          this.notifierService.notify('error', err);
+          return EMPTY;
+        })
+      ))
+  ));
+
+  destroyItem = createEffect(() => this.actions$.pipe(
+    ofType(actions.destroyItem),
+    switchMap(({itemId}) => this.inventoryService
+      .destroyItem(itemId)
+      .pipe(
+        map(() => actions.destroyItemSuccess({itemId})),
+        catchError(err => {
+          this.log.warn(err);
+          this.notifierService.notify('error', err);
+          return EMPTY;
+        })
+      ))
+  ));
+
   constructor(private actions$: Actions,
               private inventoryService: InventoryService,
               private notifierService: NotifierService) {

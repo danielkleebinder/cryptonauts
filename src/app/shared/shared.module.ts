@@ -7,13 +7,15 @@ import {ConfirmationDialogComponent} from './components/confirmation-dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {TokensComponent} from './components/tokens/tokens.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {DescribedTextComponent} from './components/described-text/described-text.component';
 
 
 @NgModule({
   declarations: [
     BackgroundComponent,
     ConfirmationDialogComponent,
-    TokensComponent
+    TokensComponent,
+    DescribedTextComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   exports: [
     BackgroundComponent,
     ConfirmationDialogComponent,
-    TokensComponent
+    TokensComponent,
+    DescribedTextComponent
   ]
 })
 export class SharedModule {

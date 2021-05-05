@@ -23,7 +23,7 @@ export class AstronautInfoComponent {
         title: 'Increase Level',
         message: 'Are you sure that you want to increase your level? This will cost you 7 Things.',
         cancelText: 'Not now',
-        confirmationText: 'Make me stronger now!'
+        confirmationText: 'Make me stronger'
       } as ConfirmationDialogModel
     });
   }

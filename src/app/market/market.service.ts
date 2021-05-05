@@ -4,61 +4,57 @@ import Web3 from 'web3';
 
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
-import {Item} from './models';
+import {Item} from '../inventory/models';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class InventoryService {
+export class MarketService {
 
   constructor(@Inject(WEB3) private web3: Web3,
               private blockchain: BlockchainService) {
   }
 
   /**
-   * Returns the inventory of the currently logged in user.
+   * Returns the entire market.
    */
-  getInventory(): Observable<Item[]> {
+  getMarket(): Observable<Item[]> {
     return from(this.blockchain
       .contract.methods
-      .getItemsByOwner(this.blockchain.player)
+      .getItemTypes()
       .call({from: this.blockchain.player})) as Observable<Item[]>;
   }
 
   /**
-   * Returns the balance of the currently logged in user.
+   * Creates and adds a completely new item type.
+   * @param name Items name.
+   * @param mining Mining power.
+   * @param attack Attack power.
+   * @param defense Defense power.
+   * @param cost Cost.
    */
-  getBalance(): Observable<number> {
+  addItemType(name: string, mining: number, attack: number, defense: number, cost: number): Observable<any> {
     return from(this.blockchain
       .contract.methods
-      .balanceOf(this.blockchain.player)
-      .call({from: this.blockchain.player})) as Observable<number>;
-  }
-
-  /**
-   * Upgrades the item with the given ID.
-   */
-  upgradeItem(itemId: number): Observable<any> {
-    return from(this.blockchain
-      .contract.methods
-      .levelUpItem(itemId)
+      .createItemType(name, mining, attack, defense, cost)
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<number>;
+      })) as Observable<any>;
   }
 
   /**
-   * Destroy the item with the given ID.
+   * Buys the item with the given item ID.
+   * @param itemTypeId Item type ID.
    */
-  destroyItem(itemId: number): Observable<any> {
+  buyItem(itemTypeId: number): Observable<any> {
     return from(this.blockchain
       .contract.methods
-      .destroyItem(itemId)
+      .buyItem(itemTypeId)
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<number>;
+      })) as Observable<any>;
   }
 }

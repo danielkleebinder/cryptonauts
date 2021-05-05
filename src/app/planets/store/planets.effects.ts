@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
-import {catchError, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 
 import * as actions from './planets.actions';
 
 import {PlanetsService} from '../planets.service';
 import {NotifierService} from 'angular-notifier';
 import {Logger} from '../../core/utils';
+import {MatDialog} from '@angular/material/dialog';
+import {PlanetTokensFoundComponent} from '../planet-tokens-found/planet-tokens-found.component';
 
 
 @Injectable()
@@ -19,7 +21,9 @@ export class PlanetsEffects {
   planetExplorerLeft$ = createEffect(() => this.planetsService.explorerLeftEvent$.pipe(map(() => actions.loadPlanets())));
 
   planetResourcesCollected$ = createEffect(() => this.planetsService.resourcesCollectedEvent$.pipe(
-    tap((collectedResources) => this.notifierService.notify('success', `You found ${collectedResources} space diamonds during your exploration`)),
+    tap((collectedResources) => this.notifierService.notify('success', `${collectedResources} space diamonds found`)),
+    filter(collectedResources => collectedResources >= 2),
+    tap(collectedResources => this.dialog.open(PlanetTokensFoundComponent, {width: '460px', data: collectedResources}))
   ), {dispatch: false});
 
   loadPlanets$ = createEffect(() => this.actions$.pipe(
@@ -102,6 +106,7 @@ export class PlanetsEffects {
 
   constructor(private actions$: Actions,
               private planetsService: PlanetsService,
-              private notifierService: NotifierService) {
+              private notifierService: NotifierService,
+              private dialog: MatDialog) {
   }
 }

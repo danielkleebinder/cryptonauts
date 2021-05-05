@@ -23,4 +23,12 @@ export class InventoryFacade {
   loadTokens(): void {
     this.store.dispatch(actions.loadTokens());
   }
+
+  upgradeItem(itemId: number): void {
+    this.store.dispatch(actions.upgradeItem({itemId}));
+  }
+
+  destroyItem(itemId: number): void {
+    this.store.dispatch(actions.destroyItem({itemId}));
+  }
 }

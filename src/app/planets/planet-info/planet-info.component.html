@@ -57,16 +57,19 @@
   <mat-divider></mat-divider>
 
   <ng-container *ngIf="exploring$ | async">
+
+    <button mat-flat-button (click)="leavePlanet()"
+            class="margin-bottom">
+      <mat-icon>logout</mat-icon>
+      Leave Planet
+    </button>
+
     <button mat-flat-button color="primary" (click)="collectMinedResources()"
-            class="margin-bottom"
             matTooltip="Collect all resources that you have mined so far" matTooltipPosition="right">
       <mat-icon>hardware</mat-icon>
       Collect mined resources
     </button>
-    <button mat-flat-button color="warn" (click)="leavePlanet()">
-      <mat-icon>logout</mat-icon>
-      Leave Planet
-    </button>
+
   </ng-container>
 
   <button *ngIf="!(exploring$ | async)" mat-flat-button color="primary" (click)="explore()">

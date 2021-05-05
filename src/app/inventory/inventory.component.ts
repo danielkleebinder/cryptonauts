@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, TrackByFunction} from '@angular/core';
 import {InventoryFacade} from './store';
+import {Item} from './models';
 
 @Component({
   selector: 'app-inventory',
@@ -13,6 +14,9 @@ export class InventoryComponent implements OnInit {
   empty$ = this.inventoryFacade.inventoryEmpty$;
   tokens$ = this.inventoryFacade.tokens$;
 
+  // Improve performance by using a tracking function
+  trackByItemId: TrackByFunction<Item> = (index, item) => item.id;
+
   constructor(private inventoryFacade: InventoryFacade) {
   }
 
@@ -22,4 +26,11 @@ export class InventoryComponent implements OnInit {
     this.inventoryFacade.loadTokens();
   }
 
+  upgradeItem(itemId: number): void {
+    this.inventoryFacade.upgradeItem(itemId);
+  }
+
+  destroyItem(itemId: number): void {
+    this.inventoryFacade.destroyItem(itemId);
+  }
 }

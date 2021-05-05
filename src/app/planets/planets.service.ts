@@ -5,7 +5,7 @@ import Web3 from 'web3';
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
 import {Planet, PlanetExploration} from './models';
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,11 +17,20 @@ export class PlanetsService {
   private readonly planetExplorerLeftEvent = 'PlanetExplorerLeft(address,uint256)';
   private readonly planetResourcesCollectedEvent = 'PlanetResourcesCollected(address,uint256)';
 
-  readonly explorerArrivedEvent$ = this.blockchain.createTopicObservable(this.planetExplorerArrivedEvent);
-  readonly explorerLeftEvent$ = this.blockchain.createTopicObservable(this.planetExplorerLeftEvent);
+  readonly explorerArrivedEvent$ = this.blockchain
+    .createTopicObservable(
+      {name: this.planetExplorerArrivedEvent},
+      {name: this.blockchain.playerAddress256, raw: true});
+
+  readonly explorerLeftEvent$ = this.blockchain
+    .createTopicObservable(
+      {name: this.planetExplorerLeftEvent},
+      {name: this.blockchain.playerAddress256, raw: true});
 
   readonly resourcesCollectedEvent$ = this.blockchain
-    .createTopicObservable(this.planetResourcesCollectedEvent)
+    .createTopicObservable(
+      {name: this.planetResourcesCollectedEvent},
+      {name: this.blockchain.playerAddress256, raw: true})
     .pipe(map(({data}) => this.web3.utils.toDecimal(data)));
 
 
@@ -36,7 +45,7 @@ export class PlanetsService {
     return from(this.blockchain
       .contract.methods
       .getPlanets()
-      .call()) as Observable<Planet[]>;
+      .call({from: this.blockchain.player})) as Observable<Planet[]>;
   }
 
   /**
@@ -77,6 +86,6 @@ export class PlanetsService {
     return from(this.blockchain
       .contract.methods
       .getMyExploration()
-      .call()) as Observable<PlanetExploration>;
+      .call({from: this.blockchain.player})) as Observable<PlanetExploration>;
   }
 }

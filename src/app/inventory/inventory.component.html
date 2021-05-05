@@ -2,11 +2,26 @@
 
 <mat-dialog-content>
 
-  <ng-container *ngIf="!(empty$ | async)">
-    <div *ngFor="let item of (inventory$ | async)">
-      TEST
-    </div>
-  </ng-container>
+  <main *ngIf="!(empty$ | async)">
+    <mat-card *ngFor="let item of (inventory$ | async); trackBy: trackByItemId">
+      <mat-card-header>
+        <mat-card-title>{{item.name}} (Lv {{item.level}})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-described-text description="Mining">+{{item.mining}}</app-described-text>
+        <app-described-text description="Damage">+{{item.attack}}</app-described-text>
+        <app-described-text description="Defense">+{{item.defense}}</app-described-text>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button (click)="destroyItem(item.id)">
+          Destroy
+        </button>
+        <button mat-flat-button (click)="upgradeItem(item.id)" color="primary">
+          Upgrade for {{item.cost}} SD
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </main>
 
   <div class="empty-inventory" *ngIf="empty$ | async">
     <mat-icon>sentiment_dissatisfied</mat-icon>

@@ -78,6 +78,16 @@ mat-dialog-actions {
   padding-right: 24px !important;
 }
 
+mat-card {
+  background: #352d35 !important;
+  margin: 12px !important;
+}
+
+mat-card-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
 notifier-notification {
   max-width: 600px;
 }

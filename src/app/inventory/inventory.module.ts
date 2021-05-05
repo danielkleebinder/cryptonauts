@@ -11,8 +11,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {SharedModule} from "../shared/shared.module";
-import { ItemComponent } from './item/item.component';
+import {ItemComponent} from './item/item.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {MatIconModule} from "@angular/material/icon";
     MatTooltipModule,
     SharedModule,
     MatIconModule,
+    MatCardModule,
   ],
   providers: [
     InventoryFacade

@@ -5,7 +5,8 @@ import {cryptoverseAbi} from '../abis';
 import {WEB3} from '../tokens/web3.token';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Logger} from '../utils';
-import {filter, switchMap} from "rxjs/operators";
+import {filter, switchMap} from 'rxjs/operators';
+import {Topic} from './topic';
 
 
 @Injectable({
@@ -32,11 +33,11 @@ export class BlockchainService {
    * Creates an observable for a specific topic (i.e. event).
    * @param topicNames Topic name (e.g. "Transfer(address,uint256)").
    */
-  createTopicObservable(...topicNames: string[]): Observable<any> {
+  createTopicObservable(...topicNames: Topic[]): Observable<any> {
     // Have to convert the topics name to it's signature array
     const topicSignatures = topicNames
       .filter(topic => topic != null)
-      .map(topic => this.web3.utils.keccak256(topic));
+      .map(topic => topic.raw ? topic.name : this.web3.utils.keccak256(topic.name));
 
     // Beware that we always use the active contracts' address
     return this.contractActive$.pipe(
@@ -83,7 +84,11 @@ export class BlockchainService {
   }
 
   get player(): string {
-    return this.playerAddress;
+    return '0x' + this.playerAddress;
+  }
+
+  get playerAddress256(): string {
+    return '0x' + this.playerAddress.padStart(64, '0');
   }
 
   hasContract(): boolean {

@@ -15,6 +15,8 @@ import {PlanetComponent} from './planet/planet.component';
 import {PlanetInfoComponent} from './planet-info/planet-info.component';
 import {PlanetsEffects, PlanetsFacade, reducer} from './store';
 import * as queries from './store/planets.selectors';
+import { PlanetTokensFoundComponent } from './planet-tokens-found/planet-tokens-found.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const routes: Routes = [
@@ -26,21 +28,23 @@ const routes: Routes = [
   declarations: [
     PlanetsComponent,
     PlanetComponent,
-    PlanetInfoComponent
+    PlanetInfoComponent,
+    PlanetTokensFoundComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    StoreModule.forFeature(queries.featureKey, reducer),
-    EffectsModule.forFeature([PlanetsEffects]),
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        StoreModule.forFeature(queries.featureKey, reducer),
+        EffectsModule.forFeature([PlanetsEffects]),
 
-    MatTooltipModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatDividerModule,
-    MatSidenavModule
-  ],
+        MatTooltipModule,
+        MatButtonModule,
+        MatIconModule,
+        MatChipsModule,
+        MatDividerModule,
+        MatSidenavModule,
+        MatDialogModule
+    ],
   providers: [
     PlanetsFacade
   ]

@@ -17,6 +17,7 @@ export class PlanetsComponent implements OnInit {
   activePlanet$ = this.planetsFacade.activePlanet$;
   hasActivePlanet$ = this.planetsFacade.hasActivePlanet$;
 
+  // Improve performance by using a tracking function
   trackByPlanetId: TrackByFunction<Planet> = (index, planet) => planet.id;
 
   constructor(private planetsFacade: PlanetsFacade) {

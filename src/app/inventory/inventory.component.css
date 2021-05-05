@@ -1,7 +1,3 @@
-mat-dialog-actions {
-  justify-content: space-between;
-}
-
 .empty-inventory {
   display: flex;
   flex-direction: column;
@@ -21,4 +17,25 @@ mat-dialog-actions {
 .empty-inventory span {
   font-size: 22px;
   letter-spacing: 2px;
+}
+
+main {
+  display: flex;
+}
+
+mat-card {
+  max-width: 300px;
+}
+
+mat-dialog-actions {
+  justify-content: space-between;
+}
+
+mat-card-actions {
+  flex-direction: column;
+}
+
+mat-card-actions button {
+  width: 100%;
+  margin-bottom: 8px;
 }
