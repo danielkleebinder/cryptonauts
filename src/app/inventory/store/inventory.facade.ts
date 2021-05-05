@@ -10,9 +10,14 @@ import * as queries from './inventory.selectors';
 export class InventoryFacade {
 
   inventory$ = this.store.select(queries.selectInventory);
+  inventoryEmpty$ = this.store.select(queries.selectInventoryEmpty);
   tokens$ = this.store.select(queries.selectTokens);
 
   constructor(private store: Store<InventoryState>) {
+  }
+
+  loadInventory(): void {
+    this.store.dispatch(actions.loadInventory());
   }
 
   loadTokens(): void {

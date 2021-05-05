@@ -13,7 +13,7 @@ contract("Cryptoverse Exploration", async accounts => {
   let planets;
 
   async function getExplorerCount(planetId) {
-    return (await explorationInstance.explorerCount.call(planetId)).toNumber();
+    return (await explorationInstance.planets.call(planetId)).explorerCount.toNumber();
   }
 
   async function getExploration(playerId) {

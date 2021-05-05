@@ -1,1 +1,23 @@
-You have <strong>{{tokens$ | async}}</strong> Space Diamonds
+<h1 mat-dialog-title>Inventory</h1>
+
+<mat-dialog-content>
+
+  <ng-container *ngIf="!(empty$ | async)">
+    <div *ngFor="let item of (inventory$ | async)">
+      TEST
+    </div>
+  </ng-container>
+
+  <div class="empty-inventory" *ngIf="empty$ | async">
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+    <span>You do not have any items</span>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <app-tokens [tokens]="tokens$ | async"></app-tokens>
+  <button mat-flat-button mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

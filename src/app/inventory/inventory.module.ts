@@ -7,16 +7,28 @@ import {EffectsModule} from '@ngrx/effects';
 
 import * as queries from './store/inventory.selectors';
 import {InventoryEffects, InventoryFacade, reducer} from './store';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {SharedModule} from "../shared/shared.module";
+import { ItemComponent } from './item/item.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
   declarations: [
-    InventoryComponent
+    InventoryComponent,
+    ItemComponent
   ],
   imports: [
     CommonModule,
     StoreModule.forFeature(queries.featureKey, reducer),
     EffectsModule.forFeature([InventoryEffects]),
+    MatDialogModule,
+    MatButtonModule,
+    MatTooltipModule,
+    SharedModule,
+    MatIconModule,
   ],
   providers: [
     InventoryFacade

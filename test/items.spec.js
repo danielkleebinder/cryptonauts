@@ -162,48 +162,4 @@ contract("Cryptoverse Items", async accounts => {
     items = await itemsInstance.getItemsByOwner.call(playerRed);
     assert.equal(items[0].level, 1);
   });
-
-  it("should transfer an item", async () => {
-    await itemsInstance.mint(playerRed, 10000);
-    await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
-    await itemsInstance.setMaxItemLevel(5);
-    const itemTypes = await itemsInstance.getItemTypes.call();
-    await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
-
-    let myItems = await itemsInstance.getItemsByOwner.call(playerRed);
-    let yourItems = await itemsInstance.getItemsByOwner.call(playerGreen);
-    assert.equal(myItems.length, 1);
-    assert.equal(myItems[0].name, "Spacesword");
-    assert.equal(yourItems.length, 0);
-
-    truffleAssert.eventEmitted(await itemsInstance.transferItemTo(playerGreen, myItems[0].id, {from: playerRed}), "ItemTransferred");
-
-    myItems = await itemsInstance.getItemsByOwner.call(playerRed);
-    yourItems = await itemsInstance.getItemsByOwner.call(playerGreen);
-    assert.equal(myItems.length, 0);
-    assert.equal(yourItems.length, 1);
-    assert.equal(yourItems[0].name, "Spacesword");
-  });
-
-  it("should not transfer not owned item", async () => {
-    await itemsInstance.mint(playerRed, 10000);
-    await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
-    await itemsInstance.setMaxItemLevel(5);
-    const itemTypes = await itemsInstance.getItemTypes.call();
-    await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
-
-    let myItems = await itemsInstance.getItemsByOwner.call(playerRed);
-    let yourItems = await itemsInstance.getItemsByOwner.call(playerGreen);
-    assert.equal(myItems.length, 1);
-    assert.equal(myItems[0].name, "Spacesword");
-    assert.equal(yourItems.length, 0);
-
-    await truffleAssert.reverts(itemsInstance.transferItemTo(playerGreen, myItems[0].id, {from: playerGreen}));
-
-    myItems = await itemsInstance.getItemsByOwner.call(playerRed);
-    yourItems = await itemsInstance.getItemsByOwner.call(playerGreen);
-    assert.equal(myItems.length, 1);
-    assert.equal(myItems[0].name, "Spacesword");
-    assert.equal(yourItems.length, 0);
-  });
 });

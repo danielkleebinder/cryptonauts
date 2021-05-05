@@ -1,0 +1,24 @@
+mat-dialog-actions {
+  justify-content: space-between;
+}
+
+.empty-inventory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px;
+}
+
+.empty-inventory mat-icon {
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 32px;
+}
+
+.empty-inventory span {
+  font-size: 22px;
+  letter-spacing: 2px;
+}

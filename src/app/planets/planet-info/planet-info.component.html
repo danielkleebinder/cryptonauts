@@ -38,6 +38,11 @@
 
 <main>
 
+  <section>
+    <h3>Description</h3>
+    <p>{{description}}</p>
+  </section>
+
   <section *ngIf="exploring$ | async">
     <h3>Exploration Status</h3>
     <p>
@@ -46,10 +51,6 @@
     </p>
   </section>
 
-  <section>
-    <h3>Description</h3>
-    <p>{{description}}</p>
-  </section>
 </main>
 
 <footer>

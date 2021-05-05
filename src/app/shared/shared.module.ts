@@ -3,23 +3,29 @@ import {CommonModule} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 
 import {BackgroundComponent} from './components/background/background.component';
-import {ConfirmationDialogComponent} from './components/confirmation-dialog/confirmation-dialog.component';
-import {MatButtonModule} from "@angular/material/button";
+import {ConfirmationDialogComponent} from './components/confirmation-dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {TokensComponent} from './components/tokens/tokens.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
   declarations: [
     BackgroundComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    TokensComponent
   ],
   imports: [
     CommonModule,
 
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   exports: [
-    BackgroundComponent
+    BackgroundComponent,
+    ConfirmationDialogComponent,
+    TokensComponent
   ]
 })
 export class SharedModule {

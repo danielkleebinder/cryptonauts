@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.space-diamonds {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.space-diamonds img {
+  width: 26px;
+  margin-right: 8px;
+}
+
+.space-diamonds span {
+  font-size: 18px;
+  letter-spacing: 2px;
+}

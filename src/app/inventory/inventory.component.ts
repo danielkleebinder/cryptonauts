@@ -10,6 +10,7 @@ import {InventoryFacade} from './store';
 export class InventoryComponent implements OnInit {
 
   inventory$ = this.inventoryFacade.inventory$;
+  empty$ = this.inventoryFacade.inventoryEmpty$;
   tokens$ = this.inventoryFacade.tokens$;
 
   constructor(private inventoryFacade: InventoryFacade) {
@@ -17,6 +18,7 @@ export class InventoryComponent implements OnInit {
 
   /** @inheritDoc */
   ngOnInit(): void {
+    this.inventoryFacade.loadInventory();
     this.inventoryFacade.loadTokens();
   }
 

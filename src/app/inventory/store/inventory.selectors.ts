@@ -15,4 +15,7 @@ const {
 export const selectFeature = createFeatureSelector<InventoryState>(featureKey);
 
 export const selectInventory = createSelector(selectFeature, selectAll);
+export const selectInventoryItemCount = createSelector(selectFeature, selectTotal);
 export const selectTokens = createSelector(selectFeature, (state) => state.tokens);
+
+export const selectInventoryEmpty = createSelector(selectInventoryItemCount, (total) => total <= 0);
