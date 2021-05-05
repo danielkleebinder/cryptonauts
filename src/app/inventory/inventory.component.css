@@ -24,7 +24,7 @@ main {
 }
 
 mat-card {
-  max-width: 300px;
+  min-width: 175px;
 }
 
 mat-dialog-actions {

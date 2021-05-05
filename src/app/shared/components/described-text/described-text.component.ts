@@ -8,4 +8,5 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 })
 export class DescribedTextComponent {
   @Input() description: string;
+  @Input() iconUrl: string;
 }

@@ -1,2 +1,7 @@
-<span><ng-content></ng-content></span>
-<small>{{description}}</small>
+<div>
+  <img *ngIf="iconUrl" [src]="iconUrl" alt="Icon">
+</div>
+<div class="data">
+  <span><ng-content></ng-content></span>
+  <small>{{description}}</small>
+</div>

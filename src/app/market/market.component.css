@@ -20,9 +20,13 @@ main {
 }
 
 mat-card {
-  max-width: 200px;
+  min-width: 175px;
 }
 
 mat-dialog-actions {
   justify-content: space-between;
+}
+
+mat-card-actions button {
+  width: 100%;
 }

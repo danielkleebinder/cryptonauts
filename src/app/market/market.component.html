@@ -18,9 +18,9 @@
         <mat-card-subtitle>(ID: {{item.id}}, Level: {{item.level}})</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <app-described-text description="Mining">+{{item.mining}}</app-described-text>
-        <app-described-text description="Damage">+{{item.attack}}</app-described-text>
-        <app-described-text description="Defense">+{{item.defense}}</app-described-text>
+        <app-described-text description="Mining" iconUrl="assets/shovel.png">+{{item.mining}}</app-described-text>
+        <app-described-text description="Damage" iconUrl="assets/attack.png">+{{item.attack}}</app-described-text>
+        <app-described-text description="Defense" iconUrl="assets/shield.png">+{{item.defense}}</app-described-text>
       </mat-card-content>
       <mat-card-actions>
         <button mat-flat-button (click)="buyItem(item.id)">

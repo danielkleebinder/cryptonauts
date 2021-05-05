@@ -17,15 +17,8 @@ export class PlanetsService {
   private readonly planetExplorerLeftEvent = 'PlanetExplorerLeft(address,uint256)';
   private readonly planetResourcesCollectedEvent = 'PlanetResourcesCollected(address,uint256)';
 
-  readonly explorerArrivedEvent$ = this.blockchain
-    .createTopicObservable(
-      {name: this.planetExplorerArrivedEvent},
-      {name: this.blockchain.playerAddress256, raw: true});
-
-  readonly explorerLeftEvent$ = this.blockchain
-    .createTopicObservable(
-      {name: this.planetExplorerLeftEvent},
-      {name: this.blockchain.playerAddress256, raw: true});
+  readonly explorerArrivedEvent$ = this.blockchain.createTopicObservable({name: this.planetExplorerArrivedEvent});
+  readonly explorerLeftEvent$ = this.blockchain.createTopicObservable({name: this.planetExplorerLeftEvent});
 
   readonly resourcesCollectedEvent$ = this.blockchain
     .createTopicObservable(
