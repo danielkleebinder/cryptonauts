@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
 import {Item} from './models';
+import {map} from "rxjs/operators";
 
 
 @Injectable({
@@ -33,7 +34,8 @@ export class InventoryService {
     return from(this.blockchain
       .contract.methods
       .balanceOf(this.blockchain.player)
-      .call({from: this.blockchain.player})) as Observable<number>;
+      .call({from: this.blockchain.player}))
+      .pipe(map(data => +data));
   }
 
   /**
@@ -46,7 +48,7 @@ export class InventoryService {
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<number>;
+      }));
   }
 
   /**
@@ -59,6 +61,6 @@ export class InventoryService {
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<number>;
+      }));
   }
 }

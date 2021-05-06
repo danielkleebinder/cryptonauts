@@ -41,7 +41,7 @@ export class MarketService {
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<any>;
+      }));
   }
 
   /**
@@ -55,6 +55,6 @@ export class MarketService {
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
-      })) as Observable<any>;
+      }));
   }
 }

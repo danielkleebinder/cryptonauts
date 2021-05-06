@@ -26,6 +26,7 @@ export class PlanetsComponent implements OnInit {
   /** @inheritDoc */
   ngOnInit(): void {
     this.planetsFacade.loadPlanets();
+    this.planetsFacade.loadTravelTime();
   }
 
   selectPlanet(planet: Planet): void {

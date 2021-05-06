@@ -53,7 +53,7 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 |------------------------|------|
 | Game Idea              | 4h   |
 | Frontend               | 10h  |
-| Contracts              | 18h  |
+| Contracts              | 19h  |
 | Testing                | 4h   |
 | Web3 (connect FE & SC) | 5h   |
 | **Total**              | **41h** |

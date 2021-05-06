@@ -48,7 +48,7 @@ export class BlockchainService {
         const eventSubscription = this.web3.eth.subscribe('logs', {
           topics: topicSignatures
         }).on('data', data => {
-          this.log.info(`Event (${topicNames}) data arrived:`, data);
+          this.log.info(`Event (${JSON.stringify(topicNames)}) data arrived:`, data);
           subscriber.next(data);
         });
 

@@ -48,7 +48,7 @@ export class PlanetsService {
     return from(this.blockchain
       .contract.methods
       .collectMinedPlanetResources()
-      .send({from: this.blockchain.player})) as Observable<any>;
+      .send({from: this.blockchain.player}));
   }
 
   /**
@@ -58,7 +58,7 @@ export class PlanetsService {
     return from(this.blockchain
       .contract.methods
       .leavePlanet()
-      .send({from: this.blockchain.player})) as Observable<any>;
+      .send({from: this.blockchain.player}));
   }
 
   /**
@@ -69,7 +69,7 @@ export class PlanetsService {
     return from(this.blockchain
       .contract.methods
       .explorePlanet(planetId)
-      .send({from: this.blockchain.player, gas: 300_000})) as Observable<any>;
+      .send({from: this.blockchain.player, gas: 300_000}));
   }
 
   /**
@@ -80,5 +80,27 @@ export class PlanetsService {
       .contract.methods
       .getMyExploration()
       .call({from: this.blockchain.player})) as Observable<PlanetExploration>;
+  }
+
+  /**
+   * Sets the required travel time. Can only be used by owners.
+   * @param travelTime Required travel time between planets in seconds.
+   */
+  setTravelTime(travelTime: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .setRequiredTravelTime(travelTime)
+      .send({from: this.blockchain.player, gas: 300_000}));
+  }
+
+  /**
+   * Returns the required travel time.
+   */
+  getTravelTime(): Observable<number> {
+    return from(this.blockchain
+      .contract.methods
+      .requiredTravelTime()
+      .call({from: this.blockchain.player}))
+      .pipe(map(data => +data));
   }
 }

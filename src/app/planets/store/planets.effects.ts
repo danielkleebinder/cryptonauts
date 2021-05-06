@@ -110,6 +110,36 @@ export class PlanetsEffects {
       ))
   ));
 
+  setTravelTime$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.setTravelTime),
+    switchMap(({travelTime}) => this.planetsService
+      .setTravelTime(travelTime)
+      .pipe(
+        tap(() => this.notifierService.notify('success', `The required travel time between planets is now ${travelTime} seconds`)),
+        catchError(err => {
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
+          return EMPTY;
+        })
+      ))
+  ));
+
+  loadTravelTime$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.loadTravelTime),
+    switchMap(() => this.planetsService
+      .getTravelTime()
+      .pipe(
+        map((travelTime) => actions.loadTravelTimeSuccess({travelTime})),
+        catchError(err => {
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
+          return EMPTY;
+        })
+      ))
+  ));
+
   constructor(private actions$: Actions,
               private planetsService: PlanetsService,
               private notifierService: NotifierService,

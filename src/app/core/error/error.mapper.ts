@@ -15,7 +15,7 @@ errorMappings['E-I5'] = 'This item has already reached maximum upgrade level - y
 // Exploration errors
 errorMappings['E-E1'] = 'You must be on the planets surface to perform this action';
 errorMappings['E-E2'] = 'This is not a planet you can explore';
-errorMappings['E-E3'] = 'You are already exploring a planet';
+errorMappings['E-E3'] = 'You are already exploring a planet - leave it to start a new exploration';
 errorMappings['E-E4'] = 'You are still occupied and cannot perform this action yet - please wait a bit';
 
 
