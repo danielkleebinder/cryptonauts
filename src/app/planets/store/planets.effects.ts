@@ -10,6 +10,7 @@ import {NotifierService} from 'angular-notifier';
 import {Logger} from '../../core/utils';
 import {MatDialog} from '@angular/material/dialog';
 import {PlanetTokensFoundComponent} from '../planet-tokens-found/planet-tokens-found.component';
+import {replaceErrorCodes} from '../../core/error';
 
 
 @Injectable()
@@ -33,8 +34,9 @@ export class PlanetsEffects {
       .pipe(
         map((planets) => actions.loadPlanetsSuccess({planets})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -47,8 +49,9 @@ export class PlanetsEffects {
       .pipe(
         map((exploration) => actions.loadMyExplorationSuccess({exploration})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -67,8 +70,9 @@ export class PlanetsEffects {
       .pipe(
         map(() => actions.collectMinedResourcesSuccess()),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -82,8 +86,9 @@ export class PlanetsEffects {
         tap(() => this.notifierService.notify('success', 'Left the planet')),
         map(() => actions.loadMyExploration()),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -97,8 +102,9 @@ export class PlanetsEffects {
         tap(() => this.notifierService.notify('success', 'You are now exploring the planet')),
         map(() => actions.loadMyExploration()),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))

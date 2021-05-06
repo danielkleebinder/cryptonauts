@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
+import {NotifierService} from 'angular-notifier';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 
 import * as actions from './inventory.actions';
-
-import {NotifierService} from 'angular-notifier';
-import {Logger} from '../../core/utils';
 import {InventoryService} from '../inventory.service';
+
+import {Logger} from '../../core/utils';
+import {replaceErrorCodes} from '../../core/error';
 
 
 @Injectable()
@@ -22,8 +23,9 @@ export class InventoryEffects {
       .pipe(
         map((items) => actions.loadInventorySuccess({items})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -36,8 +38,9 @@ export class InventoryEffects {
       .pipe(
         map((tokens) => actions.loadTokensSuccess({tokens})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -54,8 +57,9 @@ export class InventoryEffects {
           actions.loadTokens()
         ]),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -68,8 +72,9 @@ export class InventoryEffects {
       .pipe(
         map(() => actions.destroyItemSuccess({itemId})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))

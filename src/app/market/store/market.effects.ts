@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {NotifierService} from 'angular-notifier';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
@@ -7,8 +8,8 @@ import * as actions from './market.actions';
 import * as actionsFromInventory from '../../inventory/store/inventory.actions';
 import {MarketService} from '../market.service';
 
-import {NotifierService} from 'angular-notifier';
 import {Logger} from '../../core/utils';
+import {replaceErrorCodes} from '../../core/error';
 
 
 @Injectable()
@@ -23,8 +24,9 @@ export class MarketEffects {
       .pipe(
         map((items) => actions.loadMarketSuccess({items})),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -37,8 +39,9 @@ export class MarketEffects {
       .pipe(
         map(() => actions.addItemTypeSuccess()),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))
@@ -51,8 +54,9 @@ export class MarketEffects {
       .pipe(
         map(() => actionsFromInventory.loadTokens()),
         catchError(err => {
-          this.log.warn(err);
-          this.notifierService.notify('error', err);
+          const errorText = replaceErrorCodes(err);
+          this.log.warn(errorText);
+          this.notifierService.notify('error', errorText);
           return EMPTY;
         })
       ))

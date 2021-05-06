@@ -17,10 +17,11 @@
 
 main {
   display: flex;
+  flex-wrap: wrap;
 }
 
 mat-card {
-  min-width: 175px;
+  min-width: 190px;
 }
 
 mat-dialog-actions {

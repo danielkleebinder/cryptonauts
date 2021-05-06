@@ -1,0 +1,4 @@
+
+ - Contract kann selbst keine Tokens minten
+ - Scoreboard
+ - Kämpfe

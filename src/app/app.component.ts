@@ -10,8 +10,8 @@ import {
 } from './shared/components/confirmation-dialog';
 import {InventoryComponent} from './inventory/inventory.component';
 import {BlockchainService} from './core/services/blockchain.service';
-import {AdminComponent} from "./admin/admin.component";
-import {MarketComponent} from "./market/market.component";
+import {AdminComponent} from './admin/admin.component';
+import {MarketComponent} from './market/market.component';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +34,7 @@ export class AppComponent {
   }
 
   showInventory(): void {
-    this.dialog.open(InventoryComponent, {width: '800px'});
+    this.dialog.open(InventoryComponent, {width: '900px'});
   }
 
   showMarket(): void {
