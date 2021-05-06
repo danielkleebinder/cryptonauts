@@ -2,8 +2,11 @@ const errorMappings: Record<string, string> = {};
 
 // Cryptoverse base contract errors
 errorMappings['E-C1'] = 'You cannot perform this action because you are not an owner of the game';
-errorMappings['E-C2'] = 'You have to send Ether to buy tokens';
-errorMappings['E-C3'] = 'You need to send at least the current token price in Ether to buy some tokens';
+errorMappings['E-C2'] = 'You have to send Ether to buy space diamonds';
+errorMappings['E-C3'] = 'You need to send at least the current space diamond price in Ether to buy some';
+
+// Astronaut errors
+errorMappings['E-A1'] = 'You need more space diamonds energy to level up';
 
 // Item errors
 errorMappings['E-I1'] = 'You are not the owner of this item';

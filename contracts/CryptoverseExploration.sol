@@ -93,12 +93,14 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
      *      can mine as often as you wish. The gathered amount increases over time.
      */
     function collectMinedPlanetResources() external onlyOnPlanet {
+        Astronaut memory me = ownerToAstronaut[msg.sender];
         Exploration storage exploration = explorations[msg.sender];
+
         uint explorerOnPlanet = planets[exploration.planetId].explorerCount;
         uint explorationTime = block.timestamp - exploration.startTime;
 
         // Might add some really cool and sick algorithm here
-        uint resourcesMinded = (explorationTime / 10) / explorerOnPlanet;
+        uint resourcesMinded = ((explorationTime / 10) * me.mining) / explorerOnPlanet;
 
         // Reset the exploration start time
         exploration.startTime = block.timestamp;
