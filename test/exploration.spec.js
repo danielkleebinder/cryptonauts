@@ -17,11 +17,11 @@ contract("Cryptoverse Exploration", async accounts => {
   }
 
   async function getExploration(playerId) {
-    return await explorationInstance.explorations.call(playerId);
+    return explorationInstance.explorations.call(playerId);
   }
 
   async function getMyExploration() {
-    return await explorationInstance.getMyExploration.call();
+    return explorationInstance.getMyExploration.call();
   }
 
   beforeEach("deploy and init", async () => {
@@ -89,6 +89,14 @@ contract("Cryptoverse Exploration", async accounts => {
     await explorationInstance.explorePlanet(planets[0].id);
     assert.equal(await getExplorerCount(planets[0].id), 1);
     truffleAssert.eventEmitted(await explorationInstance.collectMinedPlanetResources(), "PlanetResourcesCollected");
+  });
+
+  it("should collect mined planet resources as non-owner", async () => {
+    await explorationInstance.setRequiredTravelTime(0);
+    await explorationInstance.leavePlanet({from: playerRed});
+    await explorationInstance.explorePlanet(planets[0].id, {from: playerRed});
+    assert.equal(await getExplorerCount(planets[0].id), 1);
+    truffleAssert.eventEmitted(await explorationInstance.collectMinedPlanetResources({from: playerRed}), "PlanetResourcesCollected");
   });
 
   it("should update my exploration", async () => {

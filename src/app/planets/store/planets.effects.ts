@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NotifierService} from 'angular-notifier';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {EMPTY} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {catchError, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 
 import * as actions from './planets.actions';
-
 import {PlanetsService} from '../planets.service';
-import {NotifierService} from 'angular-notifier';
-import {Logger} from '../../core/utils';
-import {MatDialog} from '@angular/material/dialog';
+
 import {PlanetTokensFoundComponent} from '../planet-tokens-found/planet-tokens-found.component';
+import {Logger} from '../../core/utils';
 import {replaceErrorCodes} from '../../core/error';
 
 
@@ -33,12 +33,7 @@ export class PlanetsEffects {
       .getPlanets()
       .pipe(
         map((planets) => actions.loadPlanetsSuccess({planets})),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
+        catchError(err => this.onError(err))
       ))
   ));
 
@@ -48,13 +43,7 @@ export class PlanetsEffects {
       .getMyExploration()
       .pipe(
         map((exploration) => actions.loadMyExplorationSuccess({exploration})),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   selectPlanet$ = createEffect(() => this.actions$.pipe(
@@ -69,13 +58,7 @@ export class PlanetsEffects {
       .collectMinedResources()
       .pipe(
         map(() => actions.collectMinedResourcesSuccess()),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   leavePlanet$ = createEffect(() => this.actions$.pipe(
@@ -85,13 +68,7 @@ export class PlanetsEffects {
       .pipe(
         tap(() => this.notifierService.notify('success', 'Left the planet')),
         map(() => actions.loadMyExploration()),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   explorePlanet$ = createEffect(() => this.actions$.pipe(
@@ -101,13 +78,7 @@ export class PlanetsEffects {
       .pipe(
         tap(() => this.notifierService.notify('success', 'You are now exploring the planet')),
         map(() => actions.loadMyExploration()),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   setTravelTime$ = createEffect(() => this.actions$.pipe(
@@ -116,13 +87,7 @@ export class PlanetsEffects {
       .setTravelTime(travelTime)
       .pipe(
         tap(() => this.notifierService.notify('success', `The required travel time between planets is now ${travelTime} seconds`)),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   loadTravelTime$ = createEffect(() => this.actions$.pipe(
@@ -131,18 +96,23 @@ export class PlanetsEffects {
       .getTravelTime()
       .pipe(
         map((travelTime) => actions.loadTravelTimeSuccess({travelTime})),
-        catchError(err => {
-          const errorText = replaceErrorCodes(err);
-          this.log.warn(errorText);
-          this.notifierService.notify('error', errorText);
-          return EMPTY;
-        })
-      ))
+        catchError(err => this.onError(err))))
   ));
 
   constructor(private actions$: Actions,
               private planetsService: PlanetsService,
               private notifierService: NotifierService,
               private dialog: MatDialog) {
+  }
+
+  /**
+   * Handles the error case for any of the effects.
+   * @param err Error.
+   */
+  onError(err: any): Observable<never> {
+    const errorText = replaceErrorCodes(err);
+    this.log.warn(errorText);
+    this.notifierService.notify('error', errorText);
+    return EMPTY;
   }
 }

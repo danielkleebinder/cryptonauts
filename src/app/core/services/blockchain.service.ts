@@ -59,11 +59,16 @@ export class BlockchainService {
   }
 
   setCryptoverseContractAddress(cryptoverseContractAddress: string): void {
-    if (cryptoverseContractAddress?.startsWith('0x')) {
-      cryptoverseContractAddress = cryptoverseContractAddress.substr(2);
+    if (cryptoverseContractAddress != null) {
+      if (cryptoverseContractAddress.startsWith('0x')) {
+        cryptoverseContractAddress = cryptoverseContractAddress.substr(2);
+      }
+      this.cryptoverseContractAddress = cryptoverseContractAddress;
+      localStorage.setItem('contract-address', cryptoverseContractAddress);
+    } else {
+      this.cryptoverseContractAddress = null;
+      localStorage.removeItem('contract-address');
     }
-    this.cryptoverseContractAddress = cryptoverseContractAddress;
-    localStorage.setItem('contract-address', cryptoverseContractAddress);
     this.updateContract();
   }
 
@@ -72,11 +77,16 @@ export class BlockchainService {
   }
 
   setPlayerAddress(playerAddress: string): void {
-    if (playerAddress?.startsWith('0x')) {
-      playerAddress = playerAddress.substr(2);
+    if (playerAddress != null) {
+      if (playerAddress.startsWith('0x')) {
+        playerAddress = playerAddress.substr(2);
+      }
+      this.playerAddress = playerAddress;
+      localStorage.setItem('player-address', playerAddress);
+    } else {
+      this.playerAddress = null;
+      localStorage.removeItem('player-address');
     }
-    this.playerAddress = playerAddress;
-    localStorage.setItem('player-address', playerAddress);
   }
 
   getPlayerAddress(): string {
