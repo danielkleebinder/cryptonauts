@@ -4,17 +4,33 @@
 </header>
 
 <header class="sub-header">
+
   <mat-divider></mat-divider>
-  <div class="astronaut-properties">
+
+  <div class="astronaut-stats" *ngIf="me$ | async as me">
     <mat-chip-list>
-      <mat-chip color="primary" selected>Level {{me?.level}}</mat-chip>
+      <mat-chip color="primary" selected>Level {{me.level}}</mat-chip>
+      <mat-chip color="primary" matTooltip="Wins" selected>
+        {{me.winCount}}
+        <mat-icon>emoji_events</mat-icon>
+      </mat-chip>
     </mat-chip-list>
   </div>
+
   <mat-divider></mat-divider>
+
 </header>
 
 <main>
 
+  <section *ngIf="me$ | async as me">
+    <h3 style="margin-top: 0">Stats</h3>
+    <app-described-text description="Mining" iconUrl="assets/shovel.png">{{me.mining}}</app-described-text>
+    <app-described-text description="Damage" iconUrl="assets/attack.png">{{me.attack}}</app-described-text>
+    <app-described-text description="Defense" iconUrl="assets/shield.png">{{me.defense}}</app-described-text>
+  </section>
+
+  <h3>Actions</h3>
   <section>
     <p>
       Try to build an empire by constantly exploring planets and mining their resources. Some of those uncanny and
@@ -39,8 +55,8 @@
 
 <footer>
   <mat-divider></mat-divider>
-  <button mat-flat-button color="primary" (click)="increaseLevel()">
+  <button mat-flat-button color="primary" (click)="levelUp()">
     <mat-icon>arrow_upward</mat-icon>
-    Increase Level
+    Level Up
   </button>
 </footer>

@@ -1,0 +1,25 @@
+.in-space-diamonds {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.in-space-diamonds > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.in-space-diamonds span {
+  font-size: 36px;
+  letter-spacing: 4px;
+}
+
+.in-space-diamonds small {
+  opacity: 0.7;
+}
+
+mat-form-field {
+  width: 100%;
+}

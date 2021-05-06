@@ -31,7 +31,13 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <app-tokens [tokens]="tokens$ | async"></app-tokens>
+  <div class="tokens">
+    <button mat-flat-button color="primary" (click)="buyTokens()">
+      Buy Space Diamonds
+    </button>
+    <app-tokens [tokens]="tokens$ | async"></app-tokens>
+  </div>
+
   <button mat-flat-button mat-dialog-close>
     Close
   </button>

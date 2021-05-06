@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Buy Space Diamonds</h1>
+
+<mat-dialog-content>
+
+  <p>
+    You can buy more Space Diamonds with Ether. The current price per Space Diamond is
+    <strong>{{tokenPrice$ | async}} Wei</strong>.
+  </p>
+
+  <div class="in-space-diamonds">
+    <div>
+      <span>+{{diamondsFormControl.value / (tokenPrice$ | async)}}</span>
+      <small>Space Diamonds</small>
+    </div>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Wei</mat-label>
+    <input matInput [formControl]="diamondsFormControl" placeholder="100" type="number">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Close</button>
+  <button mat-flat-button mat-dialog-close color="primary"
+          [disabled]="diamondsFormControl.invalid"
+          (click)="buyTokens()">
+    Buy
+  </button>
+</mat-dialog-actions>

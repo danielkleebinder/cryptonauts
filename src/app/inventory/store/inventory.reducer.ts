@@ -7,12 +7,14 @@ import * as actions from './inventory.actions';
 
 export const adapter = createEntityAdapter<Item>();
 const initialState: InventoryState = adapter.getInitialState({
-  tokens: 0
+  tokens: 0,
+  tokenPrice: 100
 });
 
 const inventoryReducer = createReducer(initialState,
   on(actions.loadInventorySuccess, (state, {items}) => adapter.upsertMany(items, state)),
   on(actions.loadTokensSuccess, (state, {tokens}) => ({...state, tokens})),
+  on(actions.loadTokenPriceSuccess, (state, {tokenPrice}) => ({...state, tokenPrice})),
   on(actions.destroyItemSuccess, (state, {itemId}) => adapter.removeOne(itemId, state)),
   on(actions.clearInventory, (state) => adapter.removeAll(state))
 );

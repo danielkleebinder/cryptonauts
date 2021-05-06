@@ -91,3 +91,10 @@ mat-card-actions {
 notifier-notification {
   max-width: 600px;
 }
+
+mat-chip mat-icon {
+  padding-left: 6px;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}

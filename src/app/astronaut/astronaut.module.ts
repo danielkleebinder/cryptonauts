@@ -1,14 +1,22 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AstronautComponent} from './astronaut.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatSidenavModule} from "@angular/material/sidenav";
-import { AstronautInfoComponent } from './astronaut-info/astronaut-info.component';
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatChipsModule} from "@angular/material/chips";
+
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatChipsModule} from '@angular/material/chips';
+
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+
+import * as queries from './store/astronaut.selectors';
+import {AstronautEffects, AstronautFacade, reducer} from './store';
+import {AstronautComponent} from './astronaut.component';
+import {AstronautInfoComponent} from './astronaut-info/astronaut-info.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 const routes: Routes = [
@@ -24,12 +32,18 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature(queries.featureKey, reducer),
+    EffectsModule.forFeature([AstronautEffects]),
     MatSidenavModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
+    SharedModule
+  ],
+  providers: [
+    AstronautFacade
   ]
 })
 export class AstronautModule {

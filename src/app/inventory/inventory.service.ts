@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import Web3 from 'web3';
 
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
 import {Item} from './models';
-import {map} from "rxjs/operators";
 
 
 @Injectable({
@@ -25,6 +25,31 @@ export class InventoryService {
       .contract.methods
       .getItemsByOwner(this.blockchain.player)
       .call({from: this.blockchain.player})) as Observable<Item[]>;
+  }
+
+  /**
+   * Buys tokens for the given wei amount.
+   */
+  buyTokens(wei: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .buyTokens()
+      .send({
+        from: this.blockchain.player,
+        gas: 3_000_000,
+        value: wei
+      }));
+  }
+
+  /**
+   * Returns the current token price.
+   */
+  getTokenPrice(): Observable<number> {
+    return from(this.blockchain
+      .contract.methods
+      .tokenPrice()
+      .call({from: this.blockchain.player}))
+      .pipe(map(data => +data));
   }
 
   /**

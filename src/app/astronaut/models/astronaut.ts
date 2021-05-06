@@ -8,6 +8,14 @@ export interface Astronaut {
    */
   id: number;
 
+  winCount: number;
+  lossCount: number;
+
+  health: number;
+  mining: number;
+  attack: number;
+  defense: number;
+
   /**
    * The astronauts level (level >= 1).
    */

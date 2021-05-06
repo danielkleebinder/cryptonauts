@@ -12,5 +12,8 @@ export const upgradeItemSuccess = createAction('[Inventory API] Upgrade item suc
 export const destroyItem = createAction('[Inventory Page] Destroy item', props<{ itemId: number }>());
 export const destroyItemSuccess = createAction('[Inventory API] Destroy item success', props<{ itemId: number }>());
 
+export const buyTokens = createAction('[Inventory Page] Buy tokens', props<{ wei: number }>());
 export const loadTokens = createAction('[Inventory Page] Load tokens');
 export const loadTokensSuccess = createAction('[Inventory API] Load tokens success', props<{ tokens: number }>());
+export const loadTokenPrice = createAction('[Inventory Page] Load token price');
+export const loadTokenPriceSuccess = createAction('[Inventory API] Load token price success', props<{ tokenPrice: number }>());

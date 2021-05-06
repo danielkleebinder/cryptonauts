@@ -1,5 +1,5 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
-import {Astronaut} from './models';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AstronautFacade} from './store';
 
 @Component({
   selector: 'app-astronaut',
@@ -7,12 +7,17 @@ import {Astronaut} from './models';
   styleUrls: ['./astronaut.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AstronautComponent implements AfterViewInit {
+export class AstronautComponent implements OnInit, AfterViewInit {
 
-  me: Astronaut = {id: 0, level: 12};
   drawerOpen = false;
 
-  constructor(private cdRef: ChangeDetectorRef) {
+  constructor(private astronautFacade: AstronautFacade,
+              private cdRef: ChangeDetectorRef) {
+  }
+
+  /** @inheritDoc */
+  ngOnInit(): void {
+    this.astronautFacade.loadMyAstronaut();
   }
 
   /** @inheritDoc */

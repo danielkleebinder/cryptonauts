@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NotifierService} from 'angular-notifier';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, Observable} from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 
 import * as actions from './inventory.actions';
 import {InventoryService} from '../inventory.service';
@@ -25,7 +25,26 @@ export class InventoryEffects {
         catchError(err => this.onError(err))))
   ));
 
-  loadTokens = createEffect(() => this.actions$.pipe(
+  buyTokens$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.buyTokens),
+    switchMap(({wei}) => this.inventoryService
+      .buyTokens(wei)
+      .pipe(
+        tap(() => this.notifierService.notify('success', `You successfully bought tokens with a value of ${wei} Wei`)),
+        map(() => actions.loadTokens()),
+        catchError(err => this.onError(err))))
+  ));
+
+  loadTokenPrice$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.loadTokenPrice),
+    switchMap(() => this.inventoryService
+      .getTokenPrice()
+      .pipe(
+        map((tokenPrice) => actions.loadTokenPriceSuccess({tokenPrice})),
+        catchError(err => this.onError(err))))
+  ));
+
+  loadTokens$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadTokens),
     switchMap(() => this.inventoryService
       .getBalance()
@@ -34,7 +53,7 @@ export class InventoryEffects {
         catchError(err => this.onError(err))))
   ));
 
-  upgradeItem = createEffect(() => this.actions$.pipe(
+  upgradeItem$ = createEffect(() => this.actions$.pipe(
     ofType(actions.upgradeItem),
     switchMap(({itemId}) => this.inventoryService
       .upgradeItem(itemId)

@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit, TrackByFunction} from '@angular/core';
 import {InventoryFacade} from './store';
 import {Item} from './models';
+import {MatDialog} from "@angular/material/dialog";
+import {BuyTokensComponent} from "./buy-tokens/buy-tokens.component";
 
 @Component({
   selector: 'app-inventory',
@@ -17,13 +19,18 @@ export class InventoryComponent implements OnInit {
   // Improve performance by using a tracking function
   trackByItemId: TrackByFunction<Item> = (index, item) => item.id;
 
-  constructor(private inventoryFacade: InventoryFacade) {
+  constructor(private inventoryFacade: InventoryFacade,
+              private dialog: MatDialog) {
   }
 
   /** @inheritDoc */
   ngOnInit(): void {
     this.inventoryFacade.loadInventory();
     this.inventoryFacade.loadTokens();
+  }
+
+  buyTokens(): void {
+    this.dialog.open(BuyTokensComponent, {width: '400px'});
   }
 
   upgradeItem(itemId: number): void {
