@@ -7,6 +7,7 @@ errorMappings['E-C3'] = 'You need to send at least the current space diamond pri
 
 // Astronaut errors
 errorMappings['E-A1'] = 'You need more space diamonds energy to level up';
+errorMappings['E-A2'] = 'You have to choose an upgrade property (mining, attack or defense)';
 
 // Item errors
 errorMappings['E-I1'] = 'You are not the owner of this item';

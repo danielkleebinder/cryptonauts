@@ -5,7 +5,12 @@ import "./Cryptoverse.sol";
 
 /**
  * @title Cryptoverse Planet System
- * @dev The cryptoverse astronaut system manages all astronauts (i.e. players).
+ * @dev The cryptoverse astronaut system manages all astronauts (i.e. players). This contract can
+ *      throw the following error codes:
+ *
+ *        - E-A1: You do not have enough tokens to level up your astronaut
+ *        - E-A2: You did not provide a property that you want to upgrade when leveling up you astronaut
+ *
  */
 contract CryptoverseAstronauts is Cryptoverse {
 
@@ -14,10 +19,21 @@ contract CryptoverseAstronauts is Cryptoverse {
     // An astronaut is the players character used in the game. It is important to
     // notice that each player can only have one single astronaut.
     struct Astronaut {
+        address id;
+
+        // Current astronaut level. Astronauts are only capable of doing something
+        // after reaching level 1.
         uint32 level;
+
+        // Fighting win and loss count
         uint32 winCount;
         uint32 lossCount;
+
+        // Base health (max health available to the player) and current health
+        uint32 baseHealth;
         uint32 health;
+
+        // Specialization properties
         uint32 mining;
         uint32 attack;
         uint32 defense;
@@ -33,7 +49,7 @@ contract CryptoverseAstronauts is Cryptoverse {
      * @dev Levels up the astronaut by one level and burns the level up cost
      *      worth in tokens.
      */
-    function levelUpAstronaut() external {
+    function levelUpAstronaut(string memory _upgradeProperty) external {
         Astronaut storage astronaut = ownerToAstronaut[msg.sender];
         uint levelUpCost = getAstronautLevelUpCost();
 
@@ -50,10 +66,25 @@ contract CryptoverseAstronauts is Cryptoverse {
 
         // Level up the astronaut and improve it's stats a bit
         astronaut.level++;
-        astronaut.health += 10;
-        astronaut.mining += astronaut.level;
-        astronaut.attack += astronaut.level;
-        astronaut.defense += astronaut.level;
+        astronaut.baseHealth += 10;
+        astronaut.health = astronaut.baseHealth;
+        astronaut.mining++;
+        astronaut.attack++;
+        astronaut.defense++;
+        astronaut.id = msg.sender;
+
+        // Every level up has to come with one specific upgrade property in which the
+        // player wants to specialize his or her cryptonaut in.
+        bytes32 encodedUpgradeProperty = keccak256(abi.encodePacked(_upgradeProperty));
+        if (encodedUpgradeProperty == keccak256(abi.encodePacked("mining"))) {
+            astronaut.mining += 5;
+        } else if (encodedUpgradeProperty == keccak256(abi.encodePacked("attack"))) {
+            astronaut.attack += 5;
+        } else if (encodedUpgradeProperty == keccak256(abi.encodePacked("defense"))) {
+            astronaut.defense += 5;
+        } else {
+            require(false, "E-A2");
+        }
 
         // Emit the astronaut level up event
         emit AstronautLevelUp(msg.sender, astronaut.level);
@@ -64,7 +95,8 @@ contract CryptoverseAstronauts is Cryptoverse {
      */
     function getAstronautLevelUpCost() public view returns (uint) {
         Astronaut memory astronaut = ownerToAstronaut[msg.sender];
-        return uint(astronaut.level) ** levelUpFactor;
+        uint level = uint(astronaut.level);
+        return level ** levelUpFactor + level * levelUpFactor;
     }
 
     /**

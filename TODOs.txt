@@ -2,3 +2,5 @@
  - Contract kann selbst keine Tokens minten
  - Scoreboard
  - Kämpfe
+ - IDs für Astronauten
+ - Funktionen wie Level-Up Kostenberechnung auslagern

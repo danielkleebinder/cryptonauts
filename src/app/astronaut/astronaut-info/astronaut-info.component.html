@@ -15,6 +15,10 @@
         <mat-icon>emoji_events</mat-icon>
       </mat-chip>
     </mat-chip-list>
+    <mat-progress-bar class="health-bar" mode="determinate" matTooltipPosition="right"
+                      [matTooltip]="'Health: ' + me.health + ' of ' + me.baseHealth"
+                      [value]="(me.health / me.baseHealth) * 100">
+    </mat-progress-bar>
   </div>
 
   <mat-divider></mat-divider>

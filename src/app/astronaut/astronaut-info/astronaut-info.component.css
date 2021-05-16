@@ -11,6 +11,12 @@ header {
   margin-bottom: 46px;
 }
 
+.health-bar {
+  height: 12px;
+  border-radius: 500px;
+  margin-top: 16px;
+}
+
 .astronaut-stats {
   margin-top: 24px;
   margin-bottom: 24px;

@@ -1,0 +1,36 @@
+.specializations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.specialization {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 140px;
+  height: 200px;
+  margin: 16px;
+  padding: 16px;
+
+  background: #352d35;
+  border: 5px solid transparent;
+  border-radius: 12px;
+
+  transition-property: border-color;
+  transition-duration: 400ms;
+}
+
+.specialization.selected {
+  border: 5px solid #7b1fa2;
+}
+
+.specialization img {
+  width: 60px;
+}
+
+.specialization p {
+  opacity: 0.7;
+  text-align: center !important;
+}

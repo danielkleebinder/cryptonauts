@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CombatComponent } from '../combat/combat.component';
+import { CombatComponent } from './combat.component';
 
 
 

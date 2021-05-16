@@ -258,6 +258,11 @@ export const cryptoverseAbi: any[] = [
     "name": "astronauts",
     "outputs": [
       {
+        "internalType": "address",
+        "name": "id",
+        "type": "address"
+      },
+      {
         "internalType": "uint32",
         "name": "level",
         "type": "uint32"
@@ -274,23 +279,28 @@ export const cryptoverseAbi: any[] = [
       },
       {
         "internalType": "uint32",
+        "name": "baseHealth",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
         "name": "health",
         "type": "uint32"
       },
       {
-        "internalType": "uint16",
+        "internalType": "uint32",
         "name": "mining",
-        "type": "uint16"
+        "type": "uint32"
       },
       {
-        "internalType": "uint16",
+        "internalType": "uint32",
         "name": "attack",
-        "type": "uint16"
+        "type": "uint32"
       },
       {
-        "internalType": "uint16",
+        "internalType": "uint32",
         "name": "defense",
-        "type": "uint16"
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -463,6 +473,11 @@ export const cryptoverseAbi: any[] = [
       {
         "components": [
           {
+            "internalType": "address",
+            "name": "id",
+            "type": "address"
+          },
+          {
             "internalType": "uint32",
             "name": "level",
             "type": "uint32"
@@ -479,23 +494,28 @@ export const cryptoverseAbi: any[] = [
           },
           {
             "internalType": "uint32",
+            "name": "baseHealth",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
             "name": "health",
             "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "mining",
-            "type": "uint16"
+            "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "attack",
-            "type": "uint16"
+            "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "defense",
-            "type": "uint16"
+            "type": "uint32"
           }
         ],
         "internalType": "struct CryptoverseAstronauts.Astronaut",
@@ -526,6 +546,11 @@ export const cryptoverseAbi: any[] = [
       {
         "components": [
           {
+            "internalType": "address",
+            "name": "id",
+            "type": "address"
+          },
+          {
             "internalType": "uint32",
             "name": "level",
             "type": "uint32"
@@ -542,23 +567,28 @@ export const cryptoverseAbi: any[] = [
           },
           {
             "internalType": "uint32",
+            "name": "baseHealth",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
             "name": "health",
             "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "mining",
-            "type": "uint16"
+            "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "attack",
-            "type": "uint16"
+            "type": "uint32"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint32",
             "name": "defense",
-            "type": "uint16"
+            "type": "uint32"
           }
         ],
         "internalType": "struct CryptoverseAstronauts.Astronaut[]",
@@ -974,7 +1004,13 @@ export const cryptoverseAbi: any[] = [
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_upgradeProperty",
+        "type": "string"
+      }
+    ],
     "name": "levelUpAstronaut",
     "outputs": [],
     "stateMutability": "nonpayable",

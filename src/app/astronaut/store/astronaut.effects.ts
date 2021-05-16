@@ -34,8 +34,8 @@ export class AstronautEffects {
 
   levelUp$ = createEffect(() => this.actions$.pipe(
     ofType(actions.levelUp),
-    switchMap(() => this.astronautService
-      .levelUp()
+    switchMap(({specialization}) => this.astronautService
+      .levelUp(specialization)
       .pipe(
         map(() => actions.levelUpSuccess()),
         catchError(err => this.onError(err))))

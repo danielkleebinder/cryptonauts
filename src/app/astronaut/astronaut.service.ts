@@ -5,7 +5,7 @@ import Web3 from 'web3';
 
 import {WEB3} from '../core/tokens/web3.token';
 import {BlockchainService} from '../core/services/blockchain.service';
-import {Astronaut} from './models';
+import {Astronaut, AstronautSpecialization} from './models';
 
 
 @Injectable({
@@ -45,10 +45,10 @@ export class AstronautService {
   /**
    * Levels up my astronaut.
    */
-  levelUp(): Observable<any> {
+  levelUp(specialization: AstronautSpecialization): Observable<any> {
     return from(this.blockchain
       .contract.methods
-      .levelUpAstronaut()
+      .levelUpAstronaut(specialization)
       .send({
         from: this.blockchain.player,
         gas: 3_000_000

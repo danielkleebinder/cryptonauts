@@ -6,11 +6,12 @@ export interface Astronaut {
   /**
    * The astronauts unique ID.
    */
-  id: number;
+  id: string;
 
   winCount: number;
   lossCount: number;
 
+  baseHealth: number;
   health: number;
   mining: number;
   attack: number;

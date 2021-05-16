@@ -8,15 +8,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 
+import {SharedModule} from '../shared/shared.module';
 import * as queries from './store/astronaut.selectors';
 import {AstronautEffects, AstronautFacade, reducer} from './store';
 import {AstronautComponent} from './astronaut.component';
 import {AstronautInfoComponent} from './astronaut-info/astronaut-info.component';
-import {SharedModule} from "../shared/shared.module";
+import { AstronautLevelUpComponent } from './astronaut-level-up/astronaut-level-up.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const routes: Routes = [
@@ -27,20 +30,23 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AstronautComponent,
-    AstronautInfoComponent
+    AstronautInfoComponent,
+    AstronautLevelUpComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature(queries.featureKey, reducer),
     EffectsModule.forFeature([AstronautEffects]),
+    SharedModule,
     MatSidenavModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
     MatDividerModule,
     MatChipsModule,
-    SharedModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [
     AstronautFacade

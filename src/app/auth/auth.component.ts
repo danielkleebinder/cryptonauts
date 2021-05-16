@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {BlockchainService} from '../core/services/blockchain.service';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-auth',
@@ -27,8 +27,8 @@ export class AuthComponent implements OnInit {
   }
 
   letsGo(): void {
-    this.blockchain.setPlayerAddress(this.formGroup.get('accountAddress').value);
-    this.blockchain.setCryptoverseContractAddress(this.formGroup.get('contractAddress').value);
+    this.blockchain.setPlayerAddress(this.formGroup.get('accountAddress').value?.trim());
+    this.blockchain.setCryptoverseContractAddress(this.formGroup.get('contractAddress').value?.trim());
     this.router.navigate(['/planets']);
   }
 

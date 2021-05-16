@@ -31,7 +31,7 @@ contract("Cryptoverse Astronauts", async accounts => {
   });
 
   it("should level up astronaut to level 1 without cost", async () => {
-    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut({from: playerRed}), "AstronautLevelUp");
+    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut("mining", {from: playerRed}), "AstronautLevelUp");
 
     // Astronaut has to be level 1 now
     const me = await astronautsInstance.getAstronaut.call({from: playerRed});
@@ -42,17 +42,36 @@ contract("Cryptoverse Astronauts", async accounts => {
     assert(cost > 0);
   });
 
-  it("should throw if level up cost is too high", async () => {
-    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut({from: playerRed}), "AstronautLevelUp");
+  it("should throw if no specialization was given", async () => {
     await truffleAssert.reverts(astronautsInstance.levelUpAstronaut({from: playerRed}));
   });
 
+  it("should throw if invalid specialization was given", async () => {
+    await truffleAssert.reverts(astronautsInstance.levelUpAstronaut("my hacky specialization", {from: playerRed}));
+  });
+
+  it("should throw if level up cost is too high", async () => {
+    truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut("mining", {from: playerRed}), "AstronautLevelUp");
+    await truffleAssert.reverts(astronautsInstance.levelUpAstronaut("mining", {from: playerRed}));
+  });
+
+  it("should increase specialization more", async () => {
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
+    const me = await astronautsInstance.getAstronaut.call({from: playerRed});
+    assert.equal(me.level, 1);
+    assert(me.mining > me.attack);
+    assert(me.mining > me.defense);
+  });
+
   it("should change level up cost depending on level up factor", async () => {
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
+
     await astronautsInstance.setLevelUpFactor(10);
     const cost1 = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+
     await astronautsInstance.setLevelUpFactor(20);
     const cost2 = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
+
     assert.notEqual(cost1, cost2);
   });
 
@@ -60,21 +79,21 @@ contract("Cryptoverse Astronauts", async accounts => {
     let astronauts = await astronautsInstance.getAstronauts.call();
     assert.equal(astronauts.length, 0);
 
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
 
     astronauts = await astronautsInstance.getAstronauts.call();
     assert.equal(astronauts.length, 1);
   });
 
   it("should burn tokens according to the level up cost", async () => {
-    await astronautsInstance.mint(playerRed, 100);
+    await astronautsInstance.buyTokens({from: playerRed, value: 10_000});
 
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     const balanceBeforeLevelUp = (await astronautsInstance.balanceOf.call(playerRed)).toNumber();
 
     const cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
 
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     const balanceAfterLevelUp = (await astronautsInstance.balanceOf.call(playerRed)).toNumber();
 
     assert.notEqual(balanceBeforeLevelUp, balanceAfterLevelUp);
@@ -83,22 +102,22 @@ contract("Cryptoverse Astronauts", async accounts => {
   });
 
   it("should increase level up cost with every level", async () => {
-    await astronautsInstance.mint(playerRed, 1000);
+    await astronautsInstance.buyTokens({from: playerRed, value: 10_000});
 
     let previousCost, cost;
 
     previousCost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
     assert(previousCost < cost);
 
     previousCost = cost;
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
     assert(previousCost < cost);
 
     previousCost = cost;
-    await astronautsInstance.levelUpAstronaut({from: playerRed});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
     assert(previousCost < cost);
   });

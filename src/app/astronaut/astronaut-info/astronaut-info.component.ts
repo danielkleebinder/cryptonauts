@@ -1,12 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {filter, take} from 'rxjs/operators';
-import {
-  ConfirmationDialogComponent,
-  ConfirmationDialogModel,
-  ConfirmationDialogResult
-} from '../../shared/components/confirmation-dialog';
 import {AstronautFacade} from '../store';
+import {AstronautLevelUpComponent} from '../astronaut-level-up/astronaut-level-up.component';
 
 
 @Component({
@@ -18,7 +13,6 @@ import {AstronautFacade} from '../store';
 export class AstronautInfoComponent implements OnInit {
 
   me$ = this.astronautFacade.me$;
-  levelUpCost$ = this.astronautFacade.levelUpCost$;
 
   constructor(private astronautFacade: AstronautFacade,
               private dialog: MatDialog) {
@@ -33,20 +27,6 @@ export class AstronautInfoComponent implements OnInit {
    * Level up my astronaut.
    */
   levelUp(): void {
-    this.levelUpCost$
-      .pipe(take(1))
-      .subscribe((levelUpCost) => {
-        this.dialog.open(ConfirmationDialogComponent, {
-          width: '400px',
-          data: {
-            title: 'Level Up',
-            message: `Are you sure that you want to increase your level? This will cost you ${levelUpCost} space diamonds.`,
-            cancelText: 'Not now',
-            confirmationText: 'Make me stronger'
-          } as ConfirmationDialogModel
-        }).afterClosed()
-          .pipe(filter(res => res === ConfirmationDialogResult.Confirm))
-          .subscribe(() => this.astronautFacade.levelUp());
-      });
+    this.dialog.open(AstronautLevelUpComponent, {width: '600px'});
   }
 }

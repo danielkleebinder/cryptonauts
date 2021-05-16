@@ -4,6 +4,7 @@ import {AstronautState} from './astronaut.state';
 
 import * as actions from './astronaut.actions';
 import * as queries from './astronaut.selectors';
+import {AstronautSpecialization} from "../models";
 
 
 @Injectable()
@@ -21,8 +22,8 @@ export class AstronautFacade {
     this.store.dispatch(actions.loadAstronauts());
   }
 
-  levelUp(): void {
-    this.store.dispatch(actions.levelUp());
+  levelUp(specialization: AstronautSpecialization): void {
+    this.store.dispatch(actions.levelUp({specialization}));
   }
 
   loadLevelUpCost(): void {

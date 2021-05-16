@@ -1,6 +1,6 @@
 <header>
-  <h1>Cryptoverse</h1>
-  <h2>Build your own Blockchain Space Empire</h2>
+  <h1>Cryptonauts</h1>
+  <h2>Become a Blockchain Cryptonaut</h2>
 </header>
 
 <main [formGroup]="formGroup">
@@ -14,10 +14,10 @@
   </mat-form-field>
 
   <mat-form-field class="player-address" appearance="fill">
-    <mat-label>Player Address</mat-label>
+    <mat-label>Your Address</mat-label>
     <input matInput formControlName="accountAddress" placeholder="0x408007...">
     <mat-error *ngIf="formGroup.get('accountAddress').hasError('required')">
-      Player account address is <strong>required</strong>
+      Your account address is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 
