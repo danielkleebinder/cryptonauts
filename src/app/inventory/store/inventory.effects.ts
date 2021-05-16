@@ -5,6 +5,7 @@ import {EMPTY, Observable} from 'rxjs';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 
 import * as actions from './inventory.actions';
+import * as actionsFromAstronaut from '../../astronaut/store/astronaut.actions';
 import {InventoryService} from '../inventory.service';
 
 import {Logger} from '../../core/utils';
@@ -72,6 +73,34 @@ export class InventoryEffects {
       .destroyItem(itemId)
       .pipe(
         map(() => actions.destroyItemSuccess({itemId})),
+        catchError(err => this.onError(err))))
+  ));
+
+  equipItem$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.equipItem),
+    switchMap(({itemId}) => this.inventoryService
+      .equip(itemId)
+      .pipe(
+        tap(() => this.notifierService.notify('success', 'Item equipped')),
+        switchMap(() => [
+          actions.equipItemSuccess(),
+          actions.loadInventory(),
+          actionsFromAstronaut.loadMyAstronaut()
+        ]),
+        catchError(err => this.onError(err))))
+  ));
+
+  unequipItem$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.unequipItem),
+    switchMap(({itemId}) => this.inventoryService
+      .unequip(itemId)
+      .pipe(
+        tap(() => this.notifierService.notify('success', 'Item unequipped')),
+        switchMap(() => [
+          actions.unequipItemSuccess(),
+          actions.loadInventory(),
+          actionsFromAstronaut.loadMyAstronaut()
+        ]),
         catchError(err => this.onError(err))))
   ));
 

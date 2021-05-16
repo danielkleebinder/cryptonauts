@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit, TrackByFunction} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {InventoryFacade} from './store';
 import {Item} from './models';
-import {MatDialog} from "@angular/material/dialog";
-import {BuyTokensComponent} from "./buy-tokens/buy-tokens.component";
+import {BuyTokensComponent} from './buy-tokens/buy-tokens.component';
 
 @Component({
   selector: 'app-inventory',
@@ -31,13 +31,5 @@ export class InventoryComponent implements OnInit {
 
   buyTokens(): void {
     this.dialog.open(BuyTokensComponent, {width: '400px'});
-  }
-
-  upgradeItem(itemId: number): void {
-    this.inventoryFacade.upgradeItem(itemId);
-  }
-
-  destroyItem(itemId: number): void {
-    this.inventoryFacade.destroyItem(itemId);
   }
 }

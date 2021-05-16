@@ -3,24 +3,9 @@
 <mat-dialog-content>
 
   <main *ngIf="!(empty$ | async)">
-    <mat-card *ngFor="let item of (inventory$ | async); trackBy: trackByItemId">
-      <mat-card-header>
-        <mat-card-title>{{item.name}} (Lv {{item.level}})</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <app-described-text description="Mining" iconUrl="assets/shovel.png">+{{item.mining}}</app-described-text>
-        <app-described-text description="Damage" iconUrl="assets/attack.png">+{{item.attack}}</app-described-text>
-        <app-described-text description="Defense" iconUrl="assets/shield.png">+{{item.defense}}</app-described-text>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-flat-button (click)="destroyItem(item.id)">
-          Destroy
-        </button>
-        <button mat-flat-button (click)="upgradeItem(item.id)" color="primary">
-          Upgrade for {{item.cost}} SD
-        </button>
-      </mat-card-actions>
-    </mat-card>
+    <app-item *ngFor="let item of (inventory$ | async); trackBy: trackByItemId"
+              [item]="item">
+    </app-item>
   </main>
 
   <div class="empty-inventory" *ngIf="empty$ | async">

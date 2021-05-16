@@ -8,14 +8,14 @@ library CryptoverseMath {
     /**
      * @dev Returns the largest of two numbers.
      */
-    function max(int a, int b) internal pure returns (int) {
+    function max(int32 a, int32 b) internal pure returns (int32) {
         return a >= b ? a : b;
     }
 
     /**
      * @dev Returns the smallest of two numbers.
      */
-    function min(int a, int b) internal pure returns (int) {
+    function min(int32 a, int32 b) internal pure returns (int32) {
         return a < b ? a : b;
     }
 }

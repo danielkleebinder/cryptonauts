@@ -40,4 +40,12 @@ export class InventoryFacade {
   destroyItem(itemId: number): void {
     this.store.dispatch(actions.destroyItem({itemId}));
   }
+
+  equipItem(itemId: number): void {
+    this.store.dispatch(actions.equipItem({itemId}));
+  }
+
+  unequipItem(itemId: number): void {
+    this.store.dispatch(actions.unequipItem({itemId}));
+  }
 }

@@ -69,7 +69,7 @@ export class InventoryService {
   upgradeItem(itemId: number): Observable<any> {
     return from(this.blockchain
       .contract.methods
-      .levelUpItem(itemId)
+      .upgradeItem(itemId)
       .send({
         from: this.blockchain.player,
         gas: 3_000_000
@@ -83,6 +83,32 @@ export class InventoryService {
     return from(this.blockchain
       .contract.methods
       .destroyItem(itemId)
+      .send({
+        from: this.blockchain.player,
+        gas: 3_000_000
+      }));
+  }
+
+  /**
+   * Equips the item with the given id.
+   */
+  equip(itemId: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .equip(itemId)
+      .send({
+        from: this.blockchain.player,
+        gas: 3_000_000
+      }));
+  }
+
+  /**
+   * Unequips the item with the given id.
+   */
+  unequip(itemId: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .unequip(itemId)
       .send({
         from: this.blockchain.player,
         gas: 3_000_000

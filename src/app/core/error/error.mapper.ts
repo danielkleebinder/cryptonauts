@@ -11,10 +11,13 @@ errorMappings['E-A2'] = 'You have to choose an upgrade property (mining, attack 
 
 // Item errors
 errorMappings['E-I1'] = 'You are not the owner of this item';
-errorMappings['E-I2'] = 'This is not an item you can buy';
-errorMappings['E-I3'] = 'This item is too expensive for you';
-errorMappings['E-I4'] = 'The upgrade is too expensive for you';
-errorMappings['E-I5'] = 'This item has already reached maximum upgrade level - you cannot improve it further';
+errorMappings['E-I2'] = 'You cannot perform this action while the item is equipped';
+errorMappings['E-I3'] = 'This is not an item you can buy';
+errorMappings['E-I4'] = 'This item is too expensive for you';
+errorMappings['E-I5'] = 'The upgrade is too expensive for you';
+errorMappings['E-I6'] = 'This item has already reached maximum upgrade level - you cannot improve it further';
+errorMappings['E-I7'] = 'You cannot equip more items - unequip one to equip a new one';
+errorMappings['E-I8'] = 'This item is already unequipped';
 
 // Exploration errors
 errorMappings['E-E1'] = 'You must be on the planets surface to perform this action';

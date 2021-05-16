@@ -24,27 +24,14 @@ main {
   flex-wrap: wrap;
 }
 
-mat-card {
-  min-width: 190px;
-}
-
-mat-dialog-actions {
-  justify-content: space-between;
-}
-
-mat-card-actions {
-  flex-direction: column;
-}
-
-mat-card-actions button {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
 .tokens {
   display: flex;
 }
 
 .tokens button {
   margin-right: 16px;
+}
+
+mat-dialog-actions {
+  justify-content: space-between;
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {Item} from '../models';
+import {InventoryFacade} from '../store';
 
 @Component({
   selector: 'app-item',
@@ -6,11 +8,26 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
 
-  constructor() { }
+  @Input() item: Item;
 
-  ngOnInit(): void {
+  constructor(private inventoryFacade: InventoryFacade) {
   }
 
+  equipItem(itemId: number): void {
+    this.inventoryFacade.equipItem(itemId);
+  }
+
+  unequipItem(itemId: number): void {
+    this.inventoryFacade.unequipItem(itemId);
+  }
+
+  upgradeItem(itemId: number): void {
+    this.inventoryFacade.upgradeItem(itemId);
+  }
+
+  destroyItem(itemId: number): void {
+    this.inventoryFacade.destroyItem(itemId);
+  }
 }

@@ -20,6 +20,8 @@
 
   transition-property: border-color;
   transition-duration: 400ms;
+
+  cursor: pointer;
 }
 
 .specialization.selected {

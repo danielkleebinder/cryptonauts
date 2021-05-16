@@ -61,12 +61,50 @@ export const cryptoverseAbi: any[] = [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ItemEquipped",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "itemTypeId",
         "type": "uint256"
       }
     ],
     "name": "ItemTypeCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ItemUnequipped",
     "type": "event"
   },
   {
@@ -414,6 +452,19 @@ export const cryptoverseAbi: any[] = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "equip",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -644,6 +695,11 @@ export const cryptoverseAbi: any[] = [
             "internalType": "bool",
             "name": "destroyed",
             "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "equipped",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoverseItems.Item[]",
@@ -705,24 +761,16 @@ export const cryptoverseAbi: any[] = [
             "internalType": "bool",
             "name": "destroyed",
             "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "equipped",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoverseItems.Item[]",
         "name": "",
         "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getMaxItemLevel",
-    "outputs": [
-      {
-        "internalType": "uint16",
-        "name": "",
-        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -808,30 +856,6 @@ export const cryptoverseAbi: any[] = [
         "internalType": "struct CryptoversePlanets.Planet[]",
         "name": "",
         "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_player",
-        "type": "address"
-      }
-    ],
-    "name": "getTotalPlayerStats",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "attack",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "defense",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -937,6 +961,11 @@ export const cryptoverseAbi: any[] = [
         "internalType": "bool",
         "name": "destroyed",
         "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "equipped",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -991,6 +1020,11 @@ export const cryptoverseAbi: any[] = [
         "internalType": "bool",
         "name": "destroyed",
         "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "equipped",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1017,16 +1051,29 @@ export const cryptoverseAbi: any[] = [
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "maxEquipmentCount",
+    "outputs": [
       {
-        "internalType": "uint256",
-        "name": "_itemId",
-        "type": "uint256"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    "name": "levelUpItem",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxItemLevel",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1127,6 +1174,19 @@ export const cryptoverseAbi: any[] = [
     "inputs": [
       {
         "internalType": "uint16",
+        "name": "_maxEquipmentCount",
+        "type": "uint16"
+      }
+    ],
+    "name": "setMaxEquipmentCount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
         "name": "_maxItemLevel",
         "type": "uint16"
       }
@@ -1186,6 +1246,32 @@ export const cryptoverseAbi: any[] = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "unequip",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "upgradeItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

@@ -41,4 +41,9 @@ export interface Item {
    * Players can destroy item. They are no longer available if they got destroyed.
    */
   destroyed: boolean;
+
+  /**
+   * Indicates if this item is currently equipped by the player.
+   */
+  equipped: boolean;
 }

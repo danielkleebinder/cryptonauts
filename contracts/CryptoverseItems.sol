@@ -1,16 +1,29 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Cryptoverse.sol";
+import "./CryptoverseAstronauts.sol";
 
 /**
  * @title Cryptoverse Item System
- * @dev The cryptoverse item system manages all item related stuff like creating and trading.
+ * @dev The cryptoverse item system manages all item related stuff like creating and trading. This
+ *      contract may throw the following error codes:
+ *
+ *        - E-I1: You are not the owner of this item
+ *        - E-I2: You cannot perform this action while the item is equipped
+ *        - E-I3: This is not an item you can buy
+ *        - E-I4: This item is too expensive for you
+ *        - E-I5: The upgrade is too expensive for you
+ *        - E-I6: This item has already reached maximum upgrade level - you cannot improve it further
+ *        - E-I7: You cannot equip more items - unequip one to equip a new one
+ *        - E-I8: This item is already unequipped
+ *
  */
-contract CryptoverseItems is Cryptoverse {
+contract CryptoverseItems is CryptoverseAstronauts {
 
     event ItemBought(address buyer, uint itemId);
     event ItemUpgraded(address owner, uint itemId);
+    event ItemEquipped(address owner, uint itemId);
+    event ItemUnequipped(address owner, uint itemId);
     event ItemDestroyed(address destroyer, uint itemId);
 
     event ItemTypeCreated(uint itemTypeId);
@@ -30,31 +43,29 @@ contract CryptoverseItems is Cryptoverse {
         // field should have an upper bound.
         uint16 level;
 
-        // The mining factor which indicates how much this item improves mining speed.
+        // Indicators for how much this item improves the players capabilities
         uint16 mining;
-
-        // The attack factor which indicates how much this item improves offensive damage.
         uint16 attack;
-
-        // The attack factor which indicates how much this item improves defense against
-        // other players.
         uint16 defense;
 
         // Depending on the type (being a template or a purchased item owned by a player),
         // this field either indicates the initial purchase cost or the upgrade cost.
         uint64 cost;
 
-        // Players can destroy item. They are no longer available if they got destroyed.
+        // Players can destroy and equip items.
         bool destroyed;
+        bool equipped;
     }
 
-    uint16 private maxItemLevel = 4;
+    uint16 public maxItemLevel = 4;
+    uint16 public maxEquipmentCount = 3;
 
     Item[] public itemTypes;
     Item[] public items;
 
     mapping(uint => address) itemToOwner;
     mapping(address => uint) ownerItemCount;
+    mapping(address => uint) ownerEquippedItemCount;
 
 
     /**
@@ -63,6 +74,15 @@ contract CryptoverseItems is Cryptoverse {
      */
     modifier onlyItemOwnerOf(uint _itemId) {
         require(msg.sender == itemToOwner[_itemId], "E-I1");
+        _;
+    }
+
+    /**
+     * @dev Some actions can only be performed when the item is not equipped at the moment.
+     * @param _itemId Item ID to check if it is currently equipped.
+     */
+    modifier onlyUnequippedItem(uint _itemId) {
+        require(!items[_itemId].equipped, "E-I2");
         _;
     }
 
@@ -79,7 +99,7 @@ contract CryptoverseItems is Cryptoverse {
      */
     function createItemType(string memory _name, uint16 _mining, uint16 _attack, uint16 _defense, uint64 _cost) external onlyOwner {
         uint id = itemTypes.length;
-        itemTypes.push(Item(id, _name, 1, _mining, _attack, _defense, _cost, false));
+        itemTypes.push(Item(id, _name, 1, _mining, _attack, _defense, _cost, false, false));
         emit ItemTypeCreated(id);
     }
 
@@ -103,12 +123,12 @@ contract CryptoverseItems is Cryptoverse {
      * @param _itemTypeId The type of item which the player want to purchase.
      */
     function buyItem(uint _itemTypeId) external {
-        require(isItemType(_itemTypeId), "E-I2");
+        require(isItemType(_itemTypeId), "E-I3");
 
         Item memory itemType = itemTypes[_itemTypeId];
 
         // Burn the items cost
-        require(balanceOf(msg.sender) >= itemType.cost, "E-I3");
+        require(balanceOf(msg.sender) >= itemType.cost, "E-I4");
         burn(itemType.cost);
 
         // Buy the item by copying the item type
@@ -120,6 +140,7 @@ contract CryptoverseItems is Cryptoverse {
             itemType.attack,
             itemType.defense,
             itemType.cost * 2,
+            false,
             false));
         itemToOwner[id] = msg.sender;
         ownerItemCount[msg.sender]++;
@@ -133,7 +154,7 @@ contract CryptoverseItems is Cryptoverse {
      *      destroy it. This action cannot be undone.
      * @param _itemId The item which should be destroyed.
      */
-    function destroyItem(uint _itemId) external onlyItemOwnerOf(_itemId) {
+    function destroyItem(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
         items[_itemId].destroyed = true;
         ownerItemCount[msg.sender]--;
         emit ItemDestroyed(msg.sender, _itemId);
@@ -144,12 +165,12 @@ contract CryptoverseItems is Cryptoverse {
      *      does not have enough tokens.
      * @param _itemId The item which should be upgraded.
      */
-    function levelUpItem(uint _itemId) external onlyItemOwnerOf(_itemId) {
+    function upgradeItem(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
         Item storage item = items[_itemId];
 
         // Burn the amount of tokens that this upgrade costs
-        require(balanceOf(msg.sender) >= item.cost, "E-I4");
-        require(item.level < maxItemLevel, "E-I5");
+        require(balanceOf(msg.sender) >= item.cost, "E-I5");
+        require(item.level < maxItemLevel, "E-I6");
         burn(item.cost);
 
         // Level up the item
@@ -164,10 +185,52 @@ contract CryptoverseItems is Cryptoverse {
     }
 
     /**
-     * @dev Returns all items of an owner.
+     * @dev For items to be in effect, players have to equip them. There is also a maximum
+     *      amount of equipment a player can use at a time.
+     * @param _itemId The item which should be equipped.
+     */
+    function equip(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
+        Astronaut storage me = ownerToAstronaut[msg.sender];
+        Item storage item = items[_itemId];
+
+        require(ownerEquippedItemCount[msg.sender] < maxEquipmentCount, "E-I7");
+
+        me.mining += item.mining;
+        me.attack += item.attack;
+        me.defense += item.defense;
+        item.equipped = true;
+        ownerEquippedItemCount[msg.sender]++;
+
+        // Emit the event to notify the owner that the item is now equipped
+        emit ItemEquipped(msg.sender, item.id);
+    }
+
+    /**
+     * @dev Some actions require the player to unequip an item.
+     * @param _itemId The item which should be unequipped.
+     */
+    function unequip(uint _itemId) external onlyItemOwnerOf(_itemId) {
+        Astronaut storage me = ownerToAstronaut[msg.sender];
+        Item storage item = items[_itemId];
+
+        require(item.equipped, "E-I8");
+
+        me.mining -= item.mining;
+        me.attack -= item.attack;
+        me.defense -= item.defense;
+        item.equipped = false;
+        ownerEquippedItemCount[msg.sender]--;
+
+        // Emit the event to notify the owner that the item is now unequipped
+        emit ItemUnequipped(msg.sender, item.id);
+    }
+
+    /**
+     * @dev Returns all items of an owner. This function is external because it is really
+     *      expensive for a contract to perform on distributed transactions.
      * @param _owner The owners address.
      */
-    function getItemsByOwner(address _owner) public view returns (Item[] memory) {
+    function getItemsByOwner(address _owner) external view returns (Item[] memory) {
         Item[] memory result = new Item[](ownerItemCount[_owner]);
         Item memory item;
         uint counter = 0;
@@ -191,9 +254,10 @@ contract CryptoverseItems is Cryptoverse {
     }
 
     /**
-     * @dev Returns the current max item level that can be reached.
+     * @dev Sets the max amount of items that can be equipped at a time by a player.
+     * @param _maxEquipmentCount New max equipment count.
      */
-    function getMaxItemLevel() external view returns (uint16) {
-        return maxItemLevel;
+    function setMaxEquipmentCount(uint16 _maxEquipmentCount) external onlyOwner {
+        maxEquipmentCount = _maxEquipmentCount;
     }
 }

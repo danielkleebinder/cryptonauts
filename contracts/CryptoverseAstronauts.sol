@@ -64,7 +64,7 @@ contract CryptoverseAstronauts is Cryptoverse {
             astronauts.push(astronaut);
         }
 
-        // Level up the astronaut and improve it's stats a bit
+        // Level up the astronaut, improve it's stats a bit and fully heal it
         astronaut.level++;
         astronaut.baseHealth += 10;
         astronaut.health = astronaut.baseHealth;

@@ -52,11 +52,11 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 | Work Packet            | Time |
 |------------------------|------|
 | Game Idea              | 4h   |
-| Frontend               | 11h  |
-| Contracts              | 20h  |
-| Testing                | 5h   |
+| Frontend               | 12h  |
+| Contracts              | 24h  |
+| Testing                | 6h   |
 | Web3 (connect FE & SC) | 6h   |
-| **Total**              | **46h** |
+| **Total**              | **52h** |
 
 
 Difficulties
