@@ -86,7 +86,7 @@ contract("Cryptoverse Astronauts", async accounts => {
   });
 
   it("should burn tokens according to the level up cost", async () => {
-    await astronautsInstance.buyTokens({from: playerRed, value: 10_000});
+    await astronautsInstance.buyTokens({from: playerRed, value: 10000});
 
     await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     const balanceBeforeLevelUp = (await astronautsInstance.balanceOf.call(playerRed)).toNumber();
@@ -102,7 +102,7 @@ contract("Cryptoverse Astronauts", async accounts => {
   });
 
   it("should increase level up cost with every level", async () => {
-    await astronautsInstance.buyTokens({from: playerRed, value: 10_000});
+    await astronautsInstance.buyTokens({from: playerRed, value: 10000});
 
     let previousCost, cost;
 
