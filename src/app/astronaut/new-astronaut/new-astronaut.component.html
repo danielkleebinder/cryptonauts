@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Welcome fellow Cryptonaut</h1>
+
+<mat-dialog-content>
+
+  <p>
+    I hope your cross-multiverse travel wasn't too boring. Since you arrived all healthy and not deformed at all I
+    assume everything went well on your trip to the Cryptoverse?
+  </p>
+
+  <p>
+    You are a new Cryptonaut. As you have no experience this far, let me quickly introduce you to the game. Our currency
+    are so called <strong>space diamonds (SD)</strong>. There are three options how you can pile up your stock:
+  </p>
+
+  <ul>
+    <li>Mine them during your explorations on hostile and untouched planets</li>
+    <li>Become a space pirate and fight against other players to gather some of their space diamonds</li>
+    <li>... or you can buy them for Ether in your inventory</li>
+  </ul>
+
+  <p>
+    To make your explorations and battles more lucrative, take a look into the store in your menu to the right. You can
+    buy items there and upgrade them in your inventory.
+  </p>
+
+  <div class="actions">
+    <app-info-card iconUrl="assets/planets-icon.png"
+                   header="Exploration"
+                   description="Travel to uncanny and newly explored planets to mine their resources."
+                   [routerLink]="['/planets']" mat-dialog-close>
+    </app-info-card>
+    <app-info-card iconUrl="assets/npc.png"
+                   header="Me"
+                   description="Take a look at your cryptonauts profile and maybe fight against other players."
+                   [routerLink]="['/me']" mat-dialog-close>
+    </app-info-card>
+  </div>
+
+  <p>
+    <strong>Notice:</strong> You have to level your cryptonaut to level one to be able to fight and explore planets!
+    This is quite easy, give it a try in your cryptonauts profile.
+  </p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close="skip" cdkFocusInitial>Skip</button>
+</mat-dialog-actions>

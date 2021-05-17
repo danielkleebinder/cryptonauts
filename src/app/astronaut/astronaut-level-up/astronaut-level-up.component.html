@@ -7,31 +7,33 @@
   </p>
 
   <section class="specializations">
-    <div class="specialization" [class.selected]="selected === types.Mining" (click)="select(types.Mining)">
-      <img src="assets/shovel.png">
-      <h3>Mining</h3>
-      <p class="no-margin">Your mining is admired in the entire galaxy.</p>
-    </div>
-
-    <div class="specialization" [class.selected]="selected === types.Attack" (click)="select(types.Attack)">
-      <img src="assets/attack.png">
-      <h3>Attack</h3>
-      <p class="no-margin">Increase the damage you deal in combat.</p>
-    </div>
-
-    <div class="specialization" [class.selected]="selected === types.Defense" (click)="select(types.Defense)">
-      <img src="assets/shield.png">
-      <h3>Defense</h3>
-      <p class="no-margin">Better defend yourself against hostile players.</p>
-    </div>
+    <app-info-card [class.selected]="selected === types.Mining" (click)="select(types.Mining)"
+                   iconUrl="assets/shovel.png"
+                   header="Mining"
+                   description="Your mining is admired in the entire galaxy.">
+    </app-info-card>
+    <app-info-card [class.selected]="selected === types.Attack" (click)="select(types.Attack)"
+                   iconUrl="assets/attack.png"
+                   header="Attack"
+                   description="Increase the damage you deal in combat.">
+    </app-info-card>
+    <app-info-card [class.selected]="selected === types.Defense" (click)="select(types.Defense)"
+                   iconUrl="assets/shield.png"
+                   header="Defense"
+                   description="Better defend yourself against hostile players.">
+    </app-info-card>
   </section>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-flat-button mat-dialog-close>Not now</button>
-  <button mat-flat-button mat-dialog-close color="primary"
-          (click)="levelUp()" [disabled]="!selected">
-    Make me stronger
-  </button>
+  <app-tokens [tokens]="tokens$ | async"></app-tokens>
+
+  <div>
+    <button mat-flat-button mat-dialog-close>Not now</button>
+    <button mat-flat-button mat-dialog-close color="primary"
+            (click)="levelUp()" [disabled]="!selected">
+      Make me stronger
+    </button>
+  </div>
 </mat-dialog-actions>

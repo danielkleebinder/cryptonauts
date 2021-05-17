@@ -14,6 +14,7 @@ export class AstronautFacade {
   astronautCount$ = this.store.select(queries.selectAstronautCount);
   me$ = this.store.select(queries.selectMe);
   levelUpCost$ = this.store.select(queries.selectLevelUpCost);
+  isNewPlayer$ = this.store.select(queries.selectIsNewPlayer);
 
   constructor(private store: Store<AstronautState>) {
   }

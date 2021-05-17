@@ -20,6 +20,7 @@ import {AstronautComponent} from './astronaut.component';
 import {AstronautInfoComponent} from './astronaut-info/astronaut-info.component';
 import { AstronautLevelUpComponent } from './astronaut-level-up/astronaut-level-up.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { NewAstronautComponent } from './new-astronaut/new-astronaut.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   declarations: [
     AstronautComponent,
     AstronautInfoComponent,
-    AstronautLevelUpComponent
+    AstronautLevelUpComponent,
+    NewAstronautComponent
   ],
   imports: [
     CommonModule,

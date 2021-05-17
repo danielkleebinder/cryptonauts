@@ -46,7 +46,7 @@ Implementation
 TODO - Write about your implementation here...
 
 Effort breakdown
-------------------
+----------------
 TODO - Short breakdown of your work distribution (approx. 40h effort)...
 
 | Work Packet            | Time |
@@ -86,8 +86,7 @@ However, implementing this system also came at a cost. Players cannot destroy or
 
 Proposal for future changes
 ---------------------------
-TODO - Do you have any proposal how we could change this exercise in the future? 
-(can be left empty)
+We are masters students and were told to develop some sort of smart contract given a certain time frame. I think this part of the lecture was done perfectly well.
 
 ---------------------------
 

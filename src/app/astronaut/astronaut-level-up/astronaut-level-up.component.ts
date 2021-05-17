@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AstronautFacade} from '../store';
 import {AstronautSpecialization} from '../models';
+import {InventoryFacade} from '../../inventory/store';
 
 @Component({
   selector: 'app-astronaut-level-up',
@@ -8,15 +9,21 @@ import {AstronautSpecialization} from '../models';
   styleUrls: ['./astronaut-level-up.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AstronautLevelUpComponent {
+export class AstronautLevelUpComponent implements OnInit {
 
   selected: AstronautSpecialization;
   types = AstronautSpecialization;
 
   levelUpCost$ = this.astronautFacade.levelUpCost$;
+  tokens$ = this.inventoryFacade.tokens$;
 
+  constructor(private astronautFacade: AstronautFacade,
+              private inventoryFacade: InventoryFacade) {
+  }
 
-  constructor(private astronautFacade: AstronautFacade) {
+  /** @inheritDoc */
+  ngOnInit(): void {
+    this.inventoryFacade.loadTokens();
   }
 
   select(specialization: AstronautSpecialization): void {
