@@ -242,14 +242,14 @@ contract("Cryptoverse Items", async accounts => {
     await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
     let items = await itemsInstance.getItemsByOwner.call(playerRed);
 
-    let me = await itemsInstance.getAstronaut.call({from: playerRed});
+    let me = await itemsInstance.getMyAstronaut.call({from: playerRed});
     const plainPlayerMining = +me.mining;
     const plainPlayerAttack = +me.attack;
     const plainPlayerDefense = +me.defense;
 
     await itemsInstance.equip(items[0].id, {from: playerRed});
 
-    me = await itemsInstance.getAstronaut.call({from: playerRed});
+    me = await itemsInstance.getMyAstronaut.call({from: playerRed});
     const equippedPlayerMining = +me.mining;
     const equippedPlayerAttack = +me.attack;
     const equippedPlayerDefense = +me.defense;
@@ -268,13 +268,13 @@ contract("Cryptoverse Items", async accounts => {
     let items = await itemsInstance.getItemsByOwner.call(playerRed);
 
     await itemsInstance.equip(items[0].id, {from: playerRed});
-    let me = await itemsInstance.getAstronaut.call({from: playerRed});
+    let me = await itemsInstance.getMyAstronaut.call({from: playerRed});
     const equippedPlayerMining = +me.mining;
     const equippedPlayerAttack = +me.attack;
     const equippedPlayerDefense = +me.defense;
 
     truffleAssert.eventEmitted(await itemsInstance.unequip(items[0].id, {from: playerRed}), "ItemUnequipped");
-    me = await itemsInstance.getAstronaut.call({from: playerRed});
+    me = await itemsInstance.getMyAstronaut.call({from: playerRed});
     const plainPlayerMining = +me.mining;
     const plainPlayerAttack = +me.attack;
     const plainPlayerDefense = +me.defense;

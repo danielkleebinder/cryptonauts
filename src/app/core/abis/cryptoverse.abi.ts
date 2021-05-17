@@ -24,6 +24,25 @@ export const cryptoverseAbi: any[] = [
       {
         "indexed": false,
         "internalType": "address",
+        "name": "challenger",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "opponent",
+        "type": "address"
+      }
+    ],
+    "name": "CombatOver",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "buyer",
         "type": "address"
       },
@@ -288,65 +307,6 @@ export const cryptoverseAbi: any[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "astronauts",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "id",
-        "type": "address"
-      },
-      {
-        "internalType": "uint32",
-        "name": "level",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "winCount",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "lossCount",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "baseHealth",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "health",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "mining",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "attack",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "defense",
-        "type": "uint32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_owner",
         "type": "address"
@@ -515,66 +475,6 @@ export const cryptoverseAbi: any[] = [
     "name": "fight",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAstronaut",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "id",
-            "type": "address"
-          },
-          {
-            "internalType": "uint32",
-            "name": "level",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "winCount",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "lossCount",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "baseHealth",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "health",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "mining",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "attack",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "defense",
-            "type": "uint32"
-          }
-        ],
-        "internalType": "struct CryptoverseAstronauts.Astronaut",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -771,6 +671,66 @@ export const cryptoverseAbi: any[] = [
         "internalType": "struct CryptoverseItems.Item[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMyAstronaut",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "id",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "level",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "winCount",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lossCount",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "baseHealth",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "health",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "mining",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "attack",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "defense",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct CryptoverseAstronauts.Astronaut",
+        "name": "",
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",

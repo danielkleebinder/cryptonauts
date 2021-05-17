@@ -16,8 +16,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {metaReducers} from './app.reducer';
 
-import {AdminModule} from './admin/admin.module';
 import {SharedModule} from './shared/shared.module';
+import {AdminModule} from './admin/admin.module';
 import {CombatModule} from './combat/combat.module';
 import {MarketModule} from './market/market.module';
 import {InventoryModule} from './inventory/inventory.module';
@@ -39,6 +39,7 @@ import {InventoryModule} from './inventory/inventory.module';
     CombatModule,
     MarketModule,
     InventoryModule,
+
     MatButtonModule,
     MatIconModule,
     MatDividerModule,

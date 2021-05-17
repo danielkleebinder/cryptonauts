@@ -29,7 +29,7 @@ export class AuthComponent implements OnInit {
   letsGo(): void {
     this.blockchain.setPlayerAddress(this.formGroup.get('accountAddress').value?.trim());
     this.blockchain.setCryptoverseContractAddress(this.formGroup.get('contractAddress').value?.trim());
-    this.router.navigate(['/planets']);
+    this.router.navigate(['/me']);
   }
 
 }

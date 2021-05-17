@@ -12,6 +12,7 @@ import {InventoryComponent} from './inventory/inventory.component';
 import {BlockchainService} from './core/services/blockchain.service';
 import {AdminComponent} from './admin/admin.component';
 import {MarketComponent} from './market/market.component';
+import {CombatComponent} from "./combat/combat.component";
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,10 @@ export class AppComponent {
 
   prepareRoute(outlet: RouterOutlet): any {
     return outlet && outlet.isActivated && outlet.activatedRoute;
+  }
+
+  showCombat(): void {
+    this.dialog.open(CombatComponent, {width: '900px'});
   }
 
   showInventory(): void {

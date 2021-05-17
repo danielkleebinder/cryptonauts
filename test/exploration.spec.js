@@ -57,7 +57,6 @@ contract("Cryptoverse Exploration", async accounts => {
 
   it("should arrive after travel on planet", async () => {
     await explorationInstance.setRequiredTravelTime(0);
-    await explorationInstance.leavePlanet();
     assert.equal((await getExploration(owner)).exploring, false);
     truffleAssert.eventEmitted(await explorationInstance.explorePlanet(planets[0].id), "PlanetExplorerArrived");
     assert.equal(await getExplorerCount(planets[0].id), 1);
@@ -65,14 +64,15 @@ contract("Cryptoverse Exploration", async accounts => {
   });
 
   it("should throw if player starts exploring before arriving", async () => {
-    await explorationInstance.leavePlanet();
+    await explorationInstance.setRequiredTravelTime(10);
+    explorationInstance.explorePlanet(planets[0].id);
+    explorationInstance.leavePlanet();
     await truffleAssert.reverts(explorationInstance.explorePlanet(planets[0].id));
     assert.equal(await getExplorerCount(planets[0].id), 0);
   });
 
   it("should travel from one to another planet", async () => {
     await explorationInstance.setRequiredTravelTime(0);
-    await explorationInstance.leavePlanet();
     await explorationInstance.explorePlanet(planets[0].id);
     assert.equal(await getExplorerCount(planets[0].id), 1);
     assert.equal(await getExplorerCount(planets[1].id), 0);
@@ -85,7 +85,6 @@ contract("Cryptoverse Exploration", async accounts => {
 
   it("should collect mined planet resources", async () => {
     await explorationInstance.setRequiredTravelTime(0);
-    await explorationInstance.leavePlanet();
     await explorationInstance.explorePlanet(planets[0].id);
     assert.equal(await getExplorerCount(planets[0].id), 1);
     truffleAssert.eventEmitted(await explorationInstance.collectMinedPlanetResources(), "PlanetResourcesCollected");
@@ -93,7 +92,6 @@ contract("Cryptoverse Exploration", async accounts => {
 
   it("should collect mined planet resources as non-owner", async () => {
     await explorationInstance.setRequiredTravelTime(0);
-    await explorationInstance.leavePlanet({from: playerRed});
     await explorationInstance.explorePlanet(planets[0].id, {from: playerRed});
     assert.equal(await getExplorerCount(planets[0].id), 1);
     truffleAssert.eventEmitted(await explorationInstance.collectMinedPlanetResources({from: playerRed}), "PlanetResourcesCollected");
@@ -112,4 +110,5 @@ contract("Cryptoverse Exploration", async accounts => {
     exploration = await getMyExploration();
     assert.equal(exploration.exploring, false);
   });
+
 });

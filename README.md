@@ -53,15 +53,36 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 |------------------------|------|
 | Game Idea              | 4h   |
 | Frontend               | 12h  |
-| Contracts              | 24h  |
+| Contracts              | 25h  |
 | Testing                | 6h   |
 | Web3 (connect FE & SC) | 6h   |
-| **Total**              | **52h** |
+| Documentation          | 1h   |
+| **Total**              | **54h** |
 
 
 Difficulties
 ------------
 TODO - What difficulties did you face during development?
+
+Solidity has certain constraints placed upon us developers. The most annoying one certainly was the 24 kB contract size limit. The Cryptoverse could probably be split into multiple smaller contacts, but that would come at a certain management cost. It also wasn't obvious HOW to split it.
+
+I thought about extracting the tokens contract from the main one, but this is also barely possible and would come at great cost of extending the token contract by a quite excessive amount of code. This is due to the fact, that the Cryptoverse contract needs more than just minter access to the token contract. It needs full administrative rights like burning tokens of certain users or being able to transfer tokens from one to another user solely on its own for example.
+
+Using delegate calls for this task would have placed more security issues on both of the contracts than they would benefit. So this option also fell flat. However, I was able to reduce the contracts size by using the optimizer flag on the compiler, remove all unnecessary boilerplate code (like getter if a property could be public instead) and replace all revert error messages with simple and short error codes.
+
+Also the astronauts contract gave me some headache: I did not want to initialize the astronauts per player with any function (which the users of the contract must invoked before playing the game - that would have been quite annoying), so I simply decided to make this constraint a feature of my game.
+
+New players now start with a level 0 cryptonaut. They are not part of the global cryptonauts array and can therefore not be address by other players. So level 0 cryptonauts are implicitly protected by some sort of "noob shield". Only if they level up their cryptonaut, they can participate in fights and mining.
+
+One of the biggest challenges was the item system. It has quite a lot of funcionality and affects the player in a wide area. I struggled to figure out how to add the stats that an item gives to the players stats. First I tried to use some sort of for loop and add the accumulated stats to the players stats, but this would become insanely expensive for transactions that cost actual gas.
+
+In the end I figured out, that I can implement an "equipment" system. Players actually have to equip an item to profit from its stats. If equipped, the stats will be directly added to the players stats now. This has many advantages:
+
+ - I can easily perform actions using the players real stats with the equipment active on this player
+ - Getting the players total stats is very cost effcicient now
+ - The total stats can be directly shown in the players menu in the game
+
+However, implementing this system also came at a cost. Players cannot destroy or upgrade items if equipped. This makes a lot of sense however and it became a quite cool feature of the game now.
 
 Proposal for future changes
 ---------------------------

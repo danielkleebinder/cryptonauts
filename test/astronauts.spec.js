@@ -16,7 +16,7 @@ contract("Cryptoverse Astronauts", async accounts => {
   });
 
   it("should start with a level 0 astronaut", async () => {
-    const me = await astronautsInstance.getAstronaut.call();
+    const me = await astronautsInstance.getMyAstronaut.call();
     assert.equal(me.level, 0);
   });
 
@@ -34,7 +34,7 @@ contract("Cryptoverse Astronauts", async accounts => {
     truffleAssert.eventEmitted(await astronautsInstance.levelUpAstronaut("mining", {from: playerRed}), "AstronautLevelUp");
 
     // Astronaut has to be level 1 now
-    const me = await astronautsInstance.getAstronaut.call({from: playerRed});
+    const me = await astronautsInstance.getMyAstronaut.call({from: playerRed});
     assert.equal(me.level, 1);
 
     // Level up cost must increase
@@ -57,7 +57,7 @@ contract("Cryptoverse Astronauts", async accounts => {
 
   it("should increase specialization more", async () => {
     await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
-    const me = await astronautsInstance.getAstronaut.call({from: playerRed});
+    const me = await astronautsInstance.getMyAstronaut.call({from: playerRed});
     assert.equal(me.level, 1);
     assert(me.mining > me.attack);
     assert(me.mining > me.defense);
@@ -120,6 +120,17 @@ contract("Cryptoverse Astronauts", async accounts => {
     await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
     cost = (await astronautsInstance.getAstronautLevelUpCost.call({from: playerRed})).toNumber();
     assert(previousCost < cost);
+  });
+
+  it("should keep astronauts list consistent", async () => {
+    await astronautsInstance.buyTokens({from: playerRed, value: 10000});
+    await astronautsInstance.levelUpAstronaut("mining", {from: playerRed});
+    let astronauts = await astronautsInstance.getAstronauts.call();
+    assert.equal(astronauts.length, 1);
+    assert.equal(astronauts[0].level, 1);
+    assert(astronauts[0].mining > 0);
+    assert(astronauts[0].attack > 0);
+    assert(astronauts[0].defense > 0);
   });
 
 });

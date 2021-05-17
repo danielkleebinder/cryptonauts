@@ -7,7 +7,15 @@ import "./CryptoverseItems.sol";
 
 /**
  * @title Cryptoverse Exploration System
- * @dev Players can explore the universe of "Cryptoverse". This contract handles that.
+ * @dev Players can explore the universe of "Cryptoverse". This contract handles that. This contract
+ *      may throw the following error codes:
+ *
+ *        - E-E1: You must be on the planets surface to perform this action
+ *        - E-E2: This is not a planet you can explore
+ *        - E-E3: You are already exploring a planet - leave it to start a new exploration
+ *        - E-E4: You are still occupied and cannot perform this action yet - please wait a bit
+ *        - E-E5: You must be at least level 1 to explore a planet
+ *
  */
 contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, CryptoverseItems {
 
@@ -40,7 +48,7 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
     /**
      * @dev Leaves the planet into outer space without a specific next target.
      */
-    function leavePlanet() public {
+    function leavePlanet() public onlyOnPlanet {
         Exploration storage exploration = explorations[msg.sender];
         Planet storage planet = planets[exploration.planetId];
 
@@ -71,9 +79,9 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
         // This might look like a security bug here. If the exploration is not
         // initialized yet and the player just starts to explore a planet, all
         // those require statements will pass since exploring is false and
-        // the start time of the journy is at 0.
+        // the start time of the journey is at 0.
         //
-        // But this is actually perfectly fine here and even inteded. So to say
+        // But this is actually perfectly fine here and even intended. So to say
         // a "feature". Astronauts who just joined the game for the first time
         // and are not on the surface of any planet can immediately travel there
         // to get a first feeling for the game.

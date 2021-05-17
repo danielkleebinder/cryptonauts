@@ -24,6 +24,12 @@ errorMappings['E-E1'] = 'You must be on the planets surface to perform this acti
 errorMappings['E-E2'] = 'This is not a planet you can explore';
 errorMappings['E-E3'] = 'You are already exploring a planet - leave it to start a new exploration';
 errorMappings['E-E4'] = 'You are still occupied and cannot perform this action yet - please wait a bit';
+errorMappings['E-E5'] = 'You must be at least level 1 to explore a planet';
+
+// Fight errors
+errorMappings['E-F1'] = 'You and your opponent must be at least level 1 to fight each other';
+errorMappings['E-F2'] = 'The level difference is too large';
+errorMappings['E-F3'] = 'You cannot fight against yourself';
 
 
 /**

@@ -38,7 +38,7 @@ export class AstronautService {
   getMyAstronaut(): Observable<Astronaut> {
     return from(this.blockchain
       .contract.methods
-      .getAstronaut()
+      .getMyAstronaut()
       .call({from: this.blockchain.player})) as Observable<Astronaut>;
   }
 

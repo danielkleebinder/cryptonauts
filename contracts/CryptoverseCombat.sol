@@ -7,14 +7,19 @@ import "./CryptoverseItems.sol";
 import "./CryptoverseMath.sol";
 
 /**
- * @title Cryptoverse Exploration System
- * @dev Players can explore the universe of "Cryptoverse". This contract handles that. This contract
+ * @title Cryptoverse Combat System
+ * @dev Players can fight other players. This contract handles that. This contract
  *      throws the following error codes:
  *
- *        - E-F1: The level difference is too large
+ *        - E-F1: You and your opponent must be at least level 1 to fight each other
+ *        - E-F2: The level difference is too large
+ *        - E-F3: You cannot fight against yourself
  *
  */
-contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
+contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
+
+    event CombatOver(address challenger, address opponent);
+
 
     /**
      * @dev Players can only fight other players in their level range. There is no
@@ -24,7 +29,9 @@ contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
     modifier canFightAgainst(address _opponent) {
         int32 myLevel = int32(ownerToAstronaut[msg.sender].level);
         int32 opLevel = int32(ownerToAstronaut[_opponent].level);
-        require((opLevel - myLevel) > -10, "E-F1");
+        require(opLevel > 0 && myLevel > 0, "E-F1");
+        require((opLevel - myLevel) > -10, "E-F2");
+        require(msg.sender != _opponent, "E-F3");
         _;
     }
 
@@ -32,8 +39,8 @@ contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
         Astronaut storage me = ownerToAstronaut[msg.sender];
         Astronaut storage op = ownerToAstronaut[_opponent];
 
-        int32 dmgToMe = CryptoverseMath.max(int32(me.defense) - int32(op.attack), 1);
-        int32 dmgToOp = CryptoverseMath.max(int32(op.defense) - int32(me.attack), 1);
+        int32 dmgToMe = CryptoverseMath.max(int32(op.attack) - int32(me.defense), 1);
+        int32 dmgToOp = CryptoverseMath.max(int32(me.attack) - int32(op.defense), 1);
 
         // Will never be below zero, so this type cast is safe
         me.health = uint32(CryptoverseMath.max(int32(me.health) - dmgToMe, 0));
@@ -52,5 +59,8 @@ contract CryptoverseFights is CryptoverseAstronauts, CryptoverseItems {
             op.lossCount++;
             op.health = op.baseHealth;
         }
+
+        // Notify the players that the battle is now over
+        emit CombatOver(msg.sender, _opponent);
     }
 }

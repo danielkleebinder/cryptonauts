@@ -39,7 +39,7 @@ contract CryptoverseAstronauts is Cryptoverse {
         uint32 defense;
     }
 
-    Astronaut[] public astronauts;
+    address[] private players;
     mapping(address => Astronaut) ownerToAstronaut;
 
     uint private levelUpFactor = 3;
@@ -61,7 +61,7 @@ contract CryptoverseAstronauts is Cryptoverse {
         // reached level 1. Otherwise the astronaut cannot fight and is not visible to
         // other players. This is some sort of "Noob-Protection".
         if (astronaut.level <= 0) {
-            astronauts.push(astronaut);
+            players.push(msg.sender);
         }
 
         // Level up the astronaut, improve it's stats a bit and fully heal it
@@ -102,7 +102,7 @@ contract CryptoverseAstronauts is Cryptoverse {
     /**
      * @dev Returns the players astronaut.
      */
-    function getAstronaut() external view returns (Astronaut memory) {
+    function getMyAstronaut() external view returns (Astronaut memory) {
         return ownerToAstronaut[msg.sender];
     }
 
@@ -110,6 +110,10 @@ contract CryptoverseAstronauts is Cryptoverse {
      * @dev Returns all astronauts currently stored in this contract.
      */
     function getAstronauts() external view returns (Astronaut[] memory) {
+        Astronaut[] memory astronauts = new Astronaut[](players.length);
+        for (uint i = 0; i < players.length; i++) {
+          astronauts[i] = ownerToAstronaut[players[i]];
+        }
         return astronauts;
     }
 
