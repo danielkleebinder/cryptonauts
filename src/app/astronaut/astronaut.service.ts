@@ -79,4 +79,18 @@ export class AstronautService {
         gas: 3_000_000
       }));
   }
+
+  /**
+   * Fights another astronaut.
+   * @param opponent Opponent
+   */
+  fight(opponent: Astronaut): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .fight(opponent.id)
+      .send({
+        from: this.blockchain.player,
+        gas: 3_000_000
+      }));
+  }
 }

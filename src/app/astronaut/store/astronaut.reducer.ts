@@ -5,7 +5,11 @@ import {AstronautState} from './astronaut.state';
 import * as actions from './astronaut.actions';
 
 
-export const adapter = createEntityAdapter<Astronaut>();
+export const adapter = createEntityAdapter<Astronaut>({
+  selectId: model => model.id,
+  sortComparer: (a, b) => b.level - a.level
+});
+
 const initialState: AstronautState = adapter.getInitialState({
   me: null,
   levelUpCost: 0

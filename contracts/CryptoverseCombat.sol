@@ -51,6 +51,7 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
             me.lossCount++;
             op.winCount++;
             me.health = me.baseHealth;
+            dropLoot(msg.sender, _opponent);
         }
 
         // I won, increase counters and heal my opponent back up again
@@ -58,9 +59,22 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
             me.winCount++;
             op.lossCount++;
             op.health = op.baseHealth;
+            dropLoot(_opponent, msg.sender);
         }
 
         // Notify the players that the battle is now over
         emit CombatOver(msg.sender, _opponent);
+    }
+
+    /**
+     * @dev Internal function which simulates dropping some tokens as loot for the
+     *      winner of a battle.
+     * @param _loser  The battles loser.
+     * @param _winner The battles winner.
+     */
+    function dropLoot(address _loser, address _winner) internal {
+        uint droppedTokens = balanceOf(_loser) / 20;
+        _burn(_loser, droppedTokens);
+        mint(_winner, droppedTokens);
     }
 }

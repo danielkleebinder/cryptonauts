@@ -21,4 +21,9 @@ export interface Astronaut {
    * The astronauts level (level >= 1).
    */
   level: number;
+
+  /**
+   * Optional ranking property only used in the frontend.
+   */
+  ranking?: number;
 }

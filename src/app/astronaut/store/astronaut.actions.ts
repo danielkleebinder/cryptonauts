@@ -9,6 +9,8 @@ export const clearAstronauts = createAction('[Astronaut Page] Clear astronauts')
 export const levelUp = createAction('[Astronaut Page] Level up my astronaut', props<{ specialization: AstronautSpecialization }>());
 export const levelUpSuccess = createAction('[Astronaut API] Level up my astronaut success');
 
+export const fight = createAction('[Astronaut Page] Fight', props<{ opponent: Astronaut }>());
+
 export const loadLevelUpCost = createAction('[Astronaut Page] Load level up cost');
 export const loadLevelUpCostSuccess = createAction('[Astronaut API]  Load level up cost success', props<{ levelUpCost: number }>());
 

@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Astronaut} from '../astronaut/models';
 import {AstronautFacade} from '../astronaut/store';
-import {Subscription} from "rxjs";
+import {AstronautFilters} from './astronaut-filters/astronaut-filters';
+import {matchesFilter} from './astronaut-filters/astronaut-filters-fn';
 
 @Component({
   selector: 'app-combat',
@@ -10,30 +12,47 @@ import {Subscription} from "rxjs";
   styleUrls: ['./combat.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CombatComponent implements OnInit, OnDestroy {
+export class CombatComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'level', 'winCount', 'actions'];
-  dataSource = new MatTableDataSource<Astronaut>();
+  filter$ = new BehaviorSubject<AstronautFilters>(null);
 
-  private astronautsSubscription: Subscription;
+  astronauts$ = combineLatest([
+    this.astronautFacade.astronauts$,
+    this.filter$
+  ]).pipe(
+    map(([astronauts, filter]) => astronauts
+      .map((curr, index) => ({...curr, ranking: (index + 1)}))
+      .filter(curr => matchesFilter(curr, filter))),
+    map((astronauts) => astronauts));
 
   constructor(private astronautFacade: AstronautFacade) {
   }
 
   /** @inheritDoc */
   ngOnInit(): void {
-    this.astronautsSubscription = this.astronautFacade
-      .astronauts$
-      .subscribe(astronauts => this.dataSource = new MatTableDataSource<Astronaut>(astronauts));
+    this.refresh();
+  }
 
+  /**
+   * Refreshes the list of astronauts.
+   */
+  refresh(): void {
     this.astronautFacade.loadAstronauts();
   }
 
-  /** @inheritDoc */
-  ngOnDestroy(): void {
-    this.astronautsSubscription?.unsubscribe();
+  /**
+   * Readjust whats shown on the screen.
+   * @param filter Filter.
+   */
+  filterChanged(filter: AstronautFilters): void {
+    this.filter$.next(filter);
   }
 
-  fight(astronaut: Astronaut):void{
+  /**
+   * Fight against the opponent given.
+   * @param opponent Your opponent.
+   */
+  fight(opponent: Astronaut): void {
+    this.astronautFacade.fight(opponent);
   }
 }

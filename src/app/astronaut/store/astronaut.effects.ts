@@ -41,6 +41,18 @@ export class AstronautEffects {
         catchError(err => this.onError(err))))
   ));
 
+  fight$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.fight),
+    switchMap(({opponent}) => this.astronautService
+      .fight(opponent)
+      .pipe(
+        switchMap(() => [
+          actions.loadMyAstronaut(),
+          actions.loadAstronauts()
+        ]),
+        catchError(err => this.onError(err))))
+  ));
+
   loadLevelUpCost$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadLevelUpCost),
     switchMap(() => this.astronautService

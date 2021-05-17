@@ -2,38 +2,18 @@
 
 <mat-dialog-content>
 
-  <table mat-table [dataSource]="dataSource" matSort>
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="winCount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Wins</th>
-      <td mat-cell *matCellDef="let element">{{element.winCount}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="level">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
-      <td mat-cell *matCellDef="let element">{{element.level}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-flat-button color="primary" (click)="fight(element)">Fight</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <app-astronaut-filters (filter)="filterChanged($event)"></app-astronaut-filters>
+  <app-astronaut-item *ngFor="let astronaut of (astronauts$ | async)"
+                      [astronaut]="astronaut"
+                      [ranking]="astronaut.ranking"
+                      (fight)="fight(astronaut)">
+  </app-astronaut-item>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
+  <button mat-icon-button (click)="refresh()">
+    <mat-icon>refresh</mat-icon>
+  </button>
   <button mat-flat-button mat-dialog-close cdkFocusInitial>Close</button>
 </mat-dialog-actions>
