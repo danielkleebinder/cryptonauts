@@ -22,6 +22,7 @@ export class AuthComponent implements OnInit {
 
   /** @inheritDoc */
   ngOnInit(): void {
+    this.blockchain.logout();
     this.formGroup = this.formBuilder.group({
       contractAddress: ['', Validators.required],
       accountAddress: ['', Validators.required]

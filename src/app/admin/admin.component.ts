@@ -9,6 +9,7 @@ import {
   ConfirmationDialogResult
 } from '../shared/components/confirmation-dialog';
 import {AdminFacade} from './store';
+import {ChangeTokenPriceComponent} from "./change-token-price/change-token-price.component";
 
 
 @Component({
@@ -54,5 +55,9 @@ export class AdminComponent implements OnInit {
   redeemEther(): void {
     this.adminFacade.redeemEther();
     this.adminFacade.loadContractBalance();
+  }
+
+  setTokenPrice(): void {
+    this.dialog.open(ChangeTokenPriceComponent, {width: '400px'});
   }
 }

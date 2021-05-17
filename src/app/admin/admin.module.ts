@@ -17,6 +17,7 @@ import {AddOwnerComponent} from './add-owner/add-owner.component';
 
 import * as queries from './store/admin.selectors';
 import {AdminEffects, AdminFacade, reducer} from './store';
+import { ChangeTokenPriceComponent } from './change-token-price/change-token-price.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {AdminEffects, AdminFacade, reducer} from './store';
     AdminComponent,
     AddItemComponent,
     AddOwnerComponent,
+    ChangeTokenPriceComponent,
   ],
   imports: [
     CommonModule,

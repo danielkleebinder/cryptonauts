@@ -3,12 +3,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminFacade} from '../store';
 
 @Component({
-  selector: 'app-add-owner',
-  templateUrl: './add-owner.component.html',
-  styleUrls: ['./add-owner.component.css'],
+  selector: 'app-change-token-price',
+  templateUrl: './change-token-price.component.html',
+  styleUrls: ['./change-token-price.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddOwnerComponent implements OnInit {
+export class ChangeTokenPriceComponent implements OnInit {
 
   formGroup: FormGroup;
 
@@ -19,15 +19,15 @@ export class AddOwnerComponent implements OnInit {
   /** @inheritDoc */
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      address: ['', Validators.required]
+      tokenPrice: [null, Validators.required]
     });
   }
 
   /**
-   * Adds the owner entered.
+   * Sets the new token price.
    */
-  addOwner(): void {
-    const {address} = this.formGroup.getRawValue();
-    this.adminFacade.addOwner(address);
+  save(): void {
+    const {tokenPrice} = this.formGroup.getRawValue();
+    this.adminFacade.setTokenPrice(tokenPrice);
   }
 }

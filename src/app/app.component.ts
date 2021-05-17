@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {filter} from 'rxjs/operators';
@@ -22,7 +22,7 @@ import {AdminFacade} from './admin/store';
   animations: [routeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   contractActive$ = this.blockchain.contractActive$;
   isOwner$ = this.adminFacade.isOwner$;
@@ -35,6 +35,11 @@ export class AppComponent {
 
   prepareRoute(outlet: RouterOutlet): any {
     return outlet && outlet.isActivated && outlet.activatedRoute;
+  }
+
+  /** @inheritDoc */
+  ngOnInit(): void {
+    this.adminFacade.loadOwnership();
   }
 
   showCombat(): void {
