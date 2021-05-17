@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AstronautFacade} from '../store';
 import {AstronautLevelUpComponent} from '../astronaut-level-up/astronaut-level-up.component';
+import {CombatComponent} from "../../combat/combat.component";
 
 
 @Component({
@@ -21,6 +22,10 @@ export class AstronautInfoComponent implements OnInit {
   /** @inheritDoc */
   ngOnInit(): void {
     this.astronautFacade.loadLevelUpCost();
+  }
+
+  showCombat(): void {
+    this.dialog.open(CombatComponent, {width: '900px'});
   }
 
   /**

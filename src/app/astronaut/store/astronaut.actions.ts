@@ -16,5 +16,3 @@ export const loadLevelUpCostSuccess = createAction('[Astronaut API]  Load level 
 
 export const loadMyAstronaut = createAction('[Astronaut Page] Load my astronaut');
 export const loadMyAstronautSuccess = createAction('[Astronaut API] Load my astronaut success', props<{ me: Astronaut }>());
-
-export const setLevelUpFactor = createAction('[Admin Page] Set level up factor', props<{ levelUpFactor: number }>());

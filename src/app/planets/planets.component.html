@@ -8,13 +8,19 @@
 
   <mat-sidenav-content>
 
+    <ng-container *ngIf="exploration$ | async as exploration">
+      <app-planet-travel-timer *ngIf="exploration != null && !exploration.exploring"
+                               @slideOutTravelTimer>
+      </app-planet-travel-timer>
+    </ng-container>
+
     <app-planet *ngFor="let planet of (cryptoverse$ | async); trackBy: trackByPlanetId"
                 [planet]="planet"
                 [class.selected]="planet.id === (activePlanet$ | async)?.id"
                 (click)="selectPlanet(planet)">
     </app-planet>
 
-    <div *ngIf="!(hasActivePlanet$ | async)" class="notes" @slideOut>
+    <div *ngIf="!(hasActivePlanet$ | async)" class="notes" @slideOutNotes>
       <h4 class="no-margin">Welcome back commander</h4>
       Click on one of the planets to start your exploration 🚀
     </div>

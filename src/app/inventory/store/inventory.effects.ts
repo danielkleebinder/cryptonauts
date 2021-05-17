@@ -26,6 +26,15 @@ export class InventoryEffects {
         catchError(err => this.onError(err))))
   ));
 
+  loadPlayerBalance$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.loadPlayerBalance),
+    switchMap(() => this.inventoryService
+      .getPlayerBalance()
+      .pipe(
+        map((playerBalance) => actions.loadPlayerBalanceSuccess({playerBalance})),
+        catchError(err => this.onError(err))))
+  ));
+
   buyTokens$ = createEffect(() => this.actions$.pipe(
     ofType(actions.buyTokens),
     switchMap(({wei}) => this.inventoryService

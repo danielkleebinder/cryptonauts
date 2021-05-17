@@ -22,10 +22,16 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-flat-button mat-dialog-close>Close</button>
-  <button mat-flat-button mat-dialog-close color="primary"
-          [disabled]="diamondsFormControl.invalid"
-          (click)="buyTokens()">
-    Buy
-  </button>
+
+  <small>You have {{playerBalance$ | async | number}} Ether</small>
+
+  <div>
+    <button mat-flat-button mat-dialog-close>Close</button>
+    <button mat-flat-button mat-dialog-close color="primary"
+            [disabled]="diamondsFormControl.invalid"
+            (click)="buyTokens()">
+      Buy
+    </button>
+  </div>
+
 </mat-dialog-actions>

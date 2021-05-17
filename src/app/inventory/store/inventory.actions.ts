@@ -7,6 +7,9 @@ export const loadInventory = createAction('[Inventory Page] Load inventory');
 export const loadInventorySuccess = createAction('[Inventory API] Load inventory success', props<{ items: Item[] }>());
 export const clearInventory = createAction('[Inventory Page] Clear inventory');
 
+export const loadPlayerBalance = createAction('[Admin Page] Load player balance');
+export const loadPlayerBalanceSuccess = createAction('[Admin API] Load player balance success', props<{ playerBalance: number }>());
+
 export const upgradeItem = createAction('[Inventory Page] Upgrade item', props<{ itemId: number }>());
 export const upgradeItemSuccess = createAction('[Inventory API] Upgrade item success', props<{ itemId: number }>());
 export const destroyItem = createAction('[Inventory Page] Destroy item', props<{ itemId: number }>());

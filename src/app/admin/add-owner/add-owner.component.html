@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Add Owner</h1>
+
+<mat-dialog-content [formGroup]="formGroup">
+  <h4>Account</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Add owner</mat-label>
+    <input matInput formControlName="address" placeholder="0x408007...">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="addOwner()">
+    <mat-icon>add</mat-icon>
+    Add Owner
+  </button>
+</mat-dialog-actions>

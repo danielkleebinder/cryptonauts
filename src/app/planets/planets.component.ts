@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, TrackByFunction} from '@angular/core';
 import {Planet} from './models';
-import {slideOut} from './planets.animation';
+import {slideOutNotes, slideOutTravelTimer} from './planets.animation';
 import {PlanetsFacade} from './store';
 
 
@@ -8,7 +8,7 @@ import {PlanetsFacade} from './store';
   selector: 'app-planets',
   templateUrl: './planets.component.html',
   styleUrls: ['./planets.component.css'],
-  animations: [slideOut],
+  animations: [slideOutNotes, slideOutTravelTimer],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetsComponent implements OnInit {
@@ -16,6 +16,7 @@ export class PlanetsComponent implements OnInit {
   cryptoverse$ = this.planetsFacade.planets$;
   activePlanet$ = this.planetsFacade.activePlanet$;
   hasActivePlanet$ = this.planetsFacade.hasActivePlanet$;
+  exploration$ = this.planetsFacade.myExploration$;
 
   // Improve performance by using a tracking function
   trackByPlanetId: TrackByFunction<Planet> = (index, planet) => planet.id;
@@ -27,6 +28,7 @@ export class PlanetsComponent implements OnInit {
   ngOnInit(): void {
     this.planetsFacade.loadPlanets();
     this.planetsFacade.loadTravelTime();
+    this.planetsFacade.loadMyExploration();
   }
 
   selectPlanet(planet: Planet): void {

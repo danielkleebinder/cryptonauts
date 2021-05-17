@@ -114,4 +114,14 @@ export class InventoryService {
         gas: 3_000_000
       }));
   }
+
+  /**
+   * Returns the balance on the current player.
+   */
+  getPlayerBalance(): Observable<number> {
+    return from(this.web3.eth.getBalance(this.blockchain.player))
+      .pipe(
+        map(data => this.web3.utils.fromWei(data, 'ether')),
+        map(data => +data));
+  }
 }

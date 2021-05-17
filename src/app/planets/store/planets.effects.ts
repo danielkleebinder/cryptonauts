@@ -81,15 +81,6 @@ export class PlanetsEffects {
         catchError(err => this.onError(err))))
   ));
 
-  setTravelTime$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.setTravelTime),
-    switchMap(({travelTime}) => this.planetsService
-      .setTravelTime(travelTime)
-      .pipe(
-        tap(() => this.notifierService.notify('success', `The required travel time between planets is now ${travelTime} seconds`)),
-        catchError(err => this.onError(err))))
-  ));
-
   loadTravelTime$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadTravelTime),
     switchMap(() => this.planetsService

@@ -13,12 +13,17 @@ export class InventoryFacade {
   inventoryEmpty$ = this.store.select(queries.selectInventoryEmpty);
   tokens$ = this.store.select(queries.selectTokens);
   tokenPrice$ = this.store.select(queries.selectTokenPrice);
+  playerBalance$ = this.store.select(queries.selectPlayerBalance);
 
   constructor(private store: Store<InventoryState>) {
   }
 
   loadInventory(): void {
     this.store.dispatch(actions.loadInventory());
+  }
+
+  loadPlayerBalance(): void {
+    this.store.dispatch(actions.loadPlayerBalance());
   }
 
   buyTokens(wei: number): void {

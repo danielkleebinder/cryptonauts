@@ -17,6 +17,8 @@ import {PlanetsEffects, PlanetsFacade, reducer} from './store';
 import * as queries from './store/planets.selectors';
 import { PlanetTokensFoundComponent } from './planet-tokens-found/planet-tokens-found.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { PlanetTravelTimerComponent } from './planet-travel-timer/planet-travel-timer.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 const routes: Routes = [
@@ -29,7 +31,8 @@ const routes: Routes = [
     PlanetsComponent,
     PlanetComponent,
     PlanetInfoComponent,
-    PlanetTokensFoundComponent
+    PlanetTokensFoundComponent,
+    PlanetTravelTimerComponent
   ],
     imports: [
         CommonModule,
@@ -43,7 +46,8 @@ const routes: Routes = [
         MatChipsModule,
         MatDividerModule,
         MatSidenavModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressBarModule
     ],
   providers: [
     PlanetsFacade

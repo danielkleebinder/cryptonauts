@@ -3,11 +3,6 @@ section {
   flex-direction: column;
 }
 
-section p {
-  margin-top: 48px;
-  margin-bottom: 48px;
-}
-
 section mat-form-field {
   max-width: 400px;
   margin-left: 16px;
@@ -17,4 +12,12 @@ section mat-form-field {
 footer {
   display: flex;
   justify-content: flex-end;
+}
+
+p {
+  opacity: 0.7;
+}
+
+button {
+  margin-bottom: 12px;
 }

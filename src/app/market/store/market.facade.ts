@@ -5,8 +5,6 @@ import {MarketState} from './market.state';
 import * as actions from './market.actions';
 import * as queries from './market.selectors';
 
-import {Item} from '../../inventory/models';
-
 
 @Injectable()
 export class MarketFacade {
@@ -19,10 +17,6 @@ export class MarketFacade {
 
   loadMarket(): void {
     this.store.dispatch(actions.loadMarket());
-  }
-
-  addItemType(newItem: Partial<Item>): void {
-    this.store.dispatch(actions.addItemType({newItem}));
   }
 
   buyItem(itemTypeId: number): void {

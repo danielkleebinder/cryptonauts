@@ -1,6 +1,15 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MarketFacade} from '../market/store';
+import {MatDialog} from '@angular/material/dialog';
+import {filter} from 'rxjs/operators';
+import {AddItemComponent} from './add-item/add-item.component';
+import {AddOwnerComponent} from './add-owner/add-owner.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmationDialogModel,
+  ConfirmationDialogResult
+} from '../shared/components/confirmation-dialog';
+import {AdminFacade} from './store';
+
 
 @Component({
   selector: 'app-admin',
@@ -10,32 +19,40 @@ import {MarketFacade} from '../market/store';
 })
 export class AdminComponent implements OnInit {
 
-  itemFormGroup: FormGroup;
+  contractBalance$ = this.adminFacade.contractBalance$;
 
-  constructor(private formBuilder: FormBuilder,
-              private marketFacade: MarketFacade) {
+  constructor(private adminFacade: AdminFacade,
+              private dialog: MatDialog) {
   }
 
   /** @inheritDoc */
   ngOnInit(): void {
-    this.itemFormGroup = this.formBuilder.group({
-      itemName: ['', Validators.required],
-      itemMining: [0, Validators.compose([Validators.required, Validators.min(0)])],
-      itemAttack: [0, Validators.compose([Validators.required, Validators.min(0)])],
-      itemDefense: [0, Validators.compose([Validators.required, Validators.min(0)])],
-      itemCost: [0, Validators.compose([Validators.required, Validators.min(0)])]
-    });
+    this.adminFacade.loadContractBalance();
   }
 
-  createItem(): void {
-    const val = this.itemFormGroup.getRawValue();
-    this.marketFacade.addItemType({
-      name: val.itemName,
-      mining: +val.itemMining,
-      attack: +val.itemAttack,
-      defense: +val.itemDefense,
-      cost: +val.itemCost,
-    });
-    this.itemFormGroup.reset();
+  addItem(): void {
+    this.dialog.open(AddItemComponent, {width: '400px'});
+  }
+
+  addOwner(): void {
+    this.dialog.open(AddOwnerComponent, {width: '400px'});
+  }
+
+  renounceOwnership(): void {
+    this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Renounce your ownership',
+        message: 'Are you sure that you want to renounce your ownership? Only other owners will be able to add you back again.',
+        confirmationText: 'Renounce'
+      } as ConfirmationDialogModel
+    }).afterClosed()
+      .pipe(filter(res => res === ConfirmationDialogResult.Confirm))
+      .subscribe(() => this.adminFacade.renounceOwner());
+  }
+
+  redeemEther(): void {
+    this.adminFacade.redeemEther();
+    this.adminFacade.loadContractBalance();
   }
 }

@@ -27,24 +27,6 @@ export class MarketService {
   }
 
   /**
-   * Creates and adds a completely new item type.
-   * @param name Items name.
-   * @param mining Mining power.
-   * @param attack Attack power.
-   * @param defense Defense power.
-   * @param cost Cost.
-   */
-  addItemType(name: string, mining: number, attack: number, defense: number, cost: number): Observable<any> {
-    return from(this.blockchain
-      .contract.methods
-      .createItemType(name, mining, attack, defense, cost)
-      .send({
-        from: this.blockchain.player,
-        gas: 3_000_000
-      }));
-  }
-
-  /**
    * Buys the item with the given item ID.
    * @param itemTypeId Item type ID.
    */

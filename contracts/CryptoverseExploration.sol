@@ -33,7 +33,7 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
 
     mapping(address => Exploration) public explorations;
 
-    uint public requiredTravelTime = 5 seconds;
+    uint public requiredTravelTime = 30 seconds;
 
 
     /**

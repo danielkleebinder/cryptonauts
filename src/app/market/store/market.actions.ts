@@ -10,6 +10,3 @@ export const clearMarket = createAction('[Market Page] Clear market');
 export const buyItem = createAction('[Market Page] Buy item', props<{ itemTypeId: number }>());
 export const buyItemSuccess = createAction('[Market Page] Buy item success');
 
-export const addItemType = createAction('[Admin Page] Add item type', props<{ newItem: Partial<Item> }>());
-export const addItemTypeSuccess = createAction('[Admin API] Add item type success');
-

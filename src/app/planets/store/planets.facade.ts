@@ -43,10 +43,6 @@ export class PlanetsFacade {
     this.store.dispatch(actions.explorePlanet({planetId}));
   }
 
-  setTravelTime(travelTime: number): void {
-    this.store.dispatch(actions.setTravelTime({travelTime}));
-  }
-
   loadTravelTime(): void {
     this.store.dispatch(actions.loadTravelTime());
   }

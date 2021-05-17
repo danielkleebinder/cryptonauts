@@ -38,8 +38,4 @@ export class AstronautFacade {
   loadMyAstronaut(): void {
     this.store.dispatch(actions.loadMyAstronaut());
   }
-
-  setLevelUpFactor(levelUpFactor: number): void {
-    this.store.dispatch(actions.setLevelUpFactor({levelUpFactor}));
-  }
 }

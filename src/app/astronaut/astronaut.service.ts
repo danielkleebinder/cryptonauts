@@ -67,20 +67,6 @@ export class AstronautService {
   }
 
   /**
-   * Sets the level up factor. Can only be adjusted by owners.
-   * @param levelUpFactor Level up factor.
-   */
-  setLevelUpFactor(levelUpFactor: number): Observable<any> {
-    return from(this.blockchain
-      .contract.methods
-      .setLevelUpFactor(levelUpFactor)
-      .send({
-        from: this.blockchain.player,
-        gas: 3_000_000
-      }));
-  }
-
-  /**
    * Fights another astronaut.
    * @param opponent Opponent
    */

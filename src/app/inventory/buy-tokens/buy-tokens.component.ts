@@ -11,6 +11,7 @@ import {InventoryFacade} from '../store';
 export class BuyTokensComponent implements OnInit {
 
   tokenPrice$ = this.inventoryFacade.tokenPrice$;
+  playerBalance$ = this.inventoryFacade.playerBalance$;
 
   diamondsFormControl = this.formBuilder.control(0, Validators.compose([
     Validators.min(1),
@@ -24,6 +25,7 @@ export class BuyTokensComponent implements OnInit {
   /** @inheritDoc */
   ngOnInit(): void {
     this.inventoryFacade.loadTokenPrice();
+    this.inventoryFacade.loadPlayerBalance();
   }
 
   buyTokens(): void {

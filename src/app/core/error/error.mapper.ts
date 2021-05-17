@@ -29,7 +29,7 @@ errorMappings['E-E5'] = 'You must be at least level 1 to explore a planet';
 // Fight errors
 errorMappings['E-F1'] = 'You and your opponent must be at least level 1 to fight each other';
 errorMappings['E-F2'] = 'The level difference is too large';
-errorMappings['E-F3'] = 'Everyone is struggling, so dont fight against yourself, I believe in you';
+errorMappings['E-F3'] = 'I know this player looks handsome and you want to fight, but that is your own cryptonaut';
 
 
 /**

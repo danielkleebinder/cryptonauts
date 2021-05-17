@@ -12,7 +12,8 @@ import {InventoryComponent} from './inventory/inventory.component';
 import {BlockchainService} from './core/services/blockchain.service';
 import {AdminComponent} from './admin/admin.component';
 import {MarketComponent} from './market/market.component';
-import {CombatComponent} from "./combat/combat.component";
+import {CombatComponent} from './combat/combat.component';
+import {AdminFacade} from './admin/store';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,12 @@ import {CombatComponent} from "./combat/combat.component";
 export class AppComponent {
 
   contractActive$ = this.blockchain.contractActive$;
+  isOwner$ = this.adminFacade.isOwner$;
 
   constructor(private dialog: MatDialog,
               private router: Router,
-              private blockchain: BlockchainService) {
+              private blockchain: BlockchainService,
+              private adminFacade: AdminFacade) {
   }
 
   prepareRoute(outlet: RouterOutlet): any {
@@ -47,7 +50,7 @@ export class AppComponent {
   }
 
   showAdminSettings(): void {
-    this.dialog.open(AdminComponent, {width: '800px'});
+    this.dialog.open(AdminComponent, {width: '600px'});
   }
 
   exit(): void {

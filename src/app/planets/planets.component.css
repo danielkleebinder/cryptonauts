@@ -26,6 +26,14 @@ mat-sidenav-content {
   }
 }
 
+app-planet-travel-timer {
+  position: absolute;
+  top: 48px;
+  margin-left: 32px;
+  margin-right: 32px;
+  width: 360px;
+}
+
 .notes {
   position: absolute;
   bottom: 48px;

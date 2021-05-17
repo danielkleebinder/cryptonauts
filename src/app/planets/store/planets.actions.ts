@@ -17,6 +17,5 @@ export const loadMyExploration = createAction('[Planets Page] Load my exploratio
 export const loadMyExplorationSuccess = createAction('[Planets Page] Load my exploration success', props<{ exploration: PlanetExploration }>());
 
 // Only owner actions
-export const setTravelTime = createAction('[Admin Page] Set travel time', props<{ travelTime: number }>());
 export const loadTravelTime = createAction('[Planets Page] Load travel time');
 export const loadTravelTimeSuccess = createAction('[Planets API] Load travel time success', props<{ travelTime: number }>());

@@ -71,13 +71,6 @@ export class AstronautEffects {
         catchError(err => this.onError(err))))
   ));
 
-  setLevelUpFactor$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.setLevelUpFactor),
-    switchMap(({levelUpFactor}) => this.astronautService
-      .setLevelUpFactor(levelUpFactor)
-      .pipe(catchError(err => this.onError(err))))
-  ));
-
   constructor(private actions$: Actions,
               private astronautService: AstronautService,
               private notifierService: NotifierService) {

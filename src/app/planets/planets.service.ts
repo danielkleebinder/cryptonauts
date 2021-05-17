@@ -83,17 +83,6 @@ export class PlanetsService {
   }
 
   /**
-   * Sets the required travel time. Can only be used by owners.
-   * @param travelTime Required travel time between planets in seconds.
-   */
-  setTravelTime(travelTime: number): Observable<any> {
-    return from(this.blockchain
-      .contract.methods
-      .setRequiredTravelTime(travelTime)
-      .send({from: this.blockchain.player, gas: 300_000}));
-  }
-
-  /**
    * Returns the required travel time.
    */
   getTravelTime(): Observable<number> {

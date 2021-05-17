@@ -26,15 +26,6 @@ export class MarketEffects {
         catchError(err => this.onError(err))))
   ));
 
-  addItemType$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.addItemType),
-    switchMap(({newItem}) => this.marketService
-      .addItemType(newItem.name, newItem.mining, newItem.attack, newItem.defense, newItem.cost)
-      .pipe(
-        map(() => actions.addItemTypeSuccess()),
-        catchError(err => this.onError(err))))
-  ));
-
   buyItem$ = createEffect(() => this.actions$.pipe(
     ofType(actions.buyItem),
     switchMap(({itemTypeId}) => this.marketService
