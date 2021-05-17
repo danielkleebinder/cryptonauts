@@ -52,12 +52,12 @@ TODO - Short breakdown of your work distribution (approx. 40h effort)...
 | Work Packet            | Time |
 |------------------------|------|
 | Game Idea              | 4h   |
-| Frontend               | 14h  |
+| Frontend               | 16h  |
 | Contracts              | 25h  |
 | Testing                | 6h   |
 | Web3 (connect FE & SC) | 6h   |
 | Documentation          | 1h   |
-| **Total**              | **56h** |
+| **Total**              | **58h** |
 
 
 Difficulties
@@ -87,6 +87,9 @@ However, implementing this system also came at a cost. Players cannot destroy or
 Proposal for future changes
 ---------------------------
 We are masters students and were told to develop some sort of smart contract given a certain time frame. I think this part of the lecture was done perfectly well.
+
+Even tough it is not part of this lecture, I really really like fancy and beautiful UIs and I think they are an important part of modern DAPPs using Smart Contracts and Web3. Please consider putting a bit more of the total grading on the UI :-)
+
 
 ---------------------------
 
