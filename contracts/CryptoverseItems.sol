@@ -150,7 +150,7 @@ contract CryptoverseItems is CryptoverseAstronauts {
     }
 
     /**
-     * @dev Destroys the item with the given ID. On the owner of the item can
+     * @dev Destroys the item with the given ID. Only the owner of the item can
      *      destroy it. This action cannot be undone.
      * @param _itemId The item which should be destroyed.
      */
