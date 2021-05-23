@@ -1,3 +1,0 @@
-
- - Scoreboard
- - Funktionen wie Level-Up Kostenberechnung auslagern

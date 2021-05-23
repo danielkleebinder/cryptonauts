@@ -4,12 +4,12 @@
 
   <p>
     You can buy more Space Diamonds with Ether. The current price per Space Diamond is
-    <strong>{{tokenPrice$ | async}} Wei</strong>.
+    <strong>{{tokenPrice$ | async}} Wei</strong>. Excessive Ether will not be returned.
   </p>
 
   <div class="in-space-diamonds">
     <div>
-      <span>+{{diamondsFormControl.value / (tokenPrice$ | async)}}</span>
+      <span>+{{floor(diamondsFormControl.value / (tokenPrice$ | async))}}</span>
       <small>Space Diamonds</small>
     </div>
   </div>

@@ -13,10 +13,12 @@ export class BuyTokensComponent implements OnInit {
   tokenPrice$ = this.inventoryFacade.tokenPrice$;
   playerBalance$ = this.inventoryFacade.playerBalance$;
 
+  floor = Math.floor;
   diamondsFormControl = this.formBuilder.control(0, Validators.compose([
     Validators.min(1),
     Validators.required
   ]));
+
 
   constructor(private inventoryFacade: InventoryFacade,
               private formBuilder: FormBuilder) {

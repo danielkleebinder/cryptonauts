@@ -35,6 +35,13 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
         _;
     }
 
+    /**
+     * @dev Players can fight other players using this function. It is important to notice
+     *      that players have to be within a certain level range to fight each other. If one
+     *      player wins over another, a certain amount of tokens are dropped by one player
+     *      and automatically looted by another one.
+     * @param _opponent Opponents address.
+     */
     function fight(address _opponent) external canFightAgainst(_opponent) {
         Astronaut storage me = ownerToAstronaut[msg.sender];
         Astronaut storage op = ownerToAstronaut[_opponent];
