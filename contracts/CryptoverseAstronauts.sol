@@ -83,6 +83,7 @@ contract CryptoverseAstronauts is Cryptoverse {
         } else if (encodedUpgradeProperty == keccak256(abi.encodePacked("defense"))) {
             astronaut.defense += 5;
         } else {
+            // No valid upgrade property was provided, this is invalid.
             require(false, "E-A2");
         }
 
@@ -95,6 +96,9 @@ contract CryptoverseAstronauts is Cryptoverse {
      */
     function getAstronautLevelUpCost() public view returns (uint) {
         Astronaut memory astronaut = ownerToAstronaut[msg.sender];
+
+        // TODO: For version 2, maybe move this computation to its own contract to allow modification. This
+        //       is not required yet. This formula works quite well so far.
         uint level = uint(astronaut.level);
         return level ** levelUpFactor + level * levelUpFactor;
     }

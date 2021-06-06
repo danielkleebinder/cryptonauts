@@ -8,8 +8,10 @@ import "./CryptoverseMath.sol";
 
 /**
  * @title Cryptoverse Combat System
- * @dev Players can fight other players. This contract handles that. This contract
- *      throws the following error codes:
+ * @dev Players can fight other players. This contract handles that. Be aware that combat
+ *      is purposelly fully predictable. Randomness is quite difficult to achive in Solidity
+ *      and I don't like game that include (too much) randomness anyways. This contract throws
+ *      the following error codes:
  *
  *        - E-F1: You and your opponent must be at least level 1 to fight each other
  *        - E-F2: The level difference is too large
@@ -25,12 +27,13 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
      * @dev Players can only fight other players in their level range. There is no
      *      upper bound for stronger opponents, but there is one for opponents that
      *      are weaker than you.
+     * @param _opponent The opponent players address.
      */
     modifier canFightAgainst(address _opponent) {
         int32 myLevel = int32(ownerToAstronaut[msg.sender].level);
         int32 opLevel = int32(ownerToAstronaut[_opponent].level);
         require(opLevel > 0 && myLevel > 0, "E-F1");
-        require((opLevel - myLevel) > -10, "E-F2");
+        require((opLevel + 10) > myLevel, "E-F2");
         require(msg.sender != _opponent, "E-F3");
         _;
     }
@@ -53,20 +56,14 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
         me.health = uint32(CryptoverseMath.max(int32(me.health) - dmgToMe, 0));
         op.health = uint32(CryptoverseMath.max(int32(op.health) - dmgToOp, 0));
 
-        // I lost, increase counters and heal me back up again (I respawned)
+        // I lost, increase counters and heal me back up again (I respawn)
         if (me.health <= 0) {
-            me.lossCount++;
-            op.winCount++;
-            me.health = me.baseHealth;
-            dropLoot(msg.sender, _opponent);
+            fightEnded(_opponent, msg.sender);
         }
 
         // I won, increase counters and heal my opponent back up again
         if (op.health <= 0) {
-            me.winCount++;
-            op.lossCount++;
-            op.health = op.baseHealth;
-            dropLoot(_opponent, msg.sender);
+            fightEnded(msg.sender, _opponent);
         }
 
         // Notify the players that the battle is now over
@@ -74,14 +71,27 @@ contract CryptoverseCombat is CryptoverseAstronauts, CryptoverseItems {
     }
 
     /**
-     * @dev Internal function which simulates dropping some tokens as loot for the
-     *      winner of a battle.
-     * @param _loser  The battles loser.
-     * @param _winner The battles winner.
+     * @dev Internal function that handles the outcome of a battle.
+     * @param _winner Winners address.
+     * @param _loser Losers address.
      */
-    function dropLoot(address _loser, address _winner) internal {
+    function fightEnded(address _winner, address _loser) internal {
+        Astronaut storage winner = ownerToAstronaut[_winner];
+        Astronaut storage loser = ownerToAstronaut[_loser];
+
+        // Change the players stats accordingly
+        winner.winCount++;
+        loser.lossCount++;
+        loser.health = loser.baseHealth;
+
+        // The loser drops 5% of the tokens and the winner collects them as reward
         uint droppedTokens = balanceOf(_loser) / 20;
-        _burn(_loser, droppedTokens);
-        mint(_winner, droppedTokens);
+
+        // It only makes sense to drop and collect tokens if the loser even has
+        // something to drop.
+        if (droppedTokens > 0) {
+            _burn(_loser, droppedTokens);
+            mint(_winner, droppedTokens);
+        }
     }
 }

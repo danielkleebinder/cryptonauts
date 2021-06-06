@@ -106,7 +106,17 @@ contract("Cryptoverse Items", async accounts => {
     const itemTypes = await itemsInstance.getItemTypes.call();
     await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
     const items = await itemsInstance.getItemsByOwner.call(playerRed);
-    await truffleAssert.reverts(itemsInstance.buyItem(items[0].id, {from: playerBlue}));
+    await truffleAssert.reverts(itemsInstance.destroyItem(items[0].id, {from: playerBlue}));
+  });
+
+  it("should not destroy item twice", async () => {
+    await itemsInstance.buyTokens({from: playerRed, value: tokensToWei(100)});
+    await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
+    const itemTypes = await itemsInstance.getItemTypes.call();
+    await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
+    const items = await itemsInstance.getItemsByOwner.call(playerRed);
+    itemsInstance.destroyItem(items[0].id, {from: playerRed});
+    await truffleAssert.reverts(itemsInstance.destroyItem(items[0].id, {from: playerRed}));
   });
 
   it("should upgrade item", async () => {
@@ -136,6 +146,18 @@ contract("Cryptoverse Items", async accounts => {
     const itemTypes = await itemsInstance.getItemTypes.call();
     await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
     const items = await itemsInstance.getItemsByOwner.call(playerRed);
+    await truffleAssert.reverts(itemsInstance.upgradeItem(items[0].id, {from: playerRed}));
+  });
+
+  it("should not upgrade destroyed item", async () => {
+    await itemsInstance.buyTokens({from: playerRed, value: tokensToWei(1000)});
+    await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
+    await itemsInstance.setMaxItemLevel(5);
+    const itemTypes = await itemsInstance.getItemTypes.call();
+    await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
+    const items = await itemsInstance.getItemsByOwner.call(playerRed);
+    itemsInstance.upgradeItem(items[0].id, {from: playerRed});
+    itemsInstance.destroyItem(items[0].id, {from: playerRed});
     await truffleAssert.reverts(itemsInstance.upgradeItem(items[0].id, {from: playerRed}));
   });
 
@@ -200,6 +222,17 @@ contract("Cryptoverse Items", async accounts => {
     let items = await itemsInstance.getItemsByOwner.call(playerRed);
 
     await truffleAssert.reverts(itemsInstance.equip(items[0].id, {from: playerBlue}));
+  });
+
+  it("should not equip destroyed item", async () => {
+    await itemsInstance.buyTokens({from: playerRed, value: tokensToWei(1000)});
+    await itemsInstance.createItemType("Spacesword", 1, 10, 3, 100);
+    await itemsInstance.setMaxItemLevel(5);
+    const itemTypes = await itemsInstance.getItemTypes.call();
+    await itemsInstance.buyItem(itemTypes[0].id, {from: playerRed});
+    let items = await itemsInstance.getItemsByOwner.call(playerRed);
+    itemsInstance.destroyItem(items[0].id, {from: playerRed});
+    await truffleAssert.reverts(itemsInstance.equip(items[0].id, {from: playerRed}));
   });
 
   it("should not un-equip unequipped items", async () => {

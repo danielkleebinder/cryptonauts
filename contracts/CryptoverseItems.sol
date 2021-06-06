@@ -12,10 +12,11 @@ import "./CryptoverseAstronauts.sol";
  *        - E-I2: You cannot perform this action while the item is equipped
  *        - E-I3: This is not an item you can buy
  *        - E-I4: This item is too expensive for you
- *        - E-I5: The upgrade is too expensive for you
- *        - E-I6: This item has already reached maximum upgrade level - you cannot improve it further
- *        - E-I7: You cannot equip more items - unequip one to equip a new one
- *        - E-I8: This item is already unequipped
+ *        - E-I5: This item was already destroyed
+ *        - E-I6: The upgrade is too expensive for you
+ *        - E-I7: This item has already reached maximum upgrade level - you cannot improve it further
+ *        - E-I8: You cannot equip more items - unequip one to equip a new one
+ *        - E-I9: This item is already unequipped
  *
  */
 contract CryptoverseItems is CryptoverseAstronauts {
@@ -72,7 +73,7 @@ contract CryptoverseItems is CryptoverseAstronauts {
      * @dev Some actions can only be performed by the owner of an item.
      * @param _itemId Item ID to check the owner of.
      */
-    modifier onlyItemOwnerOf(uint _itemId) {
+    modifier onlyOwnerOfItem(uint _itemId) {
         require(msg.sender == itemToOwner[_itemId], "E-I1");
         _;
     }
@@ -83,6 +84,15 @@ contract CryptoverseItems is CryptoverseAstronauts {
      */
     modifier onlyUnequippedItem(uint _itemId) {
         require(!items[_itemId].equipped, "E-I2");
+        _;
+    }
+
+    /**
+     * @dev Some actions can only be performed for items that are not destroyed yet.
+     * @param _itemId Item ID to check if not destroyed.
+     */
+    modifier onlyNotDestroyedItem(uint _itemId) {
+        require(!items[_itemId].destroyed, "E-I5");
         _;
     }
 
@@ -154,7 +164,9 @@ contract CryptoverseItems is CryptoverseAstronauts {
      *      destroy it. This action cannot be undone.
      * @param _itemId The item which should be destroyed.
      */
-    function destroyItem(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
+    function destroyItem(uint _itemId) external onlyOwnerOfItem(_itemId)
+                                                onlyUnequippedItem(_itemId)
+                                                onlyNotDestroyedItem(_itemId) {
         items[_itemId].destroyed = true;
         ownerItemCount[msg.sender]--;
         emit ItemDestroyed(msg.sender, _itemId);
@@ -165,12 +177,14 @@ contract CryptoverseItems is CryptoverseAstronauts {
      *      does not have enough tokens.
      * @param _itemId The item which should be upgraded.
      */
-    function upgradeItem(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
+    function upgradeItem(uint _itemId) external onlyOwnerOfItem(_itemId)
+                                                onlyUnequippedItem(_itemId)
+                                                onlyNotDestroyedItem(_itemId) {
         Item storage item = items[_itemId];
 
         // Burn the amount of tokens that this upgrade costs
-        require(balanceOf(msg.sender) >= item.cost, "E-I5");
-        require(item.level < maxItemLevel, "E-I6");
+        require(balanceOf(msg.sender) >= item.cost, "E-I6");
+        require(item.level < maxItemLevel, "E-I7");
         burn(item.cost);
 
         // Level up the item
@@ -189,11 +203,13 @@ contract CryptoverseItems is CryptoverseAstronauts {
      *      amount of equipment a player can use at a time.
      * @param _itemId The item which should be equipped.
      */
-    function equip(uint _itemId) external onlyItemOwnerOf(_itemId) onlyUnequippedItem(_itemId) {
+    function equip(uint _itemId) external onlyOwnerOfItem(_itemId)
+                                          onlyUnequippedItem(_itemId)
+                                          onlyNotDestroyedItem(_itemId) {
         Astronaut storage me = ownerToAstronaut[msg.sender];
         Item storage item = items[_itemId];
 
-        require(ownerEquippedItemCount[msg.sender] < maxEquipmentCount, "E-I7");
+        require(ownerEquippedItemCount[msg.sender] < maxEquipmentCount, "E-I8");
 
         me.mining += item.mining;
         me.attack += item.attack;
@@ -209,11 +225,11 @@ contract CryptoverseItems is CryptoverseAstronauts {
      * @dev Some actions require the player to unequip an item.
      * @param _itemId The item which should be unequipped.
      */
-    function unequip(uint _itemId) external onlyItemOwnerOf(_itemId) {
+    function unequip(uint _itemId) external onlyOwnerOfItem(_itemId) {
         Astronaut storage me = ownerToAstronaut[msg.sender];
         Item storage item = items[_itemId];
 
-        require(item.equipped, "E-I8");
+        require(item.equipped, "E-I9");
 
         me.mining -= item.mining;
         me.attack -= item.attack;

@@ -33,6 +33,8 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
 
     mapping(address => Exploration) public explorations;
 
+    // Prevent players from extensively jumping opportunistically from planet to planet
+    // depending on the current explorer count.
     uint public requiredTravelTime = 30 seconds;
 
 
@@ -48,7 +50,7 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
     /**
      * @dev Leaves the planet into outer space without a specific next target.
      */
-    function leavePlanet() public onlyOnPlanet {
+    function leavePlanet() external onlyOnPlanet {
         Exploration storage exploration = explorations[msg.sender];
         Planet storage planet = planets[exploration.planetId];
 
@@ -108,6 +110,11 @@ contract CryptoverseExploration is CryptoversePlanets, CryptoverseAstronauts, Cr
         uint explorationTime = block.timestamp - exploration.startTime;
 
         // Might add some really cool and sick algorithm here
+        // Note 1: A division by zero should never be possible here because players can
+        //         only mine from planets if they are on the planet. Therefore the explorer
+        //         count can never be zero here.
+        // Note 2: As with combats, I don't like randomness (and its difficult to achive
+        //         in solidity), so I use a predictable algorithm here (for now).
         uint resourcesMinded = ((explorationTime / 10) * me.mining) / explorerOnPlanet;
 
         // Reset the exploration start time

@@ -7,9 +7,16 @@ import "./ERC223/ERC223Burnable.sol";
 import "./ERC223/Roles.sol";
 
 /**
- * @title Cryptoverse Game
+ * @title Cryptoverse Base Administrative Contract
+ *
  * @dev Cryptoverse is a game which is based on mintable and burnable
- *      tokens and explorable planets as well as a fighting system.
+ *      tokens and explorable planets as well as a fighting system. The
+ *      following error codes might occur:
+ *
+ *        - E-C1: You are not the game contract owner
+ *        - E-C2: You have to send Ether to buy tokens
+ *        - E-C3: The token price is higher than the sent Ether amount
+ *
  */
 contract Cryptoverse is ERC223Token, ERC223Mintable, ERC223Burnable {
 
@@ -26,10 +33,14 @@ contract Cryptoverse is ERC223Token, ERC223Mintable, ERC223Burnable {
 
 
     constructor() {
+        // The creator of the game contract is also the first owner
         owners.add(msg.sender);
         emit OwnerAdded(msg.sender);
     }
 
+    /**
+     * @dev Some actions can only be performed by the game owner.
+     */
     modifier onlyOwner() {
         require(isOwner(), "E-C1");
         _;
@@ -43,7 +54,7 @@ contract Cryptoverse is ERC223Token, ERC223Mintable, ERC223Burnable {
      * @dev Adds a new owner. Be aware, because owners have all the
      *      rights about the contract that you also have.
      */
-    function addOwner(address _account) public onlyOwner {
+    function addOwner(address _account) external onlyOwner {
         owners.add(_account);
         emit OwnerAdded(_account);
     }
@@ -60,7 +71,7 @@ contract Cryptoverse is ERC223Token, ERC223Mintable, ERC223Burnable {
 	 * @dev Sets the token price. This is the price required to buy
 	 *      exactly one token.
 	 */
-	function setTokenPrice(uint _price) public onlyOwner {
+	function setTokenPrice(uint _price) external onlyOwner {
 	    tokenPrice = _price;
 	}
 
