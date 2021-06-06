@@ -29,6 +29,14 @@ export class AdminFacade {
     this.store.dispatch(actions.redeemEther());
   }
 
+  setMaxItemLevel(maxItemLevel: number): void {
+    this.store.dispatch(actions.setMaxItemLevel({maxItemLevel}));
+  }
+
+  setMaxEquipmentCount(maxEquipmentCount: number): void {
+    this.store.dispatch(actions.setMaxEquipmentCount({maxEquipmentCount}));
+  }
+
   setTokenPrice(tokenPrice: number): void {
     this.store.dispatch(actions.setTokenPrice({tokenPrice}));
   }

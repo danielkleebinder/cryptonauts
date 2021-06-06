@@ -36,6 +36,21 @@
       Add new item
     </button>
 
+    <button mat-flat-button color="primary" (click)="setMaxItemLevel()">Change max item level</button>
+    <button mat-flat-button color="primary" (click)="setMaxEquipmentCount()">Change max equipment count</button>
+
+  </section>
+
+  <section>
+
+    <h3>Planets</h3>
+
+    <p>
+      Adjusts planet parameters which directly or indirectly might have impact on the games overall balance.
+    </p>
+
+    <button mat-flat-button color="primary" (click)="setTravelTime()">Change travel time</button>
+
   </section>
 
   <section>
@@ -50,20 +65,13 @@
       There is currently <strong>{{contractBalance$ | async | number}} Ether</strong> on this contract.
     </p>
 
-    <button mat-flat-button color="primary" (click)="redeemEther()">
-      Redeem contract Ether
-    </button>
-
-    <button mat-flat-button color="primary" (click)="setTokenPrice()">
-      Change token price
-    </button>
+    <button mat-flat-button color="primary" (click)="redeemEther()">Redeem contract Ether</button>
+    <button mat-flat-button color="primary" (click)="setTokenPrice()">Change token price</button>
 
   </section>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-flat-button mat-dialog-close cdkFocusInitial>
-    Close
-  </button>
+  <button mat-flat-button mat-dialog-close cdkFocusInitial>Close</button>
 </mat-dialog-actions>

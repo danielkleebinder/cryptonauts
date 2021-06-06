@@ -14,6 +14,8 @@ export const loadOwnershipSuccess = createAction('[Admin API] Load ownership suc
 export const addItemType = createAction('[Admin Page] Add item type', props<{ newItem: Partial<Item> }>());
 export const addItemTypeSuccess = createAction('[Admin API] Add item type success');
 
+export const setMaxItemLevel = createAction('[Admin Page] Set max item level', props<{ maxItemLevel: number }>());
+export const setMaxEquipmentCount = createAction('[Admin Page] Set max equipment count', props<{ maxEquipmentCount: number }>());
 export const setTokenPrice = createAction('[Admin Page] Set token price', props<{ tokenPrice: number }>());
 export const setLevelUpFactor = createAction('[Admin Page] Set level up factor', props<{ levelUpFactor: number }>());
 export const setTravelTime = createAction('[Admin Page] Set travel time', props<{ travelTime: number }>());

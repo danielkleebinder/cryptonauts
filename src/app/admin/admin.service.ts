@@ -46,6 +46,26 @@ export class AdminService {
   }
 
   /**
+   * Sets the max allowed item level that players can archive.
+   */
+  setMaxItemLevel(maxItemLevel: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .setMaxItemLevel(maxItemLevel)
+      .send({from: this.blockchain.player, gas: 3_000_000}));
+  }
+
+  /**
+   * Sets the max amount of simultaneously equipped items.
+   */
+  setMaxEquipmentCount(maxEquipmentCount: number): Observable<any> {
+    return from(this.blockchain
+      .contract.methods
+      .setMaxEquipmentCount(maxEquipmentCount)
+      .send({from: this.blockchain.player, gas: 3_000_000}));
+  }
+
+  /**
    * Redeems the ether on the game contract.
    */
   redeemEther(): Observable<any> {

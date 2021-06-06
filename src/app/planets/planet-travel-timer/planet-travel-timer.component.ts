@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {combineLatest, Observable, timer} from 'rxjs';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {PlanetsFacade} from '../store';
@@ -9,7 +9,7 @@ import {PlanetsFacade} from '../store';
   styleUrls: ['./planet-travel-timer.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlanetTravelTimerComponent {
+export class PlanetTravelTimerComponent implements OnInit {
 
   timer$: Observable<number> = combineLatest([
     this.planetsFacade.myExploration$,
@@ -22,5 +22,10 @@ export class PlanetTravelTimerComponent {
         map(startTime => (Date.now() - startTime) / (travelTime * 1000) * 100))));
 
   constructor(private planetsFacade: PlanetsFacade) {
+  }
+
+  /** @inheritDoc */
+  ngOnInit(): void {
+    this.planetsFacade.loadTravelTime();
   }
 }

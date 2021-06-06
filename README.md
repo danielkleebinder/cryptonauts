@@ -122,11 +122,11 @@ The table below shows the effort I put into certain work packets:
 |------------------------|------|
 | Game Idea              | 4h   |
 | Frontend               | 16h  |
-| Contracts              | 25h  |
+| Contracts              | 27h  |
 | Testing                | 6h   |
 | Web3 (connect FE & SC) | 6h   |
 | Documentation          | 2h   |
-| **Total**              | **59h** |
+| **Total**              | **61h** |
 
 
 Difficulties

@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Interplanetary Travel Time</h1>
+
+<mat-dialog-content [formGroup]="formGroup">
+  <p>
+    Time in seconds required to travel between planets.
+  </p>
+  <mat-form-field appearance="fill">
+    <mat-label>Travel time</mat-label>
+    <input matInput formControlName="travelTime" placeholder="4">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button mat-dialog-close color="primary" [disabled]="formGroup.invalid" (click)="save()">
+    Set Travel Time
+  </button>
+</mat-dialog-actions>

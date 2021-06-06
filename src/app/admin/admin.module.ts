@@ -18,6 +18,9 @@ import {AddOwnerComponent} from './add-owner/add-owner.component';
 import * as queries from './store/admin.selectors';
 import {AdminEffects, AdminFacade, reducer} from './store';
 import { ChangeTokenPriceComponent } from './change-token-price/change-token-price.component';
+import { ChangeMaxItemLevelComponent } from './change-max-item-level/change-max-item-level.component';
+import { ChangeMaxEquipmentCountComponent } from './change-max-equipment-count/change-max-equipment-count.component';
+import { ChangeTravelTimeComponent } from './change-travel-time/change-travel-time.component';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { ChangeTokenPriceComponent } from './change-token-price/change-token-pri
     AddItemComponent,
     AddOwnerComponent,
     ChangeTokenPriceComponent,
+    ChangeMaxItemLevelComponent,
+    ChangeMaxEquipmentCountComponent,
+    ChangeTravelTimeComponent,
   ],
   imports: [
     CommonModule,

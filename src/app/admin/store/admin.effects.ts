@@ -52,6 +52,24 @@ export class AdminEffects {
         catchError(err => this.onError(err))))
   ), {dispatch: false});
 
+  setMaxItemLevel$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.setMaxItemLevel),
+    switchMap(({maxItemLevel}) => this.adminService
+      .setMaxItemLevel(maxItemLevel)
+      .pipe(
+        tap(() => this.notifierService.notify('success', `Max item level updated to ${maxItemLevel}`)),
+        catchError(err => this.onError(err))))
+  ), {dispatch: false});
+
+  setMaxEquipmentCount$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.setMaxEquipmentCount),
+    switchMap(({maxEquipmentCount}) => this.adminService
+      .setMaxEquipmentCount(maxEquipmentCount)
+      .pipe(
+        tap(() => this.notifierService.notify('success', `Max equipment count updated to ${maxEquipmentCount}`)),
+        catchError(err => this.onError(err))))
+  ), {dispatch: false});
+
   setLevelUpFactor$ = createEffect(() => this.actions$.pipe(
     ofType(actions.setLevelUpFactor),
     switchMap(({levelUpFactor}) => this.adminService
@@ -75,6 +93,7 @@ export class AdminEffects {
     switchMap(({newItem}) => this.adminService
       .addItemType(newItem.name, newItem.mining, newItem.attack, newItem.defense, newItem.cost)
       .pipe(
+        tap(() => this.notifierService.notify('success', `Item "${newItem.name}" created`)),
         map(() => actions.addItemTypeSuccess()),
         catchError(err => this.onError(err))))
   ));
