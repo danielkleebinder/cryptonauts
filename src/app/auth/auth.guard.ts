@@ -19,6 +19,6 @@ export class AuthGuard implements CanActivate {
     if (!this.blockchain.hasContract()) {
       return this.router.navigate(['/auth']);
     }
-    return true;
+    return this.blockchain.contractActive$;
   }
 }

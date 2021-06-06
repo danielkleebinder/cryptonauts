@@ -2,7 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {BlockchainService} from '../core/services/blockchain.service';
-import {AdminFacade} from "../admin/store";
+import {AdminFacade} from '../admin/store';
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-auth',
@@ -32,8 +33,11 @@ export class AuthComponent implements OnInit {
   letsGo(): void {
     this.blockchain.setPlayerAddress(this.formGroup.get('accountAddress').value?.trim());
     this.blockchain.setCryptoverseContractAddress(this.formGroup.get('contractAddress').value?.trim());
-    this.adminFacade.loadOwnership();
-    this.router.navigate(['/me']);
+    this.blockchain.contractActive$
+      .pipe(take(1))
+      .subscribe(() => {
+        this.adminFacade.loadOwnership();
+        this.router.navigate(['/me']);
+      });
   }
-
 }
