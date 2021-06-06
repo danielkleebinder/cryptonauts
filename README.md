@@ -35,7 +35,11 @@ Project details
 
 Addresses
 ---------
-TODO - Write here on which addresses you have deployed the contracts on the LVAChain:
+__Cryptoverse Game Contract Address__: 0x400C02b5E11817Aa273D324B493733B40A5703A6
+
+__Your Address__: Your accounts address which you want to use to play the game
+
+(The address at `addresses.getPublic(4)` was added to the owners list)
 
 Description
 -----------

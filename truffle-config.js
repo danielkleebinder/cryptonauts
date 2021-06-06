@@ -49,7 +49,7 @@ module.exports = {
     },
     prod: {
       host: "127.0.0.1",
-      port: 8546, // websocket port
+      port: 8545, // websocket port
       network_id: "19010311"
     }
   }
