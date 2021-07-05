@@ -1,19 +1,18 @@
 Cryptonauts
 ================
 
-Cryptonauts is a game which was developed during the course of Smart Contracts in the summer term 2021 at TU Vienna. It
+Cryptonauts is a game which was developed during the course of Smart Contracts in the summer term 2021 at TU Vienna. The game
+is based on Solidity (the Smart Contract programming language of [Ethereum - the global decentralized blockchain](https://ethereum.org/)). It
 is a game about your personal astronaut that resides in the Cryptoverse. Your cryptonaut has a certain level and can improve
 on its skills over time.
 
-![Cryptonauts Login](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/1.PNG?raw=true)
+![Yes, that's you](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/2.PNG?raw=true)
 
 The entire game is based around a crypto token called "space diamonds" that can be mined on planets over time, bought
 using Ether or "stolen" from other Cryptonauts playing the game when you win a fight. Leveling up your cryptonaut can
 make it easier for you to specialize in one certain area but might weaken you in others. For example: you can specialize
 in mining space diamonds from planets, but neglect your combat abilities which will obviously make you an easier target
 for hostile players.
-
-![Yes, that's you](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/2.PNG?raw=true)
 
 Another important aspect of the game is the "Spacemarket". It's ran by a guy called "Mr. Goodes". He sells items that
 game administrators can add to the game. These items also increase your cryptonauts stats and can be improved in your
