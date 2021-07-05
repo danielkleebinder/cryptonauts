@@ -1,51 +1,11 @@
-My Final Project
+Cryptonauts
 ================
 
-### Deadline: Mon, 14 June 2021, 23:55
-
-Topic
----------
-Choose a topic to your liking for your own project.
-If you have no preference for any topic, you may build on the TU beer bar by either replacing parts and/or extending the existing project. 
-This could be a pub quiz, an extended beer supply, or an extended voting board for example.
-
-Grading
----------
-We consider the following aspects:
-- Documentation: Provide the documentation of your project by completing the project details in the README.md on git. Add further files as necessary.
-- Complexity: The project should be non-trivial. Rather, it should make use of mappings, roles with RBAC, modifiers, Ether, and tokens when reasonable. Moreover, it should provide a simple web interface for interaction with the contract.
-- Correctness: The project should use correct math (big numbers, overflow), include test cases and ensure that neither any ether nor any tokens are lost.
-- Security: Try to avoid that the contract can be depleted by any method used in the challenges.
-- Originality: We would like your projects to be distinguishable from reproductions, clones, forgeries, or derivative works. On a side note: we've already seen too many casinos.
-
-We place less value on a fancy WebUI, as it is not part of the LVA.
-
-Your project is complex enough if 40 hours of effort are understandable for us.
-
-
-Submission and Presentation
----------
-Submit your project on your `master` branch on git.sc.logic.at and present it in the online review session on Thu, 17.06.2021. 
-Reserve a time slot via Tuwel.
-
----------------------------
-
-Project details
-===============
-
-Addresses
----------
-__Cryptoverse Game Contract Address__: 0x400C02b5E11817Aa273D324B493733B40A5703A6
-
-__Your Address__: Your accounts address which you want to use to play the game
-
-(The address at `addresses.getPublic(4)` was added to the owners list)
-
-Description
------------
 Cryptonauts is a game which was developed during the course of Smart Contracts in the summer term 2021 at TU Vienna. It
 is a game about your personal astronaut that resides in the Cryptoverse. Your cryptonaut has a certain level and can improve
 on its skills over time.
+
+![Cryptonauts Login](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/1.PNG?raw=true)
 
 The entire game is based around a crypto token called "space diamonds" that can be mined on planets over time, bought
 using Ether or "stolen" from other Cryptonauts playing the game when you win a fight. Leveling up your cryptonaut can
@@ -53,19 +13,27 @@ make it easier for you to specialize in one certain area but might weaken you in
 in mining space diamonds from planets, but neglect your combat abilities which will obviously make you an easier target
 for hostile players.
 
+![Yes, that's you](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/2.PNG?raw=true)
+
 Another important aspect of the game is the "Spacemarket". It's ran by a guy called "Mr. Goodes". He sells items that
 game administrators can add to the game. These items also increase your cryptonauts stats and can be improved in your
 inventory for space diamonds. Some of those items are really powerful but also quite expensive. You should also be
 aware that you cannot equip more than a given amount of items at a time.
+
+![Hello Mr. Goodes](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/4.PNG?raw=true)
 
 Mining resources from planets can be very very lucrative as well. But be aware, that you can only mine from planets
 after your cryptonaut reached level 1 at least. The more players that are currently exploring a planet, the less lucrative
 your explorations will be. So try hopping from one planet to another one from time to time, but be aware that traveling
 between planets also takes time (who would have known that space travel is time-consuming, right? ;-)
 
+![Crypton and Etherra](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/3.PNG?raw=true)
+
 Last but not least, there is the leaderboard. In the leaderboard, you can filter for players in your level range for
 example. The leaderboard is also used as a place for combat. You can fight other players there and steal their space
 diamonds.
+
+![Your Inventory](https://github.com/danielkleebinder/cryptonauts/blob/main/preview/5.PNG?raw=true)
 
 The goal of the game is quite simple. Become the very best. Try to level up your cryptonaut and improve your skills
 to become the number one on the leaderboard.
@@ -173,47 +141,17 @@ However, implementing this system also came at a cost. Players cannot destroy or
 lot of sense however and it became a quite cool feature of the game now.
 
 
-Proposal for future changes
----------------------------
-We are masters students and were told to develop some sort of smart contract given a certain time frame. I think this
-part of the lecture was done perfectly well.
-
-Even tough it is not part of this lecture, I really really like fancy and beautiful UIs and I think they are an important
-part of modern DAPPs using Smart Contracts and Web3. Please consider putting a bit more of the total grading on the UI :-)
-
-
----------------------------
-
 HOWTO
 =====
 Run `npm install` to install all dependencies.
 
 This repository contains an initialized Truffle project.
 
-Recommended web3.js version: v1.3.4
 
 Truffle
 -------
-Implement your contracts in the `contracts/` folder.
-
-Implement your test cases in the `tests/` folder.
-You can run them with `npm run truffle test`.
+You can run the tests with `npm run truffle test`.
 
 With `npm run truffle develop` you can start a local truffle development chain.
 
-You can deploy the project to the LVAChain via `npm run truffle deploy -- --network=prod` (requires running `geth` client).
-If you use roles, please make us - the person at `addresses.getPublic(4)` - an owner/admin of the contract.
-
-Web interface
--------------
-You are free to implement your web interface via static JavaScript files (similar to the BeerBar),
-or to use any suitable framework (like [React](https://reactjs.org/), [Angular](https://angular.io/), [Vue](https://vuejs.org/), or [Drizzle-React](https://github.com/trufflesuite/drizzle-react)).
-
-If you use only static content, put your files into the `public/` folder.   
-You can run a local webserver with `npm run serve`.  
-
-If you use another framework, you will need to adjust the `build` command in `package.json`. Follow the documentation of your framework for doing so.
-You can e.g. use `webpack` to compile your files, and copy the output into the `public/` folder.
-
-The content of your `public/` folder will also be available via the URL <https://final.pages.sc.logic.at/e51832684>.
-
+You can deploy the project on your local chain via `npm run truffle deploy -- --network=local`.
