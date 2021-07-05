@@ -1,0 +1,19 @@
+mat-card {
+  min-width: 190px;
+  border: 5px solid transparent;
+  transition-property: border-color;
+  transition-duration: 400ms;
+}
+
+mat-card.equipped {
+  border: 5px solid #7b1fa2
+}
+
+mat-card-actions {
+  flex-direction: column;
+}
+
+mat-card-actions button {
+  width: 100%;
+  margin-bottom: 8px;
+}

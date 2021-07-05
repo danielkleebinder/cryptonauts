@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Inventory</h1>
+
+<mat-dialog-content>
+
+  <main *ngIf="!(empty$ | async)">
+    <app-item *ngFor="let item of (inventory$ | async); trackBy: trackByItemId"
+              [item]="item">
+    </app-item>
+  </main>
+
+  <div class="empty-inventory" *ngIf="empty$ | async">
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+    <span>You do not have any items</span>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="tokens">
+    <button mat-flat-button color="primary" (click)="buyTokens()">
+      Buy Space Diamonds
+    </button>
+    <app-tokens [tokens]="tokens$ | async"></app-tokens>
+  </div>
+
+  <button mat-flat-button mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>

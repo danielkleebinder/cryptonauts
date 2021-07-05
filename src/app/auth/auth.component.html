@@ -1,0 +1,29 @@
+<header>
+  <h1>Cryptonauts</h1>
+  <h2>Become a Blockchain Cryptonaut</h2>
+</header>
+
+<main [formGroup]="formGroup">
+
+  <mat-form-field class="contract-address" appearance="fill">
+    <mat-label>Contract Address</mat-label>
+    <input matInput formControlName="contractAddress" placeholder="0x12b4E4...">
+    <mat-error *ngIf="formGroup.get('contractAddress').hasError('required')">
+      Game contract address is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="player-address" appearance="fill">
+    <mat-label>Your Address</mat-label>
+    <input matInput formControlName="accountAddress" placeholder="0x408007...">
+    <mat-error *ngIf="formGroup.get('accountAddress').hasError('required')">
+      Your account address is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" (click)="letsGo()" [disabled]="formGroup.invalid">
+    Take me to Space
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+</main>

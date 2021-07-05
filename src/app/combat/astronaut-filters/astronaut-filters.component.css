@@ -1,0 +1,9 @@
+main {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-form-field {
+  margin-left: 12px;
+  margin-right: 12px;
+}

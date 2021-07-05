@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Add item</h1>
+
+<mat-dialog-content [formGroup]="formGroup">
+
+  <h4>Name</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="itemName" placeholder="Spacesword">
+  </mat-form-field>
+
+  <h4>Stats</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Mining power</mat-label>
+    <input matInput formControlName="itemMining">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Attack power</mat-label>
+    <input matInput formControlName="itemAttack">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Defense power</mat-label>
+    <input matInput formControlName="itemDefense">
+  </mat-form-field>
+
+  <h4>Expenses</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Cost in Space Diamonds</mat-label>
+    <input matInput formControlName="itemCost">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button mat-dialog-close color="primary" [disabled]="formGroup.invalid" (click)="createItem()">
+    Create Item
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,43 @@
+<aside *ngIf="contractActive$ | async">
+  <button mat-flat-button color="primary" [routerLink]="['/me']"
+          matTooltip="My Astronaut" matTooltipPosition="left">
+    <mat-icon>face</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" [routerLink]="['/planets']"
+          matTooltip="Explore some planets" matTooltipPosition="left">
+    <mat-icon>explore</mat-icon>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" (click)="showCombat()"
+          matTooltip="Combat - Fight other players" matTooltipPosition="left">
+    <mat-icon>emoji_events</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" (click)="showInventory()"
+          matTooltip="Inventory" matTooltipPosition="left">
+    <mat-icon>inventory</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" (click)="showMarket()"
+          matTooltip="Market - You can buy stuff here" matTooltipPosition="left">
+    <mat-icon>store</mat-icon>
+  </button>
+
+  <ng-container *ngIf="isOwner$ | async">
+    <mat-divider></mat-divider>
+    <button mat-flat-button color="primary" (click)="showAdminSettings()"
+            matTooltip="Admin panel" matTooltipPosition="left">
+      <mat-icon>admin_panel_settings</mat-icon>
+    </button>
+  </ng-container>
+
+  <mat-divider></mat-divider>
+  <button mat-flat-button color="primary" (click)="exit()"
+          matTooltip="Exit app" matTooltipPosition="left">
+    <mat-icon>logout</mat-icon>
+  </button>
+</aside>
+<notifier-container></notifier-container>
+
+<app-background [@routeAnimation]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</app-background>
+

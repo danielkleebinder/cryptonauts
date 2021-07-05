@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+button.close-button {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+header {
+  margin-bottom: 46px;
+}
+
+.planet-properties {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+main {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+section {
+  margin-bottom: 48px;
+}
+
+footer > * {
+  width: 100%;
+}
+
+footer mat-divider {
+  margin-bottom: 32px;
+}

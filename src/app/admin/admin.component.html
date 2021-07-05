@@ -1,0 +1,77 @@
+<h1 mat-dialog-title>Admin Settings</h1>
+
+<mat-dialog-content>
+
+  <section>
+    <h3>Owners</h3>
+
+    <p>
+      Owners are accounts with special administrative rights in the game. They can create items, redeem money on the
+      contract or set balancing parameters.
+    </p>
+
+    <button mat-flat-button color="warn" (click)="renounceOwnership()">
+      <mat-icon>logout</mat-icon>
+      Renounce Ownership
+    </button>
+
+    <button mat-flat-button color="primary" (click)="addOwner()">
+      <mat-icon>add</mat-icon>
+      Add an owner
+    </button>
+
+  </section>
+
+  <section>
+
+    <h3>Items</h3>
+
+    <p>
+      Use this form to create a completely new item type. Players can buy those items and upgrade them to their
+      will. But be careful to not make them too powerful or too weak. Players will abuse this.
+    </p>
+
+    <button mat-flat-button color="primary" (click)="addItem()">
+      <mat-icon>add</mat-icon>
+      Add new item
+    </button>
+
+    <button mat-flat-button color="primary" (click)="setMaxItemLevel()">Change max item level</button>
+    <button mat-flat-button color="primary" (click)="setMaxEquipmentCount()">Change max equipment count</button>
+
+  </section>
+
+  <section>
+
+    <h3>Planets</h3>
+
+    <p>
+      Adjusts planet parameters which directly or indirectly might have impact on the games overall balance.
+    </p>
+
+    <button mat-flat-button color="primary" (click)="setTravelTime()">Change travel time</button>
+
+  </section>
+
+  <section>
+    <h3>Tokens</h3>
+
+    <p>
+      Tokens (called "space diamonds" in the game) are an internal currency which can be harvested or bought using
+      Ether.
+    </p>
+
+    <p>
+      There is currently <strong>{{contractBalance$ | async | number}} Ether</strong> on this contract.
+    </p>
+
+    <button mat-flat-button color="primary" (click)="redeemEther()">Redeem contract Ether</button>
+    <button mat-flat-button color="primary" (click)="setTokenPrice()">Change token price</button>
+
+  </section>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close cdkFocusInitial>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+mat-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 30px !important;
+  padding-bottom: 50px !important;
+}
+
+img {
+  width: 200px;
+  margin-right: 24px;
+}
+
+span {
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+button {
+  width: 100%;
+}

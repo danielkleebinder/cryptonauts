@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Level Up</h1>
+
+<mat-dialog-content>
+  <p>
+    Are you sure that you want to increase your level? This will cost you <strong>{{levelUpCost$ | async}} space
+    diamonds</strong>. Choose one of the properties below to specialize your cryptonaut:
+  </p>
+
+  <section class="specializations">
+    <app-info-card [class.selected]="selected === types.Mining" (click)="select(types.Mining)"
+                   iconUrl="assets/shovel.png"
+                   header="Mining"
+                   description="Your mining is admired in the entire galaxy.">
+    </app-info-card>
+    <app-info-card [class.selected]="selected === types.Attack" (click)="select(types.Attack)"
+                   iconUrl="assets/attack.png"
+                   header="Attack"
+                   description="Increase the damage you deal in combat.">
+    </app-info-card>
+    <app-info-card [class.selected]="selected === types.Defense" (click)="select(types.Defense)"
+                   iconUrl="assets/shield.png"
+                   header="Defense"
+                   description="Better defend yourself against hostile players.">
+    </app-info-card>
+  </section>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <app-tokens [tokens]="tokens$ | async"></app-tokens>
+
+  <div>
+    <button mat-flat-button mat-dialog-close>Not now</button>
+    <button mat-flat-button mat-dialog-close color="primary"
+            (click)="levelUp()" [disabled]="!selected">
+      Make me stronger
+    </button>
+  </div>
+</mat-dialog-actions>

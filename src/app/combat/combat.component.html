@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Combat Scoreboard</h1>
+
+<mat-dialog-content>
+
+  <app-astronaut-filters (filter)="filterChanged($event)"></app-astronaut-filters>
+  <app-astronaut-item *ngFor="let astronaut of (astronauts$ | async)"
+                      [astronaut]="astronaut"
+                      [ranking]="astronaut.ranking"
+                      (fight)="fight(astronaut)">
+  </app-astronaut-item>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-icon-button (click)="refresh()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button mat-flat-button mat-dialog-close cdkFocusInitial>Close</button>
+</mat-dialog-actions>

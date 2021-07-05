@@ -1,0 +1,24 @@
+image: node:11.12.0-stretch
+  
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+test:
+  script:
+   - npm install
+   - npm build
+   - npm test
+
+pages:
+  stage: deploy
+  script: "true"
+  when: always
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+

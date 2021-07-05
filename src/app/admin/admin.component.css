@@ -1,0 +1,23 @@
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+section mat-form-field {
+  max-width: 400px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+p {
+  opacity: 0.7;
+}
+
+button {
+  margin-bottom: 12px;
+}

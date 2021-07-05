@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+img {
+  width: 28px;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+span {
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+small {
+  opacity: 0.7;
+}

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Max Item Level</h1>
+
+<mat-dialog-content [formGroup]="formGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>Max item level to archive</mat-label>
+    <input matInput formControlName="maxItemLevel" placeholder="4">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button mat-dialog-close color="primary" [disabled]="formGroup.invalid" (click)="save()">
+    Set Max Item Level
+  </button>
+</mat-dialog-actions>

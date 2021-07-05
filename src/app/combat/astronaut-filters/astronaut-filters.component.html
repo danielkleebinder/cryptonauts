@@ -1,0 +1,24 @@
+<main [formGroup]="formGroup">
+
+  <div>
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="id">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Min Level (inclusive)</mat-label>
+      <input matInput formControlName="minLevel" type="number">
+      <mat-error *ngIf="formGroup.hasError('min', 'minLevel')">Must be greater or equal to 0</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Max Level (inclusive)</mat-label>
+      <input matInput formControlName="maxLevel" type="number">
+      <mat-error *ngIf="formGroup.hasError('min', 'maxLevel')">Must be greater or equal to 0</mat-error>
+    </mat-form-field>
+  </div>
+
+</main>

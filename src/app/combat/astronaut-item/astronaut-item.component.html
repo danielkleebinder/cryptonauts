@@ -1,0 +1,23 @@
+<main>
+  <div *ngIf="ranking" class="astronaut-ranking">
+    <div>{{ranking}}</div>
+    <small>Rank</small>
+  </div>
+
+  <div class="astronaut-info">
+    <div>Lv. {{astronaut.level}}</div>
+    <div [matTooltip]="astronaut.id">{{astronaut.id | slice:0:20}}...</div>
+    <div matTooltip="Win to loss ratio">{{astronaut.winCount}} / {{astronaut.lossCount}}</div>
+  </div>
+
+  <div class="astronaut-actions">
+    <button mat-flat-button color="primary" (click)="fight.emit(astronaut)">Fight</button>
+  </div>
+</main>
+
+<footer>
+  <mat-progress-bar color="primary" mode="determinate"
+                    matTooltip="The players health"
+                    [value]="(astronaut.health / astronaut.baseHealth) * 100">
+  </mat-progress-bar>
+</footer>

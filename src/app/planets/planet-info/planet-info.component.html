@@ -1,0 +1,79 @@
+<button class="close-button" mat-icon-button (click)="close.emit(planet)">
+  <mat-icon>close</mat-icon>
+</button>
+
+<header class="title">
+  <h1 class="no-margin">{{planet?.name}}</h1>
+</header>
+
+<header class="sub-header">
+  <mat-divider></mat-divider>
+  <div class="planet-properties">
+    <mat-chip-list>
+      <mat-chip color="primary" selected matTooltip="Age">
+        {{(planet?.age / 1000000000) | number}} billion y/o
+      </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Surface gravity in m/s²">
+        {{surfaceGravity | number}} m/s²
+      </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Average surface temperature in °C">
+        {{planet?.temperature}} °C
+      </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Mass compared to earth">
+        {{relativePlanetMass | number}}
+        <mat-icon>fitness_center</mat-icon>
+      </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Size compared to earth">
+        {{relativePlanetSize | number}}
+        <mat-icon>radio_button_checked</mat-icon>
+      </mat-chip>
+      <mat-chip color="primary" selected matTooltip="Explorer on the planet">
+        {{planet?.explorerCount | number}}
+        <mat-icon>person</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <mat-divider></mat-divider>
+</header>
+
+<main>
+
+  <section>
+    <h3>Description</h3>
+    <p>{{description}}</p>
+  </section>
+
+  <section *ngIf="exploring$ | async">
+    <h3>Exploration Status</h3>
+    <p>
+      You are currently exploring {{planet.name}}. The longer you stay on this planet, the more resources you are going
+      to find and be able to collect.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <mat-divider></mat-divider>
+
+  <ng-container *ngIf="exploring$ | async">
+
+    <button mat-flat-button (click)="leavePlanet()"
+            class="margin-bottom">
+      <mat-icon>logout</mat-icon>
+      Leave Planet
+    </button>
+
+    <button mat-flat-button color="primary" (click)="collectMinedResources()"
+            matTooltip="Collect all resources that you have mined so far" matTooltipPosition="right">
+      <mat-icon>hardware</mat-icon>
+      Collect mined resources
+    </button>
+
+  </ng-container>
+
+  <button *ngIf="!(exploring$ | async)" mat-flat-button color="primary" (click)="explore()">
+    <mat-icon>explore</mat-icon>
+    Explore
+  </button>
+</footer>
